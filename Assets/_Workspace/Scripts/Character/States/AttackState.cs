@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AttackState : StateBase
 {
-    [SerializeField] private Weapon _weapon;
+    [SerializeField] private WeaponBase _weapon;
 
     private WeaponBehaviour _weaponBehaviour;
 

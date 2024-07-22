@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WeaponBehaviour
 {
-    private Weapon _weapon;
+    private WeaponBase _weapon;
     private Character _character;
     private Animator _animator; 
 
@@ -16,7 +16,7 @@ public class WeaponBehaviour
     private const string ANIM_RELAOD = "Reload";
 
     private float _lstTime; 
-    public WeaponBehaviour(Character character, Weapon weapon, Animator animator)
+    public WeaponBehaviour(Character character, WeaponBase weapon, Animator animator)
     {
         _character = character;
         _weapon = weapon;

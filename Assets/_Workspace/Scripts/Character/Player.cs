@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class Player : Character
 {
-    [SerializeField] private Weapon _weapon;
+    [SerializeField] private WeaponBase _weapon;
     [SerializeField] private Joystick _joystickMovement;
     [SerializeField] private Joystick _joystickAim;
-    [SerializeField] private Transform _aimTarget;
     [SerializeField] private WeaponLineRender _weaponLineRender;
     [SerializeField] CharacterRigController _rig; 
     public Rigidbody rb { get; private set; }
-    private Vector3 _aimTargetLocalStartPos; 
     public string CurrentWeaponName => "Pistol";
 
     private MoveBehaviour _moveBehaviour;
@@ -20,7 +18,7 @@ public class Player : Character
 
     public Action<float, float> onChangeHP;
 
-    public Weapon currentWeapon => _weapon;
+    public WeaponBase currentWeapon => _weapon;
     private Vector3 GetMoveDirection()
     {
         float horizontal = 0;
@@ -51,7 +49,7 @@ public class Player : Character
     {
         base.Construct();
         rb = GetComponent<Rigidbody>();
-        _aimTargetLocalStartPos = _aimTarget.localPosition;
+
         _weaponLineRender.Construct(_viewAngle, _visibleRange);
         _rig.Construct(_weapon);
         onChangeHP?.Invoke(_currentHP, _hp);
@@ -103,7 +101,6 @@ public class Player : Character
             _aiming = _isAiming;
             if (!_isAiming)
             {
-                _aimTarget.localPosition = _aimTargetLocalStartPos;
                 _weaponLineRender.DrawLine(false, false);
                 _rig.DeactiveRig();
             }
@@ -116,11 +113,11 @@ public class Player : Character
             Character nearestEnemy = FindNearestEnemy();
             if (nearestEnemy != null)
             {
-                _aimTarget.position = nearestEnemy.transform.position;
+                _rig.SetAimTargetPos(nearestEnemy.transform.position); 
             }
             else
             {
-                _aimTarget.localPosition = _aimTargetLocalStartPos;
+                _rig.SetAimTargetPos(); 
             }
 
             _weaponLineRender.DrawLine(true, _enemyDetected);

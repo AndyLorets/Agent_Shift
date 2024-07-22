@@ -3171,14 +3171,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3985002548195155643, guid: 781d1fb9e88c493418fc277bc0c52f41, type: 3}
-      propertyPath: _reloadTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5934476668894871609, guid: 781d1fb9e88c493418fc277bc0c52f41, type: 3}
-      propertyPath: _hp
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 5934476668894871609, guid: 781d1fb9e88c493418fc277bc0c52f41, type: 3}
       propertyPath: _joystickAim
       value: 

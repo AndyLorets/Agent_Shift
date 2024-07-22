@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1793076471163684623}
   - component: {fileID: 671456104862700481}
   - component: {fileID: 2179556365350420672}
-  - component: {fileID: 7933838156587430941}
+  - component: {fileID: 8545985410939153238}
   m_Layer: 7
   m_Name: M4_8
   m_TagString: Untagged
@@ -173,7 +173,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7933838156587430941
+--- !u!114 &8545985410939153238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,15 +182,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 665646650476320966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3920885f61c56d8408d5394a6cc6c3ef, type: 3}
+  m_Script: {fileID: 11500000, guid: d35712d609b464447b59020196297a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  _damage: 1
   _bulletOnMagazineCount: 8
   _bulletCount: 30
-  _isNBulletCount: 1
   _reloadTime: 1
-  _shootDelayTime: 1.5
+  _shootDelayTime: 1
   _bulletPrefab: {fileID: 8893093729779758195, guid: 92f9a1dad95a9dc42b09cfabc57cbafb, type: 3}
   _shootEffect: {fileID: 1811206124728092144}
   _shootPos: {fileID: 5963679268744548281}
@@ -653,7 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 290195e58e2c6924c9bc6b554c89889c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 7933838156587430941}
+  _weapon: {fileID: 8545985410939153238}
 --- !u!136 &8536687069643991735
 CapsuleCollider:
   m_ObjectHideFlags: 0

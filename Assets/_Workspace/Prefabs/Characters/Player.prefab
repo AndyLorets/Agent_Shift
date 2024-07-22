@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd1f62102b0a4241881211e55e4668f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 1000
+  _hp: 10
   _currentHP: 0
   _visibleRange: 10
   _viewAngle: 25
@@ -382,10 +382,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _skin: {fileID: 1856439231464275271}
-  _weapon: {fileID: 3985002548195155643}
+  _weapon: {fileID: 8525494493482496860}
   _joystickMovement: {fileID: 0}
   _joystickAim: {fileID: 0}
-  _aimTarget: {fileID: 7154276933183700331}
   _weaponLineRender: {fileID: 4116378305205824192}
   _rig: {fileID: 6030261068593978245}
 --- !u!1 &1860592772773406367
@@ -515,6 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c929cf496ec8046b75bc62676b5d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _aimTarget: {fileID: 7154276933183700331}
 --- !u!1 &7449787098925916154
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,7 +777,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1694449805434718, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
   m_PrefabInstance: {fileID: 665760486817580475}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3985002548195155643
+--- !u!114 &8525494493482496860
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -786,14 +786,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 665200916244126437}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3920885f61c56d8408d5394a6cc6c3ef, type: 3}
+  m_Script: {fileID: 11500000, guid: d35712d609b464447b59020196297a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  _bulletOnMagazineCount: 5
-  _bulletCount: 10
+  _damage: 1
+  _bulletOnMagazineCount: 8
+  _bulletCount: 30
   _reloadTime: 1
-  _shootDelayTime: 0.8
+  _shootDelayTime: 1
   _bulletPrefab: {fileID: 8893093729779758195, guid: 92f9a1dad95a9dc42b09cfabc57cbafb, type: 3}
   _shootEffect: {fileID: 82944650625783415}
   _shootPos: {fileID: 662616178424693645}

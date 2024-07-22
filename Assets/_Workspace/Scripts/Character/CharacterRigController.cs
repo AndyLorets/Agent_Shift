@@ -3,10 +3,13 @@ using UnityEngine.Animations.Rigging;
 
 public class CharacterRigController : MonoBehaviour
 {
-    private Weapon _weapon; 
+    [SerializeField] private Transform _aimTarget;
+
+    private Vector3 _aimTargetLocalStartPos;
+    private WeaponBase _weapon; 
     private Rig _rig;
     private bool _active; 
-    public void Construct(Weapon weapon)
+    public void Construct(WeaponBase weapon)
     {
         _weapon = weapon;
         _weapon.onStartReload += DeactiveRig;
@@ -14,7 +17,8 @@ public class CharacterRigController : MonoBehaviour
     }
     private void Awake()
     {
-        _rig = GetComponent<Rig>(); 
+        _rig = GetComponent<Rig>();
+        _aimTargetLocalStartPos = _aimTarget.localPosition;
     }
     private void Update()
     {
@@ -28,6 +32,14 @@ public class CharacterRigController : MonoBehaviour
     public void DeactiveRig()
     {
         _active = false;
+        _aimTarget.localPosition = _aimTargetLocalStartPos;
+    }
+    public void SetAimTargetPos(Vector3 pos = new Vector3())
+    {
+        if (pos != Vector3.zero)
+            _aimTarget.position = pos;
+        else
+            _aimTarget.localPosition = _aimTargetLocalStartPos;
     }
     private void OnDestroy()
     {
