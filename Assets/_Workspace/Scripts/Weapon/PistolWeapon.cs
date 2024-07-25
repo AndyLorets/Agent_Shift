@@ -1,11 +1,9 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PistolWeapon : WeaponBase
 {
-    public override void Shoot(ITakeDamage takeDamageDamage, Vector3 pos)
+    public override void Shoot(ITakeDamage takeDamageDamage, Vector3 pos, bool headshoot)
     {
         _bulletOnMagazine--;
         _shootEffect.Play();
@@ -16,7 +14,7 @@ public class PistolWeapon : WeaponBase
         bullet.gameObject.SetActive(true);
         bullet.DOMove(pos, BULLET_TWEEN_DURATION)
             .SetEase(Ease.Linear)
-            .OnComplete(() => OnBulletHitTarget(bullet, takeDamageDamage));
+            .OnComplete(() => BulletHitTarget(bullet, takeDamageDamage, headshoot));
 
         _bulletsOnMagazine.RemoveAt(0);
     }

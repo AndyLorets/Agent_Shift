@@ -1,12 +1,17 @@
+using UnityEngine; 
 public class StateMachine 
 {
-    private StateBase _currentState; 
+    public StateBase currentState; 
     public void ChangeState(StateBase newState)
     {
-        if(_currentState == newState) return;   
+        if(currentState == newState) return;   
 
-        _currentState?.ExitState();
-        _currentState = newState;
-        _currentState?.EnterState();
+        currentState?.ExitState();
+        currentState = newState;
+        currentState?.EnterState();
+    }
+    public void ExitActiveState()
+    {
+        currentState?.ExitState();
     }
 }

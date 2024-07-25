@@ -16,15 +16,18 @@ public class PatroolState : StateBase
     private const float AGENT_MOVE_SPEED = 1.2f;
 
     private Vector3 _startPos;
-    protected override void Start()
+    private Enemy _enemy;
+
+    protected override void Awake()
     {
-        base.Start(); 
+        base.Awake(); 
         _startPos = transform.position;
+        _enemy = GetComponent<Enemy>();
     }
     private void Update()
     {
         _isMove = _enemy.agent.velocity.sqrMagnitude > 0;
-        _enemy.Animator.SetBool(ANIM_MOVE, _isMove);
+        _enemy.Animator.SetBool(ANIM_WALK, _isMove);
 
         if (_enemy.agent.remainingDistance <= .5f && _isMove)
             StopMove();
@@ -45,7 +48,7 @@ public class PatroolState : StateBase
         StopAllCoroutines();
 
         _isMove = false;
-        _enemy.Animator.SetBool(ANIM_MOVE, _isMove);
+        _enemy.Animator.SetBool(ANIM_WALK, _isMove);
     }
     private void SetMove()
     {

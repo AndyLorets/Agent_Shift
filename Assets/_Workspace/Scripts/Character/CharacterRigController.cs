@@ -37,7 +37,7 @@ public class CharacterRigController : MonoBehaviour
     public void SetAimTargetPos(Vector3 pos = new Vector3())
     {
         if (pos != Vector3.zero)
-            _aimTarget.position = pos;
+            _aimTarget.position = pos + Vector3.up;
         else
             _aimTarget.localPosition = _aimTargetLocalStartPos;
     }

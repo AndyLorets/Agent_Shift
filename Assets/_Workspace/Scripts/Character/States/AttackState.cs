@@ -6,12 +6,20 @@ public class AttackState : StateBase
 
     private WeaponBehaviour _weaponBehaviour;
 
-    private float _changeStateTimer;
+    [SerializeField] private float _changeStateTimer;
     private bool _shooting;
     bool _canChangeState => _changeStateTimer <= 0;
+    [SerializeField] bool canChangeState; 
 
     private const float CHANGE_STATE_TIME = .3f;
     private const float RUN_SPEED = 4f;
+
+    private Enemy _enemy;
+    protected override void Awake()
+    {
+        base.Awake();
+        _enemy = GetComponent<Enemy>();
+    }
 
     protected override void Start()
     {
@@ -34,18 +42,16 @@ public class AttackState : StateBase
 
     private void Run()
     {
+        bool detected = _enemy.IsEnemyDetected();
         bool isMove = _enemy.agent.velocity.sqrMagnitude > 0;
-        bool detected = _enemy.IsEnemyDetected(); 
+
+        _enemy.Animator.SetBool(ANIM_RUN, isMove);
+        _enemy.Animator.SetBool(ANIM_AIM, detected);
 
         if (detected)
             Attack();
-        else 
-        {
-            _weaponBehaviour.Unrun();
+        else
             Follow();
-        }
-
-        _enemy.Animator.SetBool(ANIM_RUN, isMove);
     }
     private void Attack()
     {
@@ -57,11 +63,10 @@ public class AttackState : StateBase
             _changeStateTimer = CHANGE_STATE_TIME;
 
             _enemy.agent.SetDestination(transform.position);
-            _enemy.Animator.SetTrigger(ANIM_AIM);
         }
 
         LookAtPlayer();
-        _weaponBehaviour.Run(); 
+        _weaponBehaviour.Run();
     }
     private void Follow()
     {
@@ -84,7 +89,8 @@ public class AttackState : StateBase
     public override void ExitState()
     {
         base.ExitState();
-
-        _enemy.Animator.SetBool(ANIM_RUN, false); 
+        _enemy.agent.SetDestination(transform.position);
+        _enemy.Animator.SetBool(ANIM_RUN, false);
+        _enemy.Animator.SetBool(ANIM_AIM, false);
     }
 }

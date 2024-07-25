@@ -15,6 +15,7 @@ public class WeaponBehaviour
     private const string ANIM_SHOOT = "Shoot";
     private const string ANIM_RELAOD = "Reload";
 
+    private bool headshoot; 
     private float _lstTime; 
     public WeaponBehaviour(Character character, WeaponBase weapon, Animator animator)
     {
@@ -22,21 +23,17 @@ public class WeaponBehaviour
         _weapon = weapon;
         _animator = animator;
         _shootDelay = weapon.shootDelay;
+        _currentShootTime = _shootDelay;
 
-        weapon.onStartReload += OnReloadWeapon; 
+        _weapon.onStartReload += OnReloadWeapon;
     }
     public void Run()
     {
-        bool canShoot = _character.IsEnemyDetected(out _takeDamage, out _shootPos);
+        bool canShoot = _character.IsEnemyDetected(out _takeDamage, out _shootPos, out headshoot);
         if (canShoot)
         {
             Shooting();
         }
-    }
-    public void Unrun()
-    {
-        if (_currentShootTime != 0)
-            _currentShootTime = 0; 
     }
     private void Shooting()
     {
@@ -45,7 +42,7 @@ public class WeaponBehaviour
         if (_currentShootTime <= 0 && !_weapon.isReloading)
         {
             _animator.SetTrigger(ANIM_SHOOT);
-            _weapon.Shoot(_takeDamage, _shootPos);
+            _weapon.Shoot(_takeDamage, _shootPos, headshoot);
             _currentShootTime = _shootDelay;
         }
     }

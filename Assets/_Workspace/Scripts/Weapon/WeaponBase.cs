@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField, Range(1, 10)] protected int _damage = 1;
     [Space(5)]
     [SerializeField, Range(5, 30)] protected int _bulletOnMagazineCount = 8;
-    [SerializeField, Range(10, 100)] protected int _bulletCount = 30;
     [Space(5)]
     [SerializeField, Range(1f, 5f)] protected float _reloadTime = 1;
     [SerializeField, Range(.15f, 5f)] protected float _shootDelayTime = 1f;
@@ -33,7 +31,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     public Action onStartReload;
     public Action<int, int> onEndReload;
-    public Action<int, int> onShoot;
+    public Action<int, int> onShoot; 
 
     protected virtual void Start()
     {
@@ -60,14 +58,15 @@ public abstract class WeaponBase : MonoBehaviour
         _bulletOnMagazine = _bulletOnMagazineCount;
         onEndReload?.Invoke(_bulletOnMagazine, _bulletsOnMagazine.Count);
     }
-    public abstract void Shoot(ITakeDamage takeDamageDamage, Vector3 pos);
-    protected virtual void OnBulletHitTarget(Transform bullet, ITakeDamage takeDamageDamage)
+    public abstract void Shoot(ITakeDamage takeDamageDamage, Vector3 pos, bool headshot);
+    protected virtual void BulletHitTarget(Transform bullet, ITakeDamage takeDamageDamage, bool headshoot)
     {
         _bulletsOnMagazine.Add(bullet);
         bullet.gameObject.SetActive(false);
         bullet.transform.parent = _shootPos; 
         bullet.transform.localPosition = Vector3.zero;
-        takeDamageDamage.TakeDamage(_damage);
+
+        takeDamageDamage.TakeDamage(_damage, headshoot);
     }
 
     protected virtual IEnumerator Reload()

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Player : Character
@@ -7,7 +6,9 @@ public class Player : Character
     [SerializeField] private Joystick _joystickMovement;
     [SerializeField] private Joystick _joystickAim;
     [SerializeField] private WeaponLineRender _weaponLineRender;
-    [SerializeField] CharacterRigController _rig; 
+    [SerializeField] CharacterRigController _rig;
+    [SerializeField] private PlayerAbilities _playerAbilities; 
+
     public Rigidbody rb { get; private set; }
     public string CurrentWeaponName => "Pistol";
 
@@ -15,9 +16,6 @@ public class Player : Character
     private WeaponBehaviour _weaponBehaviour;
     private bool _isAiming => _joystickAim.Horizontal != 0 || _joystickAim.Vertical != 0;
     private bool _aiming;
-
-    public Action<float, float> onChangeHP;
-
     public WeaponBase currentWeapon => _weapon;
     private Vector3 GetMoveDirection()
     {
@@ -52,7 +50,7 @@ public class Player : Character
 
         _weaponLineRender.Construct(_viewAngle, _visibleRange);
         _rig.Construct(_weapon);
-        onChangeHP?.Invoke(_currentHP, _hp);
+        onChangeHP?.Invoke(_currentHP, _hp, false);
 
         ConstructBehaviours();
     }
@@ -77,10 +75,6 @@ public class Player : Character
         if (_isAiming)
         {
             _weaponBehaviour.Run();
-        }
-        else
-        {
-            _weaponBehaviour.Unrun();
         }
     }
     private void SwitchMoveBehaviour()
@@ -133,11 +127,24 @@ public class Player : Character
                 _rig.DeactiveRig();
         }
     }
-    public override void TakeDamage(int value)
+    public override bool IsEnemyDetected(out ITakeDamage takeDamage, out Vector3 pos, out bool headshoot)
     {
-        base.TakeDamage(value);
-        onChangeHP?.Invoke(_currentHP, _hp);
+        bool isDetected = base.IsEnemyDetected(out takeDamage, out pos, out headshoot);
+
+        if (isDetected)
+        {
+            float randomValue = Random.Range(0f, 100f);
+            headshoot = randomValue <= _playerAbilities.headShotChance;
+
+            if (headshoot)
+            {
+                pos.y += 0.8f;
+            }
+        }
+
+        return isDetected;
     }
+
 
     private void OnDestroy()
     {
@@ -147,6 +154,6 @@ public class Player : Character
             enemy.onDead -= OnEnemyDead;
         }
     }
-    protected void OnEnemyDead(Enemy enemy) => _enemyList.Remove(enemy);
+    protected void OnEnemyDead(Character enemy) => _enemyList.Remove(enemy);
 }
 

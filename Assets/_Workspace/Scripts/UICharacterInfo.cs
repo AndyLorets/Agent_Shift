@@ -20,7 +20,7 @@ public class UICharacterInfo : MonoBehaviour
         _player.currentWeapon.onEndReload -= RenderBulletsCount;
         _player.onChangeHP -= RenderHP;
     }
-    private void RenderHP(float hp, float maxHp)
+    private void RenderHP(float hp, float maxHp, bool headshoot)
     {
         _hpImage.fillAmount = hp / maxHp; 
     }

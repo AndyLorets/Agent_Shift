@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public abstract class Character : MonoBehaviour, ITakeDamage
 {
@@ -20,7 +21,14 @@ public abstract class Character : MonoBehaviour, ITakeDamage
 
     protected bool _enemyDetected;
 
-    public Action<string> onSendMessag; 
+    public Action<string> onSendMessag;
+    public Action<float, float, bool> onChangeHP;
+    public Action<Character> onDead;
+
+    private const string ANIM_DAMAGE = "Damage";
+    private const string ANIM_DAMAGE_HEADSHOT = "Damage_HeadShot";
+    private const string ANIM_DEATH = "Death";
+    private const string ANIM_DEATH_HEADSHOT = "Death_HeadShot";
 
     private void Start()
     {
@@ -67,12 +75,13 @@ public abstract class Character : MonoBehaviour, ITakeDamage
 
         return true;
     }
-    public virtual bool IsEnemyDetected(out ITakeDamage takeDamage, out Vector3 pos)
+    public virtual bool IsEnemyDetected(out ITakeDamage takeDamage, out Vector3 pos, out bool headshoot)
     {
         _enemyDetected = false;
 
         takeDamage = null;
         pos = Vector3.zero;
+        headshoot = false;
 
         if (!CheckForEnemyInRange()) return false;
 
@@ -103,15 +112,25 @@ public abstract class Character : MonoBehaviour, ITakeDamage
         }
         return false;
     }
-    public virtual void TakeDamage(int value)
+    public virtual void TakeDamage(int value, bool headShot)
     {
+        string anim = headShot ? ANIM_DAMAGE_HEADSHOT : ANIM_DAMAGE;
+        value = headShot ? value * 3 : value;
+
+        onChangeHP?.Invoke(_currentHP, _hp, headShot);
+
         _currentHP -= value;
         if (_currentHP <= 0)
-            Dead();
+            Dead(headShot);
+        else
+            Animator.SetTrigger(anim);
     }
-    public virtual void Dead()
+    public virtual void Dead(bool headShot)
     {
-        gameObject.SetActive(false);
+        string anim = headShot ? ANIM_DEATH_HEADSHOT : ANIM_DEATH;
+        Animator.SetTrigger(anim);
+        enabled = false;
+        onDead?.Invoke(this);
     }
     private void OnDrawGizmosSelected()
     {
