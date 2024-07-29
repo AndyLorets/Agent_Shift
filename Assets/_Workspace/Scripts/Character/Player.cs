@@ -7,8 +7,10 @@ public class Player : Character
     [SerializeField] private Joystick _joystickAim;
     [SerializeField] private WeaponLineRender _weaponLineRender;
     [SerializeField] CharacterRigController _rig;
-    [SerializeField] private PlayerAbilities _playerAbilities; 
+    [SerializeField] private PlayerAbilities _playerAbilities;
 
+    public bool IsInvisibility { get; private set; }
+    public bool IsArmom { get; private set; }
     public Rigidbody rb { get; private set; }
     public string CurrentWeaponName => "Pistol";
 
@@ -28,6 +30,8 @@ public class Player : Character
         Vector3 direction = new Vector3(horizontal, 0f, vertical);
         return direction;
     }
+    private void SetInvisibility(bool value) => IsInvisibility = value;
+    private void SetArmor(bool value) => IsArmom = value;
     private Vector3 GetAimDirection()
     {
         float horizontal = _joystickAim.Horizontal;
@@ -53,6 +57,9 @@ public class Player : Character
         onChangeHP?.Invoke(_currentHP, _hp, false);
 
         ConstructBehaviours();
+
+        PlayerAbilities.onChangeInvisibility += SetInvisibility;
+        PlayerAbilities.onChangeArmor += SetArmor;
     }
     private void ConstructBehaviours()
     {
@@ -153,6 +160,14 @@ public class Player : Character
             Enemy enemy = _enemyList[i] as Enemy;
             enemy.onDead -= OnEnemyDead;
         }
+
+        PlayerAbilities.onChangeInvisibility -= SetInvisibility;
+        PlayerAbilities.onChangeArmor -= SetArmor;
+    }
+    public override void TakeDamage(int value, bool headShot)
+    {
+        value = IsArmom ? 0 : value; 
+        base.TakeDamage(value, headShot);
     }
     protected void OnEnemyDead(Character enemy) => _enemyList.Remove(enemy);
 }

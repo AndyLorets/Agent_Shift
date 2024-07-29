@@ -14,7 +14,8 @@ public class Enemy : Character
     public NavMeshAgent agent { get; private set; }
     public Player player { get; private set; }
 
-    private const float DETECTED_RADIUS = 20f; 
+    private const float DETECTED_RADIUS = 20f;
+    public bool EnemyIsDetected => IsEnemyDetected() && !player.IsInvisibility; 
 
     private void Awake()
     {

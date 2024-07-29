@@ -78,7 +78,7 @@ public class PatroolState : StateBase
     {
         while (enabled)
         {
-            if (_enemy.IsEnemyDetected())
+            if (_enemy.EnemyIsDetected)
             {
                 StopMove();
                 _visibleCount++;
