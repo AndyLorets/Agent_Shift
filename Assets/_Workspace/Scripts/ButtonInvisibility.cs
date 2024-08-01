@@ -13,12 +13,12 @@ public class ButtonInvisibility : MonoBehaviour
     {
         _button = GetComponent<Button>();   
 
-        PlayerAbilities.onChangeInvisibility += ChangeButtonValue;
+        PlayerAbilities.onInvisibility += ChangeButtonValue;
         PlayerAbilities.onChangeInvisibilitTime += ChangeImageValue; 
     }
     private void OnDestroy()
     {
-        PlayerAbilities.onChangeInvisibility -= ChangeButtonValue;
+        PlayerAbilities.onInvisibility -= ChangeButtonValue;
         PlayerAbilities.onChangeInvisibilitTime -= ChangeImageValue;
     }
     private void ChangeButtonValue(bool value)

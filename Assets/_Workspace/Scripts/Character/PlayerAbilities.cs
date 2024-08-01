@@ -8,9 +8,11 @@ public class PlayerAbilities : MonoBehaviour
     public float headShotChance = 100f;
 
     public static System.Action<float> onChangeInvisibilitTime;
-    public static System.Action<bool> onChangeInvisibility;
+    public static System.Action<bool> onInvisibility;
     public static System.Action<float> onChangeArmorTime;
-    public static System.Action<bool> onChangeArmor;
+    public static System.Action<bool> onArmor;
+
+    private const float cooldown = 5f; 
 
     public void ActiveInvisibility()
     {
@@ -25,7 +27,7 @@ public class PlayerAbilities : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(1); 
         float t = _invisibilityTime;
 
-        onChangeInvisibility?.Invoke(true);
+        onInvisibility?.Invoke(true);
 
         while (t > 0)
         {
@@ -34,7 +36,7 @@ public class PlayerAbilities : MonoBehaviour
             yield return waitForSeconds;
         }
 
-        onChangeInvisibility?.Invoke(false);
+        onInvisibility?.Invoke(false);
         onChangeInvisibilitTime?.Invoke(1);
     }
     private IEnumerator Armor()
@@ -42,7 +44,7 @@ public class PlayerAbilities : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(1);
         float t = _armorTime;
 
-        onChangeArmor?.Invoke(true);
+        onArmor?.Invoke(true);
 
         while (t > 0)
         {
@@ -51,7 +53,21 @@ public class PlayerAbilities : MonoBehaviour
             yield return waitForSeconds;
         }
 
-        onChangeArmor?.Invoke(false);
-        onChangeArmorTime?.Invoke(1);
+        onArmor?.Invoke(false);
+        StartCoroutine(Res());
+    }
+    private IEnumerator Res()
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(1);
+        float t = 0;
+
+        while (t < cooldown)
+        {
+            t++;
+            onChangeArmorTime?.Invoke(t / cooldown);
+            yield return waitForSeconds;
+        }
+
+        //onChangeArmorTime?.Invoke(1);
     }
 }

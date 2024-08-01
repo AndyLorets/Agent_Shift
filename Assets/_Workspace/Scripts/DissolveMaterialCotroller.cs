@@ -24,7 +24,7 @@ public class DissolveMaterialCotroller : MonoBehaviour
         }
 
         // Подписка на событие
-        PlayerAbilities.onChangeInvisibility += ChangeDissolveValue;
+        PlayerAbilities.onInvisibility += ChangeDissolveValue;
     }
 
     private void Start()
@@ -38,7 +38,7 @@ public class DissolveMaterialCotroller : MonoBehaviour
 
     private void OnDestroy()
     {
-        PlayerAbilities.onChangeInvisibility -= ChangeDissolveValue;
+        PlayerAbilities.onInvisibility -= ChangeDissolveValue;
     }
 
     private void ChangeDissolveValue(bool value)

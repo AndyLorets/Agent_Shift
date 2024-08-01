@@ -58,8 +58,8 @@ public class Player : Character
 
         ConstructBehaviours();
 
-        PlayerAbilities.onChangeInvisibility += SetInvisibility;
-        PlayerAbilities.onChangeArmor += SetArmor;
+        PlayerAbilities.onInvisibility += SetInvisibility;
+        PlayerAbilities.onArmor += SetArmor;
     }
     private void ConstructBehaviours()
     {
@@ -161,8 +161,8 @@ public class Player : Character
             enemy.onDead -= OnEnemyDead;
         }
 
-        PlayerAbilities.onChangeInvisibility -= SetInvisibility;
-        PlayerAbilities.onChangeArmor -= SetArmor;
+        PlayerAbilities.onInvisibility -= SetInvisibility;
+        PlayerAbilities.onArmor -= SetArmor;
     }
     public override void TakeDamage(int value, bool headShot)
     {

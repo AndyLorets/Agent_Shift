@@ -13,22 +13,16 @@ public class ButtonArmor : MonoBehaviour
     {
         _button = GetComponent<Button>();
 
-        PlayerAbilities.onChangeArmor += ChangeButtonValue;
         PlayerAbilities.onChangeArmorTime += ChangeImageValue;
     }
     private void OnDestroy()
     {
-        PlayerAbilities.onChangeArmor -= ChangeButtonValue;
         PlayerAbilities.onChangeArmorTime -= ChangeImageValue;
     }
-    private void ChangeButtonValue(bool value)
-    {
-        _button.interactable = !value;
-    }
-
     private void ChangeImageValue(float value)
     {
-        _image.DOFillAmount(value, 1).SetEase(Ease.Linear);
-
+        _button.interactable = value == 1; 
+        _image.DOFillAmount(value, 1)
+            .SetEase(Ease.Linear); 
     }
 }
