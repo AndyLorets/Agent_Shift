@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffe1a9ac2e5fc547935acff7b644750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactSprite: {fileID: 21300000, guid: f3d139c988dfe9742a23264281d70904, type: 3}
   _point: {fileID: 1056108532672173673}
   _effect: {fileID: 8759906491124152216}
 --- !u!82 &8396976568160116421
@@ -86,7 +87,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 5
-  MaxDistance: 15
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

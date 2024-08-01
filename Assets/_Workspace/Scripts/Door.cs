@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    [SerializeField] private Sprite _interactSprite; 
+
     private Animation _animation;
     private Collider _collider; 
     private void Awake()
@@ -13,13 +15,13 @@ public class Door : MonoBehaviour
     {
         if (!other.CompareTag(TagsObj.PLAYER)) return;
 
-        InteractionManager.Interact(Open, true);
+        InteractionManager.Interact(Open, true, _interactSprite);
     }
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag(TagsObj.PLAYER)) return;
 
-        InteractionManager.Interact(Open, false);
+        InteractionManager.Interact(Open, false, _interactSprite);
     }
 
     private void Open()
@@ -32,7 +34,7 @@ public class Door : MonoBehaviour
                 canOpen = true;
                 _animation.Play();
                 _collider.enabled = false;
-                InteractionManager.Interact(Open, false);
+                InteractionManager.Interact(Open, false, _interactSprite);
             }
         }
         if (!canOpen)

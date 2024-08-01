@@ -17,9 +17,10 @@ public class InteractableHandler : MonoBehaviour
     {
         InteractionManager.onPlayerInteraction -= Render;
     }
-    private void Render(UnityAction action, bool state)
+    private void Render(UnityAction action, bool state, Sprite sprite)
     {
         _interaction.SetActive(state);
+        _image.sprite = sprite; 
         _button.onClick.RemoveAllListeners();
         if(state)
             _button.onClick.AddListener(action);
@@ -27,9 +28,9 @@ public class InteractableHandler : MonoBehaviour
 }
 public static class InteractionManager
 {
-    public static Action<UnityAction, bool> onPlayerInteraction;
-    public static void Interact(UnityAction action, bool state)
+    public static Action<UnityAction, bool, Sprite> onPlayerInteraction;
+    public static void Interact(UnityAction action, bool state, Sprite sprite)
     {
-        onPlayerInteraction?.Invoke(action, state); 
+        onPlayerInteraction?.Invoke(action, state, sprite); 
     }
 }

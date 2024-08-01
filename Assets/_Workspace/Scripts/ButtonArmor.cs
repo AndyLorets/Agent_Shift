@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class ButtonArmor : MonoBehaviour
 {
-    private Image _image;
+    [SerializeField] private Image _image;
     private Button _button;
 
     public Action<Image, Button> onClick;
     private void Awake()
     {
-        _image = GetComponent<Image>();
         _button = GetComponent<Button>();
 
         PlayerAbilities.onChangeArmor += ChangeButtonValue;

@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class EnemyLureSpeaker : MonoBehaviour
 {
+    [SerializeField] private Sprite _interactSprite; 
     [SerializeField] private Transform _point;
     [SerializeField] private ParticleSystem _effect; 
 
@@ -24,12 +25,12 @@ public class EnemyLureSpeaker : MonoBehaviour
     {
         if (!other.CompareTag(TagsObj.PLAYER)) return;
 
-        InteractionManager.Interact(ActiveLure, true); 
+        InteractionManager.Interact(ActiveLure, true, _interactSprite); 
     }
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag(TagsObj.PLAYER)) return;
 
-        InteractionManager.Interact(ActiveLure, false);
+        InteractionManager.Interact(ActiveLure, false, _interactSprite);
     }
 }
