@@ -5,7 +5,7 @@ using UnityEngine;
 public class Task
 {
     public string taskName;
-
+    public bool complate; 
     public GameObject taskableSource; 
     public ITaskable taskable;
     public void Init()

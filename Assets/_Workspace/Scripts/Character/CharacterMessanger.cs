@@ -42,12 +42,19 @@ public class CharacterMessanger : MonoBehaviour
             StartCoroutine(ResetAudioPlaying(audioClip));
         }
     }
-    private IEnumerator ResetAudioPlaying(AudioClip audioClip)
+    private IEnumerator ResetAudioPlaying(AudioClip audioClip = null)
     {
         yield return new WaitForSeconds(audioClip.length);
         CharacterDialogue.speaking = false;
         ClearText();
         OnResetAudioPlaying?.Invoke(); 
+    }
+    public void Skip()
+    {
+        _audioSource.Stop(); 
+        StopCoroutine(ResetAudioPlaying());
+        ClearText();
+        OnResetAudioPlaying?.Invoke();
     }
     private void ClearText()
     {

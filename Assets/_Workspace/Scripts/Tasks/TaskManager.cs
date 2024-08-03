@@ -5,45 +5,51 @@ using UnityEngine;
 public class TaskManager : MonoBehaviour
 {
     public static TaskManager Instance; 
-    public List<Task> tasks = new List<Task>();
+    [SerializeField] private List<Task> _tasks = new List<Task>();
 
+    public List<Task> TasksList => _tasks;
     private int _currentTask;
 
     public Action<string> onTaskUpdate;
-    public Action onTasksComplate;
+
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
         else
-            Destroy(gameObject); 
+            Destroy(gameObject);
+
+        GameManager.onGameStart += ActiveTask; 
     }
 
     void Start()
     {
-        for (int i = 0; i < tasks.Count; i++)
+        for (int i = 0; i < _tasks.Count; i++)
         {
-            tasks[i].Init(); 
+            _tasks[i].Init(); 
         }
-        ActiveTask();
     }
     private void ActiveTask()
     {
-        onTaskUpdate?.Invoke(tasks[_currentTask].taskName); 
+        onTaskUpdate?.Invoke(_tasks[_currentTask].taskName); 
     }
     public void CompleteTask(string taskName)
     {
-        Task task = tasks.Find(t => t.taskName == taskName);
+        Task task = _tasks.Find(t => t.taskName == taskName);
         if (task != null)
         {
             _currentTask++;
-            if (_currentTask < tasks.Count)
+            if (_currentTask < _tasks.Count)
             {
-                onTaskUpdate?.Invoke(tasks[_currentTask].taskName);
+                task.complate = true; 
+                onTaskUpdate?.Invoke(_tasks[_currentTask].taskName);
             }
             else
-                onTasksComplate?.Invoke(); 
+                GameManager.onGameWin?.Invoke(); 
         }       
     }
-
+    private void OnDestroy()
+    {
+        GameManager.onGameStart -= ActiveTask;
+    }
 }

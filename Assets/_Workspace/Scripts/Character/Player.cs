@@ -185,7 +185,9 @@ public class Player : Character
     {
         base.Dead(headShot);
         _collider.enabled = false;
-        rb.isKinematic = true; 
+        rb.isKinematic = true;
+
+        GameManager.onGameLose?.Invoke(); 
     }
     protected void OnEnemyDead(Character enemy) => _enemyList.Remove(enemy);
 }

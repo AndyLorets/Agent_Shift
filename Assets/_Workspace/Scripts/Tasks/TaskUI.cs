@@ -7,6 +7,7 @@ public class TaskUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private TaskManager _taskManager;
+    [SerializeField] AudioSource _audioSource; 
     private void OnEnable()
     {
         _taskManager.onTaskUpdate += UpdateTask; 
@@ -15,7 +16,6 @@ public class TaskUI : MonoBehaviour
     {
         _taskManager.onTaskUpdate -= UpdateTask;
     }
-
     private void UpdateTask(string text)
     {
         string txt = $"• {text}";
@@ -26,8 +26,9 @@ public class TaskUI : MonoBehaviour
         _text.text = ""; 
         foreach (char letter in text)
         {
-            _text.text += letter; 
-            yield return new WaitForSeconds(0.05f); 
+            _text.text += letter;
+            _audioSource.Play(); 
+            yield return new WaitForSeconds(0.1f); 
         }
     }
 }
