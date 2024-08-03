@@ -1,37 +1,56 @@
+using DG.Tweening;
+using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
-[RequireComponent(typeof(TextMeshProUGUI))]
+using UnityEngine.UI;
+
 public class CharacterMessanger : MonoBehaviour
 {
-    [SerializeField] private Character _character;
-    private TextMeshProUGUI _text;
+    [SerializeField] private Image _icon; 
+    [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private AudioSource _audioSource;
+
+    private CanvasGroup _canvasGroup;
+
+    public static CharacterMessanger instance;
+    private const float tween_duration = .3f;
+
+    public static Action OnResetAudioPlaying; 
 
     private void Awake()
     {
-        _text = GetComponent<TextMeshProUGUI>();
-        _text.enabled = false;  
-    }
+        if (instance == null)
+            instance = this;
+        else 
+            Destroy(gameObject);  
 
-    private void OnEnable()
-    {
-        _character.onSendMessag += OnSendMessage; 
+        _canvasGroup = GetComponent<CanvasGroup>();
+        _canvasGroup.alpha = 0; 
     }
-    private void OnDisable()
+    public void SetDialogueMessage(Sprite sprite, string text, AudioClip audioClip)
     {
-        _character.onSendMessag -= OnSendMessage;
-    }
-    private void OnSendMessage(string text)
-    {
-        _text.enabled = true;
-        _text.text = text;
+        if (audioClip != null && !CharacterDialogue.speaking)
+        {
+            _audioSource.PlayOneShot(audioClip);
+            _icon.sprite = sprite; 
+            _text.text = text;
 
-        CancelInvoke(nameof(ClearText)); 
-        Invoke(nameof(ClearText), 3f); 
-    }
+            _canvasGroup.DOFade(1, tween_duration); 
 
+            CharacterDialogue.speaking = true;
+            StartCoroutine(ResetAudioPlaying(audioClip));
+        }
+    }
+    private IEnumerator ResetAudioPlaying(AudioClip audioClip)
+    {
+        yield return new WaitForSeconds(audioClip.length);
+        CharacterDialogue.speaking = false;
+        ClearText();
+        OnResetAudioPlaying?.Invoke(); 
+    }
     private void ClearText()
     {
-        _text.text = "";
-        _text.enabled = false;   
+        _canvasGroup.DOFade(0, tween_duration);
     }
 }

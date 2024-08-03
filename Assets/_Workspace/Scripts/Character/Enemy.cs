@@ -30,6 +30,11 @@ public class Enemy : Character
             agent.ResetPath();
             agent.SetDestination(destination);
         }
+        if(_stateMachine.currentState == _attakState && player.IsInvisibility)
+        {
+            _lureState.SetLurePoint(player.transform.position);
+            _stateMachine.ChangeState(_lureState);
+        }
     }
     protected override void Construct()
     {
@@ -74,6 +79,14 @@ public class Enemy : Character
         Player[] enemies = FindObjectsOfType<Player>();
         _enemyList.AddRange(enemies);
         player = _enemyList[0] as Player;
+
+        player.onDead += OnPlayerDead; 
+    }
+    private void OnPlayerDead(Character character)
+    {
+        if (character != player) return; 
+
+        EnterPatroolState(); 
     }
     private void OnPlayerDetected(Vector3 pos)
     {
@@ -119,6 +132,7 @@ public class Enemy : Character
         _lureState.onPlayerVisible -= EnterAttackState;
         _lureState.onPlayerUnvisible -= EnterPatroolState;
         _patroolState.onPlayerVisible -= EnterAttackState;
+        player.onDead -= OnPlayerDead;
     }
     private void OnDrawGizmosSelected()
     {

@@ -6,7 +6,7 @@ public class Player : Character
     [SerializeField] private Joystick _joystickMovement;
     [SerializeField] private Joystick _joystickAim;
     [SerializeField] private WeaponLineRender _weaponLineRender;
-    [SerializeField] CharacterRigController _rig;
+    [SerializeField] private CharacterRigController _rig;
     [SerializeField] private PlayerAbilities _playerAbilities;
 
     public bool IsInvisibility { get; private set; }
@@ -14,6 +14,7 @@ public class Player : Character
     public Rigidbody rb { get; private set; }
     public string CurrentWeaponName => "Pistol";
 
+    private Collider _collider;
     private MoveBehaviour _moveBehaviour;
     private WeaponBehaviour _weaponBehaviour;
     private bool _isAiming => _joystickAim.Horizontal != 0 || _joystickAim.Vertical != 0;
@@ -51,6 +52,7 @@ public class Player : Character
     {
         base.Construct();
         rb = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();   
 
         _weaponLineRender.Construct(_viewAngle, _visibleRange);
         _rig.Construct(_weapon);
@@ -166,8 +168,24 @@ public class Player : Character
     }
     public override void TakeDamage(int value, bool headShot)
     {
-        value = IsArmom ? 0 : value; 
-        base.TakeDamage(value, headShot);
+        value = IsArmom ? 0 : value;
+
+        string anim = headShot ? ANIM_DAMAGE_HEADSHOT : ANIM_DAMAGE;
+        value = headShot ? value * 3 : value;
+
+        onChangeHP?.Invoke(_currentHP, _hp, headShot);
+
+        _currentHP -= value;
+        if (_currentHP <= 0)
+            Dead(headShot);
+        else if (!IsArmom)
+            Animator.SetTrigger(anim);
+    }
+    public override void Dead(bool headShot)
+    {
+        base.Dead(headShot);
+        _collider.enabled = false;
+        rb.isKinematic = true; 
     }
     protected void OnEnemyDead(Character enemy) => _enemyList.Remove(enemy);
 }

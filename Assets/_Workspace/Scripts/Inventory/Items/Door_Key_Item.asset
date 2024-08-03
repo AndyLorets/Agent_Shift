@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Door_Key_Item
   m_EditorClassIdentifier: 
   itemName: Door Key
-  icon: {fileID: 21300000, guid: ab234ecca251bb24a90ba0e64a9c6cbe, type: 3}
+  icon: {fileID: 21300000, guid: bd42c86b51573ab47a994edc8761f832, type: 3}

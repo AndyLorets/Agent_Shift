@@ -78,6 +78,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactSprite: {fileID: 21300000, guid: ee11a012c4b19254aba7234e1939b408, type: 3}
+  _playerIcon: {fileID: 21300000, guid: c0a858d2598abe04fb79686f9aa87684, type: 3}
+  _dialogue:
+    text: I need a key..
+    clip: {fileID: 8300000, guid: fb9cdc74f3115b645acd7d92fce08c0b, type: 3}
 --- !u!1 &742806391228882843
 GameObject:
   m_ObjectHideFlags: 0

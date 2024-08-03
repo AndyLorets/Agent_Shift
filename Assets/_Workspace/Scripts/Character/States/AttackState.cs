@@ -1,9 +1,9 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AttackState : StateBase
 {
     [SerializeField] private WeaponBase _weapon;
-
     private WeaponBehaviour _weaponBehaviour;
 
     [SerializeField] private float _changeStateTimer;
@@ -83,8 +83,9 @@ public class AttackState : StateBase
     public override void EnterState()
     {
         base.EnterState();
+
         _enemy.agent.speed = RUN_SPEED;
-        _enemy.onSendMessag?.Invoke("!!!");
+        //CharacterMessanger.instance.SetDialogueMessage(_enemy.icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
     }
     public override void ExitState()
     {

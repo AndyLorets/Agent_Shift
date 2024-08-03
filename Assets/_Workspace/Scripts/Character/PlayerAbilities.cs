@@ -11,9 +11,6 @@ public class PlayerAbilities : MonoBehaviour
     public static System.Action<bool> onInvisibility;
     public static System.Action<float> onChangeArmorTime;
     public static System.Action<bool> onArmor;
-
-    private const float cooldown = 5f; 
-
     public void ActiveInvisibility()
     {
         StartCoroutine(Invisibility());
@@ -37,7 +34,6 @@ public class PlayerAbilities : MonoBehaviour
         }
 
         onInvisibility?.Invoke(false);
-        onChangeInvisibilitTime?.Invoke(1);
     }
     private IEnumerator Armor()
     {
@@ -54,20 +50,5 @@ public class PlayerAbilities : MonoBehaviour
         }
 
         onArmor?.Invoke(false);
-        StartCoroutine(Res());
-    }
-    private IEnumerator Res()
-    {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(1);
-        float t = 0;
-
-        while (t < cooldown)
-        {
-            t++;
-            onChangeArmorTime?.Invoke(t / cooldown);
-            yield return waitForSeconds;
-        }
-
-        //onChangeArmorTime?.Invoke(1);
     }
 }

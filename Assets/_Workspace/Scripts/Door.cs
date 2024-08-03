@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    [SerializeField] private Sprite _interactSprite; 
-
+    [SerializeField] private Sprite _interactSprite;
+    [SerializeField] private Sprite _playerIcon;
+    [SerializeField] private CharacterDialogue _dialogue;
     private Animation _animation;
     private Collider _collider; 
     private void Awake()
@@ -38,6 +39,6 @@ public class Door : MonoBehaviour
             }
         }
         if (!canOpen)
-            Debug.Log("Нужен Ключ!");
+            CharacterMessanger.instance.SetDialogueMessage(_playerIcon, _dialogue.text, _dialogue.clip);
     }
 }

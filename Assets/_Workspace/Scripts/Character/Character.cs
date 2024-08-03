@@ -13,7 +13,8 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     [SerializeField] protected LayerMask _detectionLayer;
     [Space(5), Header("Components")]
     [SerializeField] private Skin _skin;
-
+    [SerializeField] private Sprite _icon; 
+    public Sprite icon => _icon;
     protected List <Character> _enemyList = new List<Character>();
     public ITakeDamage takeDamage => this;
     public Skin Skin => _skin;
@@ -21,14 +22,13 @@ public abstract class Character : MonoBehaviour, ITakeDamage
 
     protected bool _enemyDetected;
 
-    public Action<string> onSendMessag;
     public Action<float, float, bool> onChangeHP;
     public Action<Character> onDead;
 
-    private const string ANIM_DAMAGE = "Damage";
-    private const string ANIM_DAMAGE_HEADSHOT = "Damage_HeadShot";
-    private const string ANIM_DEATH = "Death";
-    private const string ANIM_DEATH_HEADSHOT = "Death_HeadShot";
+    protected const string ANIM_DAMAGE = "Damage";
+    protected const string ANIM_DAMAGE_HEADSHOT = "Damage_HeadShot";
+    protected const string ANIM_DEATH = "Death";
+    protected const string ANIM_DEATH_HEADSHOT = "Death_HeadShot";
 
     private void Start()
     {

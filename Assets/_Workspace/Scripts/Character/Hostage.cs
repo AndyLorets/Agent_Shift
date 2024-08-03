@@ -2,13 +2,17 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Hostage : Character
+public class Hostage : Character, ITaskable
 {
     [SerializeField] private FollowingState _followingState;
     [SerializeField] private int _startAnimPos;
 
     private StateMachine _stateMachine = new StateMachine();
+
+    [SerializeField] private CharacterDialogue[] _CharacterDialogue; 
+
     public NavMeshAgent agent { get; private set; }
+    public string taskName { get; set; }
 
     private const string ANIM_HOSTAGE = "HostagePos";
     private const string ANIM_HOSTAGE_NUM = "HostagePosNum";
@@ -35,8 +39,11 @@ public class Hostage : Character
     }
     public void Released()
     {
+        int r = Random.Range(0, _CharacterDialogue.Length);
+
         Animator.SetTrigger("StandUp");
-        onSendMessag?.Invoke("Thank You!");
+        CharacterMessanger.instance.SetDialogueMessage(icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
+        TaskManager.Instance.CompleteTask(taskName);
 
         Invoke(nameof(EnterFollowingState), 2f);
     }

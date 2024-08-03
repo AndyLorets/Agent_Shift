@@ -8,7 +8,9 @@ public class PatroolState : StateBase
     [SerializeField, Range(1, 3)] private float _visibleReactionDuration = 2;
 
     [SerializeField] private bool _isMove;
-    [SerializeField] private int _visibleCount; 
+    [SerializeField] private int _visibleCount;
+
+    [SerializeField] private CharacterDialogue[] _CharacterDialogue;
 
     public System.Action onPlayerVisible;
 
@@ -84,7 +86,10 @@ public class PatroolState : StateBase
                 _visibleCount++;
 
                 if (_visibleCount == 1)
-                    _enemy.onSendMessag?.Invoke("?"); 
+                {
+                    int r = Random.Range(0, _CharacterDialogue.Length);
+                    CharacterMessanger.instance.SetDialogueMessage(_enemy.icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
+                }
             }
             else
                 _visibleCount = 0;
