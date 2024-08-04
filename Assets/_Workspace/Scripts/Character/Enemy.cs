@@ -134,8 +134,9 @@ public class Enemy : Character
         _patroolState.onPlayerVisible -= EnterAttackState;
         player.onDead -= OnPlayerDead;
     }
-    private void OnDrawGizmosSelected()
+    protected override void OnDrawGizmosSelected()
     {
+        base.OnDrawGizmosSelected();
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, DETECTED_RADIUS); 
     }

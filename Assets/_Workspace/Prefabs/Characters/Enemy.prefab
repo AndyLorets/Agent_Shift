@@ -481,12 +481,13 @@ MonoBehaviour:
   _hp: 5
   _currentHP: 0
   _visibleRange: 8
-  _viewAngle: 120
+  _viewAngle: 180
   _detectionLayer:
     serializedVersion: 2
     m_Bits: 8
   _skin: {fileID: 3915968520233763202}
   _icon: {fileID: 21300000, guid: 244008ae7b448f148aff58653352f9c4, type: 3}
+  <Alive>k__BackingField: 1
   _attakState: {fileID: 4341625314629210204}
   _patroolState: {fileID: 4916038441406269865}
   _lureState: {fileID: 3616283909976650226}

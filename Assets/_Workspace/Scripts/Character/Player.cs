@@ -173,9 +173,10 @@ public class Player : Character
         string anim = headShot ? ANIM_DAMAGE_HEADSHOT : ANIM_DAMAGE;
         value = headShot ? value * 3 : value;
 
+        _currentHP -= value;
+
         onChangeHP?.Invoke(_currentHP, _hp, headShot);
 
-        _currentHP -= value;
         if (_currentHP <= 0)
             Dead(headShot);
         else if (!IsArmom)

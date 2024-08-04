@@ -9,7 +9,7 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     [SerializeField] protected int _currentHP;
     [Space(5), Header("Visible")]
     [SerializeField, Range(3f, 10f)] protected float _visibleRange = 3f;
-    [SerializeField, Range(25f, 120f)] protected float _viewAngle = 45f;
+    [SerializeField, Range(25f, 180f)] protected float _viewAngle = 45f;
     [SerializeField] protected LayerMask _detectionLayer;
     [Space(5), Header("Components")]
     [SerializeField] private Skin _skin;
@@ -19,7 +19,7 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     public ITakeDamage takeDamage => this;
     public Skin Skin => _skin;
     public Animator Animator => _skin.animator;
-
+    [field : SerializeField] public bool Alive { get; private set; } = true; 
     protected bool _enemyDetected;
 
     public Action<float, float, bool> onChangeHP;
@@ -70,7 +70,7 @@ public abstract class Character : MonoBehaviour, ITakeDamage
         if (!CheckForEnemyInRange()) return false;
 
         Character nearestEnemy = FindNearestEnemy();
-        if (nearestEnemy == null) return false;
+        if (nearestEnemy == null || !nearestEnemy.Alive) return false;
         if (!IsLineClear(transform.position, nearestEnemy.transform.position)) return false;
 
         return true;
@@ -88,7 +88,7 @@ public abstract class Character : MonoBehaviour, ITakeDamage
         Character nearestEnemy = FindNearestEnemy();
         if (nearestEnemy == null) return false;
 
-        if(!IsLineClear(transform.position, nearestEnemy.transform.position)) return false;
+        if(!IsLineClear(transform.position, nearestEnemy.transform.position) || !nearestEnemy.Alive) return false;
 
         takeDamage = nearestEnemy.takeDamage;
         pos = nearestEnemy.transform.position + Vector3.up;
@@ -128,11 +128,12 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     public virtual void Dead(bool headShot)
     {
         string anim = headShot ? ANIM_DEATH_HEADSHOT : ANIM_DEATH;
-        Animator.SetTrigger(anim);
+        Alive = false;
         enabled = false;
+        Animator.SetTrigger(anim);
         onDead?.Invoke(this);
     }
-    private void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, _visibleRange);
