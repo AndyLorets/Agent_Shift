@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1011262569}
   - component: {fileID: 1011262573}
   - component: {fileID: 1011262572}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Hp_Bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 1241497498}
   - component: {fileID: 1241497497}
   - component: {fileID: 3110361441287965665}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Hp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,9 +178,8 @@ GameObject:
   - component: {fileID: 2050955652}
   - component: {fileID: 2050955656}
   - component: {fileID: 2050955655}
-  - component: {fileID: 2050955654}
   - component: {fileID: 2050955653}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,23 +251,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 1
---- !u!114 &2050955654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2050955651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &2050955653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,6 +571,7 @@ GameObject:
   - component: {fileID: 5934476668894871609}
   - component: {fileID: 7735777757861443454}
   - component: {fileID: 8201187631476465086}
+  - component: {fileID: 4415531423589596163}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -786,6 +769,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4415531423589596163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762201228030563759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fd0b0d12d3c0244956a652107f1b78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletText: {fileID: 0}
+  _hpImage: {fileID: 1241497497}
+  _player: {fileID: 5934476668894871609}
 --- !u!1 &1860592772773406367
 GameObject:
   m_ObjectHideFlags: 0

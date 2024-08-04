@@ -42,8 +42,8 @@ public class Hostage : Character, ITaskable
         int r = Random.Range(0, _CharacterDialogue.Length);
 
         Animator.SetTrigger("StandUp");
-        CharacterMessanger.instance.SetDialogueMessage(icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
-        TaskManager.Instance.CompleteTask(taskName);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
+        ServiceLocator.GetService<TaskManager>().CompleteTask(taskName);
 
         Invoke(nameof(EnterFollowingState), 2f);
     }
@@ -51,12 +51,13 @@ public class Hostage : Character, ITaskable
     {
         _stateMachine.ChangeState(_followingState);
     }
-    protected override void ConstructEnemyList()
-    {
-    }
     public override void Dead(bool headShot)
     {
         base.Dead(headShot);
         _stateMachine.ExitActiveState();
+    }
+
+    protected override void ConstructTargets()
+    {
     }
 }

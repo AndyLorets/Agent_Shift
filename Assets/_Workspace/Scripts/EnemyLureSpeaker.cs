@@ -5,7 +5,8 @@ public class EnemyLureSpeaker : MonoBehaviour
 {
     [SerializeField] private Sprite _interactSprite; 
     [SerializeField] private Transform _point;
-    [SerializeField] private ParticleSystem _effect; 
+    [SerializeField] private ParticleSystem _effect;
+    [SerializeField] private InteractableHandler _interactHandler;
 
     public Action<Vector3> onLure;
     private AudioSource _audio;
@@ -13,6 +14,7 @@ public class EnemyLureSpeaker : MonoBehaviour
     private void Awake()
     {
         _audio = GetComponent<AudioSource>();
+        _interactHandler.Init(_interactSprite, ActiveLure); 
     }
 
     private void ActiveLure()
@@ -25,12 +27,12 @@ public class EnemyLureSpeaker : MonoBehaviour
     {
         if (!other.CompareTag(TagsObj.PLAYER)) return;
 
-        InteractionManager.Interact(ActiveLure, true, _interactSprite); 
+        _interactHandler.SetInteractable(true); 
     }
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag(TagsObj.PLAYER)) return;
 
-        InteractionManager.Interact(ActiveLure, false, _interactSprite);
+        _interactHandler.SetInteractable(false);
     }
 }

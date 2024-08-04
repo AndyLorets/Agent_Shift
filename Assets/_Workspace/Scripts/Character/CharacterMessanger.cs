@@ -13,18 +13,13 @@ public class CharacterMessanger : MonoBehaviour
 
     private CanvasGroup _canvasGroup;
 
-    public static CharacterMessanger instance;
     private const float tween_duration = .3f;
 
     public static Action OnResetAudioPlaying; 
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else 
-            Destroy(gameObject);  
-
+        ServiceLocator.RegisterService(this); 
         _canvasGroup = GetComponent<CanvasGroup>();
         _canvasGroup.alpha = 0; 
     }

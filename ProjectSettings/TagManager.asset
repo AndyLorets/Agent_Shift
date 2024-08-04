@@ -17,7 +17,7 @@ TagManager:
   - Enemy
   - Hostage
   - Door
-  - 
+  - UIWorld
   - 
   - 
   - 
@@ -40,6 +40,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Cam
+    uniqueID: 423810905
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

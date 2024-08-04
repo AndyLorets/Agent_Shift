@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TaskManager : MonoBehaviour
 {
-    public static TaskManager Instance; 
     [SerializeField] private List<Task> _tasks = new List<Task>();
 
     public List<Task> TasksList => _tasks;
@@ -14,11 +13,7 @@ public class TaskManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-
+        ServiceLocator.RegisterService(this);   
         GameManager.onGameStart += ActiveTask; 
     }
 

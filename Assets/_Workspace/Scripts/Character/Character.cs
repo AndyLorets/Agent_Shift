@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public abstract class Character : MonoBehaviour, ITakeDamage
 {
@@ -13,13 +12,15 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     [SerializeField] protected LayerMask _detectionLayer;
     [Space(5), Header("Components")]
     [SerializeField] private Skin _skin;
-    [SerializeField] private Sprite _icon; 
+    [SerializeField] private Sprite _icon;
+
+    protected EnemyManager _enemyManager;
+    protected List<Character> _targets = new List<Character>(); 
     public Sprite icon => _icon;
-    protected List <Character> _enemyList = new List<Character>();
     public ITakeDamage takeDamage => this;
     public Skin Skin => _skin;
     public Animator Animator => _skin.animator;
-    [field : SerializeField] public bool Alive { get; private set; } = true; 
+    public bool Alive { get; private set; } = true;
     protected bool _enemyDetected;
 
     public Action<float, float, bool> onChangeHP;
@@ -33,21 +34,21 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     private void Start()
     {
         Construct();
-        ConstructEnemyList();
+        ConstructTargets(); 
     }
+    protected abstract void ConstructTargets(); 
     protected virtual void Construct()
     {
+        _enemyManager = ServiceLocator.GetService<EnemyManager>();  
         _currentHP = _hp;
     }
-    protected abstract void ConstructEnemyList(); 
-
     private bool CheckForEnemyInRange() => Physics.CheckSphere(transform.position, _visibleRange, _detectionLayer);
     protected Character FindNearestEnemy()
     {
         Character nearestCharacter = null;
         float minDistance = Mathf.Infinity;
 
-        foreach (Character character in _enemyList)
+        foreach (Character character in _targets)
         {
             float distance = Vector3.Distance(transform.position, character.transform.position);
             Vector3 directionToTarget = (character.transform.position - transform.position).normalized;

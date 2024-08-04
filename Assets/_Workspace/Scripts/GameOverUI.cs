@@ -53,7 +53,7 @@ public class GameOverUI : MonoBehaviour
     }
     private void RenderTasks()
     {
-        List<Task> tasks = TaskManager.Instance.TasksList;
+        List<Task> tasks = ServiceLocator.GetService<TaskManager>().TasksList;
         _tasksText.text = ""; 
         foreach (Task task in tasks) 
         {

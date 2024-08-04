@@ -5,10 +5,10 @@ public class AttackState : StateBase
     [SerializeField] private WeaponBase _weapon;
     private WeaponBehaviour _weaponBehaviour;
 
-    [SerializeField] private float _changeStateTimer;
+    private float _changeStateTimer;
     private bool _shooting;
     bool _canChangeState => _changeStateTimer <= 0;
-    [SerializeField] bool canChangeState; 
+    bool canChangeState;
 
     private const float CHANGE_STATE_TIME = .3f;
     private const float RUN_SPEED = 4f;
@@ -23,7 +23,9 @@ public class AttackState : StateBase
     protected override void Start()
     {
         base.Start();
-        _weaponBehaviour = new WeaponBehaviour(_enemy, _weapon, _enemy.Animator); 
+        _weaponBehaviour = new WeaponBehaviour(_enemy, _weapon, _enemy.Animator);
+
+        enabled = false; 
     }
 
     private void LookAtPlayer()

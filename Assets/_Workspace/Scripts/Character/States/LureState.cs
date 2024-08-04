@@ -46,7 +46,7 @@ public class LureState : StateBase
         StartCoroutine(CheckPlayer());
 
         int r = Random.Range(0, _CharacterDialogue.Length);
-        CharacterMessanger.instance.SetDialogueMessage(_enemy.icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(_enemy.icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
     }
     public override void ExitState()
     {
@@ -92,7 +92,7 @@ public class LureState : StateBase
                 if (_visibleCount == 1)
                 {
                     int r = Random.Range(0, _CharacterDialogueVisible.Length);
-                    CharacterMessanger.instance.SetDialogueMessage(_enemy.icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
+                    ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(_enemy.icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
                 }
             }
             else

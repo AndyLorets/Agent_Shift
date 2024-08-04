@@ -39,7 +39,7 @@ public class BriefingManager : MonoBehaviour
     }
     private void SkipBriefing()
     {
-        CharacterMessanger.instance.Skip();
+        ServiceLocator.GetService<CharacterMessanger>().Skip();
         _briefings[_currentBriefing - 1].StopBriefing();
         _currentBriefing = _briefings.Length + 1;
         EndBriefing();
@@ -80,7 +80,7 @@ public class Briefing
     public void PlayBriefing()
     {
         CharacterMessanger.OnResetAudioPlaying += StopBriefing;
-        CharacterMessanger.instance.SetDialogueMessage(_icon, _text, _audioClip);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(_icon, _text, _audioClip);
         _cam.Priority = 11;
     }
     public void StopBriefing()

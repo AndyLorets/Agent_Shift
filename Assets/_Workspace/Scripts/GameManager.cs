@@ -24,11 +24,9 @@ public class GameManager : MonoBehaviour
     {
         onGameStart?.Invoke();
     }
-    private void OnDestroy()
-    {
-    }
     public void Restart()
     {
+        ServiceLocator.ClearAllServices();
         CharacterDialogue.speaking = false;
         SceneManager.LoadScene(0);
     }

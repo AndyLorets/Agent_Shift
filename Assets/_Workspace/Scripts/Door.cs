@@ -6,6 +6,7 @@ public class Door : MonoBehaviour
     [SerializeField] private Sprite _playerIcon;
     [SerializeField] private CharacterDialogue _dialogue;
     [SerializeField] private bool _isOpen;
+    [SerializeField] private InteractableHandler _interactHandler;
 
     private Animation _animation;
     private Collider _collider;
@@ -17,6 +18,9 @@ public class Door : MonoBehaviour
     {
         _animation = GetComponent<Animation>();
         _collider = GetComponent<Collider>();
+
+        _interactHandler.Init(_interactSprite, InputKey);
+        _interactHandler.SetEnable(!_isOpen); 
     }
     private void Start()
     {
@@ -26,12 +30,12 @@ public class Door : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!_isOpen && other.CompareTag(TagsObj.PLAYER))
-            InteractionManager.Interact(InputKey, true, _interactSprite);
+            _interactHandler.SetInteractable(true); 
     }
     private void OnTriggerExit(Collider other)
     {
         if (!_isOpen && other.CompareTag(TagsObj.PLAYER))
-            InteractionManager.Interact(InputKey, false, _interactSprite);
+            _interactHandler.SetInteractable(false);
     }
     private void InputKey()
     {
@@ -41,16 +45,16 @@ public class Door : MonoBehaviour
             {
                 _isOpen = true;
                 _collider.enabled = false; 
-                OpenDoor(); 
-                InteractionManager.Interact(InputKey, false, _interactSprite);
+                OpenDoor();
+                _interactHandler.SetEnable(false);
             }
         }
         if (!_isOpen)
-            CharacterMessanger.instance.SetDialogueMessage(_playerIcon, _dialogue.text, _dialogue.clip);
+            ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(_playerIcon, _dialogue.text, _dialogue.clip);
     }
     private void OpenDoor()
     {
         _animation.PlayQueued(ANIM_OPEN);
-        AudioManager.Instance.PlayOpenDoor(); 
+        ServiceLocator.GetService<AudioManager>().PlayOpenDoor(); 
     }
 }

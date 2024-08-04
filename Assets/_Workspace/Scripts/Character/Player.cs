@@ -20,33 +20,16 @@ public class Player : Character
     private bool _isAiming => _joystickAim.Horizontal != 0 || _joystickAim.Vertical != 0;
     private bool _aiming;
     public WeaponBase currentWeapon => _weapon;
-    private Vector3 GetMoveDirection()
+    private void Awake()
     {
-        float horizontal = 0;
-        float vertical = 0;
-
-        horizontal = Input.GetAxis("Horizontal") + _joystickMovement.Horizontal;
-        vertical = Input.GetAxis("Vertical") + _joystickMovement.Vertical;
-
-        Vector3 direction = new Vector3(horizontal, 0f, vertical);
-        return direction;
-    }
-    private void SetInvisibility(bool value) => IsInvisibility = value;
-    private void SetArmor(bool value) => IsArmom = value;
-    private Vector3 GetAimDirection()
-    {
-        float horizontal = _joystickAim.Horizontal;
-        float vertical = _joystickAim.Vertical;
-
-        Vector3 direction = new Vector3(horizontal, 0f, vertical);
-        return direction;
+        ServiceLocator.RegisterService(this);
     }
     private void Update()
     {
         RunBehaviours();
         SwitchMoveBehaviour();
         AimingHandler();
-        RigHandler(); 
+        RigHandler();
     }
     protected override void Construct()
     {
@@ -68,16 +51,35 @@ public class Player : Character
         _moveBehaviour = new IdleMoveBehaviour(this);
         _weaponBehaviour = new WeaponBehaviour(this, _weapon, Animator);
     }
-    protected override void ConstructEnemyList()
+    protected override void ConstructTargets()
     {
-        Enemy[] enemies = FindObjectsOfType<Enemy>();
-        _enemyList.AddRange(enemies);
-
-        for (int i = 0; i < enemies.Length; i++)
+        for (int i = 0; i < _enemyManager.enemiesList.Count; i++)
         {
-            enemies[i].onDead += OnEnemyDead;
+            Character character = _enemyManager.enemiesList[i];
+            _targets.Add(character);
         }
     }
+    private Vector3 GetMoveDirection()
+    {
+        float horizontal = 0;
+        float vertical = 0;
+
+        horizontal = Input.GetAxis("Horizontal") + _joystickMovement.Horizontal;
+        vertical = Input.GetAxis("Vertical") + _joystickMovement.Vertical;
+
+        Vector3 direction = new Vector3(horizontal, 0f, vertical);
+        return direction;
+    }
+    private Vector3 GetAimDirection()
+    {
+        float horizontal = _joystickAim.Horizontal;
+        float vertical = _joystickAim.Vertical;
+
+        Vector3 direction = new Vector3(horizontal, 0f, vertical);
+        return direction;
+    }
+    private void SetInvisibility(bool value) => IsInvisibility = value;
+    private void SetArmor(bool value) => IsArmom = value;
     private void RunBehaviours()
     {
         _moveBehaviour.Move(GetMoveDirection(), GetAimDirection());
@@ -157,12 +159,6 @@ public class Player : Character
 
     private void OnDestroy()
     {
-        for (int i = 0; i < _enemyList.Count; i++)
-        {
-            Enemy enemy = _enemyList[i] as Enemy;
-            enemy.onDead -= OnEnemyDead;
-        }
-
         PlayerAbilities.onInvisibility -= SetInvisibility;
         PlayerAbilities.onArmor -= SetArmor;
     }
@@ -190,6 +186,5 @@ public class Player : Character
 
         GameManager.onGameLose?.Invoke(); 
     }
-    protected void OnEnemyDead(Character enemy) => _enemyList.Remove(enemy);
 }
 

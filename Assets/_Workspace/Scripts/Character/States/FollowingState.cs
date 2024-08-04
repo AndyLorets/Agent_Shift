@@ -8,7 +8,7 @@ public class FollowingState : StateBase
     private const float RUN_DISTANCE = 7f;
     private const float WALK_DISTANCE = 3f;
 
-    private Player _player;
+    [SerializeField] private Player _player;
     private Hostage _hostage;
 
     private bool _isMove; 
@@ -17,15 +17,22 @@ public class FollowingState : StateBase
     {
         base.Awake();
         _hostage = GetComponent<Hostage>();
-        _player = FindObjectOfType<Player>();
     }
+    protected override void Start()
+    {
+        base.Start();   
+        _player = ServiceLocator.GetService<Player>();
 
+        enabled = false;
+    }
     private IEnumerator Following()
     {
         WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame(); 
 
         while (true)
         {
+            if (_player == null) yield return null;
+            
             Vector3 playerPosition = _player.transform.position;
             float dist = Vector3.Distance(transform.position, playerPosition);
             bool isRun = _hostage.agent.velocity.sqrMagnitude > 0 && dist > RUN_DISTANCE;

@@ -26,6 +26,6 @@ public class TaskTrigger : MonoBehaviour, ITaskable
     {
         if (!other.CompareTag(GetTagName())) return;
 
-        TaskManager.Instance.CompleteTask(taskName); 
+        ServiceLocator.GetService<TaskManager>().CompleteTask(taskName); 
     }
 }

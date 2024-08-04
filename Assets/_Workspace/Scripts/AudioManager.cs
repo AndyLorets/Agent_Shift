@@ -11,16 +11,12 @@ public class AudioManager : MonoBehaviour
     [Header("Fx")]
     [SerializeField] private AudioSource _door;
     [SerializeField] private AudioSource _taskWrite;
-
-    public static AudioManager Instance { get; private set; }
+    [SerializeField] private AudioSource _item;
 
     private float _startMusicVolume; 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject); 
+        ServiceLocator.RegisterService(this);
 
         GameManager.onGameStart += OnGameStart;
         GameManager.onGameWin += OnGameWin;
@@ -73,5 +69,9 @@ public class AudioManager : MonoBehaviour
     public void PlayTaskWrite()
     {
         _taskWrite.Play();
+    }
+    public void PlayItem()
+    {
+        _item.Play();
     }
 }

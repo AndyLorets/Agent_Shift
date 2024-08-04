@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,8 +7,11 @@ public class Enemy : Character
     [SerializeField] private AttackState _attakState;
     [SerializeField] private PatroolState _patroolState;
     [SerializeField] private LureState _lureState;
+    [SerializeField] private bool _isRequestingAssistance = true;
+    [SerializeField] private UnitInventory _unitInventory;
 
     private Collider _collider;
+    private EnemyLureSpeakerManager _speakersManager;  
     private StateMachine _stateMachine = new StateMachine();
 
     public System.Action<Vector3> onPlayerVisible;
@@ -40,48 +44,59 @@ public class Enemy : Character
     {
         base.Construct();
 
-        EnterPatroolState(); 
+        player = ServiceLocator.GetService<Player>();
+        _speakersManager = ServiceLocator.GetService<EnemyLureSpeakerManager>();
 
         _patroolState.onPlayerVisible += EnterAttackState;
         _lureState.onPlayerVisible += EnterAttackState; 
         _lureState.onPlayerUnvisible += EnterPatroolState;
+        player.onDead += OnPlayerDead;
+
+        GameManager.onGameWin += ExitAllState; 
         InitAllLures(true);
-        FindAllEnemiesSubscrip(true); 
+        FindAllEnemiesSubscrip(true);
+
+        EnterPatroolState();
+    }
+    protected override void ConstructTargets()
+    {
+        _targets.Add(player); 
     }
     private void FindAllEnemiesSubscrip(bool state)
     {
-        Enemy[] allEnemies = FindObjectsOfType<Enemy>();
-
-        foreach (Enemy enemy in allEnemies)
+        foreach (Enemy enemy in _enemyManager.enemiesList)
         {
             if (enemy != this)
             {
                 if (state)
-                    enemy.onPlayerVisible += OnPlayerDetected; 
-                else
+                {
+                    if (_isRequestingAssistance)
+                        enemy.onPlayerVisible += OnPlayerDetected;
+                }
+                else if (_isRequestingAssistance)
                     enemy.onPlayerVisible -= OnPlayerDetected;
             }
         }
     }
     private void InitAllLures(bool value)
     {
-        EnemyLureSpeaker[] lures = FindObjectsOfType<EnemyLureSpeaker>(); 
-        for (int i = 0; i < lures.Length; i++)
+        List<EnemyLureSpeaker> lures = _speakersManager.lureSpeakerList;
+        float dist = 0; 
+
+        for (int i = 0; i < lures.Count; i++)
         {
             if (value)
-                lures[i].onLure += EnterLureState; 
-            else
-                lures[i].onLure -= EnterLureState;
+                 dist = Vector3.Distance(transform.position, lures[i].transform.position);
+            if (dist <= DETECTED_RADIUS)
+            {
+                if (value)
+                    lures[i].onLure += EnterLureState;
+                else
+                    lures[i].onLure -= EnterLureState;
+            }
         }
     }
-    protected override void ConstructEnemyList()
-    {
-        Player[] enemies = FindObjectsOfType<Player>();
-        _enemyList.AddRange(enemies);
-        player = _enemyList[0] as Player;
 
-        player.onDead += OnPlayerDead; 
-    }
     private void OnPlayerDead(Character character)
     {
         if (character != player) return; 
@@ -92,7 +107,7 @@ public class Enemy : Character
     {
         float dist = Vector3.Distance(transform.position, pos);
         if (dist <= DETECTED_RADIUS)
-            _stateMachine.ChangeState(_attakState); ;
+            _stateMachine.ChangeState(_attakState); 
     }
     private void EnterAttackState()
     {
@@ -108,9 +123,6 @@ public class Enemy : Character
         if (_stateMachine.currentState == _attakState || _stateMachine.currentState == _lureState)
             return;
 
-        float dist = Vector3.Distance(transform.position, pos);
-        if (dist > DETECTED_RADIUS) return;
-
         _lureState.SetLurePoint(pos);
         _stateMachine.ChangeState(_lureState);
     }
@@ -122,8 +134,15 @@ public class Enemy : Character
     public override void Dead(bool headShot)
     {
         base.Dead(headShot);
-        _stateMachine.ExitActiveState();
+        ExitAllState(); 
         _collider.enabled = false;
+        if (_unitInventory.gameObject.activeSelf)
+            _unitInventory.SpawnItem(); 
+    }
+    private void ExitAllState()
+    {
+        _stateMachine.ExitActiveState();
+        enabled = false; 
     }
     private void OnDestroy()
     {
@@ -133,6 +152,7 @@ public class Enemy : Character
         _lureState.onPlayerUnvisible -= EnterPatroolState;
         _patroolState.onPlayerVisible -= EnterAttackState;
         player.onDead -= OnPlayerDead;
+        GameManager.onGameWin -= ExitAllState;
     }
     protected override void OnDrawGizmosSelected()
     {

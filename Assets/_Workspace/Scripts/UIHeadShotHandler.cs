@@ -1,32 +1,32 @@
-using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
 public class UIHeadShotHandler : MonoBehaviour
 {
     [SerializeField] private GameObject _panel; 
-    private List <Enemy> enemyList = new List <Enemy>();
+    private EnemyManager _enemyManager;
 
-    private void Awake()
+    private void Start()
     {
         Construct(); 
     }
     private void Construct()
     {
         _panel.SetActive(false);
-        enemyList.AddRange(FindObjectsOfType<Enemy>()); 
 
-        for (int i = 0; i < enemyList.Count; i++)
+        _enemyManager = ServiceLocator.GetService<EnemyManager>();  
+
+        for (int i = 0; i < _enemyManager.enemiesList.Count; i++)
         {
-            enemyList[i].onChangeHP += OnDamage; 
+            _enemyManager.enemiesList[i].onChangeHP += OnDamage; 
         }
 
     }
     private void OnDestroy()
     {
-        for (int i = 0; i < enemyList.Count; i++)
+        for (int i = 0; i < _enemyManager.enemiesList.Count; i++)
         {
-            enemyList[i].onChangeHP -= OnDamage;
+            _enemyManager.enemiesList[i].onChangeHP -= OnDamage;
         }
     }
     private void OnDamage(float currentHP, float maxHp, bool headshot)

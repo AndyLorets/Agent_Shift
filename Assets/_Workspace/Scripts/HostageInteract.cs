@@ -4,12 +4,13 @@ public class HostageInteract : MonoBehaviour
 {
     [SerializeField] private Sprite _interactSprite; 
     [SerializeField] private Hostage[] _hostages;
-
+    [SerializeField] private InteractableHandler _interactHandler;
     private BoxCollider _boxCollider;
 
     private void Awake()
     {
         _boxCollider = GetComponent<BoxCollider>();
+        _interactHandler.Init(_interactSprite, Released);
     }
 
     private void Released()
@@ -20,18 +21,18 @@ public class HostageInteract : MonoBehaviour
         {
             _hostages[i].Released(); 
         }
-        InteractionManager.Interact(Released, false, _interactSprite);
+        _interactHandler.SetEnable(false);
     }
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag(TagsObj.PLAYER)) return;
 
-        InteractionManager.Interact(Released, true, _interactSprite);
+        _interactHandler.SetInteractable(true);
     }
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag(TagsObj.PLAYER)) return;
 
-        InteractionManager.Interact(Released, false, _interactSprite);
+        _interactHandler.SetInteractable(false);
     }
 }
