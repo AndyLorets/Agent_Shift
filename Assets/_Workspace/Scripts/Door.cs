@@ -5,8 +5,13 @@ public class Door : MonoBehaviour
     [SerializeField] private Sprite _interactSprite;
     [SerializeField] private Sprite _playerIcon;
     [SerializeField] private CharacterDialogue _dialogue;
+    [SerializeField] private bool isOpen = false;
+
     private Animation _animation;
-    private Collider _collider; 
+    private Collider _collider;
+
+    private const string ANIM_OPEN = "Door_Open";
+    private const string ANIM_CLOSE = "Door_Close";
     private void Awake()
     {
         _animation = GetComponent<Animation>();
@@ -15,30 +20,41 @@ public class Door : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag(TagsObj.PLAYER)) return;
-
-        InteractionManager.Interact(Open, true, _interactSprite);
+        if (!isOpen)
+            InteractionManager.Interact(InputKey, true, _interactSprite);
+        else OpenDoor(); 
     }
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag(TagsObj.PLAYER)) return;
-
-        InteractionManager.Interact(Open, false, _interactSprite);
+        if (!isOpen)
+            InteractionManager.Interact(InputKey, false, _interactSprite);
+        else
+            CloseDoor();
     }
 
-    private void Open()
+    private void InputKey()
     {
-        bool canOpen = false; 
         foreach (var t in Inventory.items)
         {
             if(t.itemName == "Door Key")
             {
-                canOpen = true;
-                _animation.Play();
-                _collider.enabled = false;
-                InteractionManager.Interact(Open, false, _interactSprite);
+                isOpen = true;
+                OpenDoor(); 
+                InteractionManager.Interact(InputKey, false, _interactSprite);
             }
         }
-        if (!canOpen)
+        if (!isOpen)
             CharacterMessanger.instance.SetDialogueMessage(_playerIcon, _dialogue.text, _dialogue.clip);
+    }
+    private void OpenDoor()
+    {
+        _animation.Play(ANIM_OPEN);
+        AudioManager.Instance.PlayOpenDoor(); 
+    }
+    private void CloseDoor()
+    {
+        _animation.Play(ANIM_CLOSE);
+        AudioManager.Instance.PlayOpenDoor();
     }
 }

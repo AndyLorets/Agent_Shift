@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -9,11 +7,21 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _musicSource;
     [Space(5), SerializeField] private AudioClip _musicGameClip;
     [SerializeField] private AudioClip _musicWinClip;
-    [SerializeField] private AudioClip _musicLoseClip;
+    [SerializeField] private AudioClip _musicLoseClip; 
+    [Header("Fx")]
+    [SerializeField] private AudioSource _door;
+    [SerializeField] private AudioSource _taskWrite;
+
+    public static AudioManager Instance { get; private set; }
 
     private float _startMusicVolume; 
     private void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject); 
+
         GameManager.onGameStart += OnGameStart;
         GameManager.onGameWin += OnGameWin;
         GameManager.onGameLose += OnGameLose;
@@ -57,5 +65,13 @@ public class AudioManager : MonoBehaviour
                 _musicSource.volume = _startMusicVolume; 
                 _musicSource.PlayOneShot(_musicLoseClip);
             });       
+    }
+    public void PlayOpenDoor()
+    {
+        _door.Play(); 
+    }
+    public void PlayTaskWrite()
+    {
+        _taskWrite.Play();
     }
 }
