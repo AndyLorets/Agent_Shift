@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _door;
     [SerializeField] private AudioSource _taskWrite;
     [SerializeField] private AudioSource _item;
+    [SerializeField] private AudioSource _alert;
 
     private float _startMusicVolume; 
     private void Awake()
@@ -73,5 +74,10 @@ public class AudioManager : MonoBehaviour
     public void PlayItem()
     {
         _item.Play();
+    }
+    public void PlatAlert()
+    {
+        if (!_alert.isPlaying)
+            _alert.Play(); 
     }
 }

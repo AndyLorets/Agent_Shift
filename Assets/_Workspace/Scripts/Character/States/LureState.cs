@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -70,7 +71,11 @@ public class LureState : StateBase
 
         StartCoroutine(Waiting());
     }
-
+    private void LookAtPlayer()
+    {
+        transform.DOLookAt(_enemy.player.transform.position, .5f);
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+    }
     private IEnumerator Waiting()
     {
         yield return new WaitForSeconds(_waitTime);
@@ -93,6 +98,7 @@ public class LureState : StateBase
                 {
                     int r = Random.Range(0, _CharacterDialogueVisible.Length);
                     ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(_enemy.icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
+                    LookAtPlayer();
                 }
             }
             else

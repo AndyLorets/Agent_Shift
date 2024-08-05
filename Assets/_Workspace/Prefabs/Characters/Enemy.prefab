@@ -480,19 +480,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hp: 5
   _currentHP: 0
-  _visibleRange: 8
-  _viewAngle: 180
+  _visibleRange: 10
+  _viewAngle: 220
   _detectionLayer:
     serializedVersion: 2
     m_Bits: 8
-  _skin: {fileID: 3915968520233763202}
   _icon: {fileID: 21300000, guid: 244008ae7b448f148aff58653352f9c4, type: 3}
-  <Alive>k__BackingField: 1
+  _skin: {fileID: 3915968520233763202}
   _attakState: {fileID: 4341625314629210204}
   _patroolState: {fileID: 4916038441406269865}
   _lureState: {fileID: 3616283909976650226}
-  _isRequestingAssistance: 0
   _unitInventory: {fileID: 321839853298967495}
+  _isRequestingAssistance: 1
 --- !u!114 &4916038441406269865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,14 +512,12 @@ MonoBehaviour:
   _CharacterDialogue:
   - text: Who's there? Show yourself!
     clip: {fileID: 8300000, guid: 5a6e8db79e3457a48b4e3c0885fec467, type: 3}
-  - text: Hey, who's there? Come out!
-    clip: {fileID: 8300000, guid: 5c28a03fdae6dd447a72602aaec223af, type: 3}
-  - text: I saw something. Stay alert.
-    clip: {fileID: 8300000, guid: 598f85a5bbef32846841a2589f938fde, type: 3}
   - text: Something moved over there. I'll check it out.
     clip: {fileID: 8300000, guid: 2a691bb18f33fb645bb1f7f4739acd5c, type: 3}
   - text: Something's off here. Be cautious.
     clip: {fileID: 8300000, guid: 5cbaae7e5d4dcf74383c560719c2020d, type: 3}
+  - text: I saw something. Stay alert.
+    clip: {fileID: 8300000, guid: 598f85a5bbef32846841a2589f938fde, type: 3}
 --- !u!114 &4341625314629210204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,8 +531,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weapon: {fileID: 8545985410939153238}
-  _changeStateTimer: 0
-  canChangeState: 0
+  _characterDialogue:
+  - text: Hey, who's there? Come out!
+    clip: {fileID: 8300000, guid: 5c28a03fdae6dd447a72602aaec223af, type: 3}
 --- !u!114 &3616283909976650226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1292,6 +1290,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 8276972336295140261}
+  _footStepSource: {fileID: 0}
+  _footStepClips: []
 --- !u!4 &5495891035090569665 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3920196402806634132, guid: 7c26261d9f19a1a488f9e2454c0a953a, type: 3}

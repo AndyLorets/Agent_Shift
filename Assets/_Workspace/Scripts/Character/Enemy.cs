@@ -7,11 +7,12 @@ public class Enemy : Character
     [SerializeField] private AttackState _attakState;
     [SerializeField] private PatroolState _patroolState;
     [SerializeField] private LureState _lureState;
-    [SerializeField] private bool _isRequestingAssistance = true;
     [SerializeField] private UnitInventory _unitInventory;
+    [Space(5)]
+    [SerializeField] private bool _isRequestingAssistance = true;
 
     private Collider _collider;
-    private EnemyLureSpeakerManager _speakersManager;  
+    private EnemyLureSpeakerManager _speakersManager;
     private StateMachine _stateMachine = new StateMachine();
 
     public System.Action<Vector3> onPlayerVisible;
@@ -19,7 +20,7 @@ public class Enemy : Character
     public Player player { get; private set; }
 
     private const float DETECTED_RADIUS = 20f;
-    public bool EnemyIsDetected => IsEnemyDetected() && !player.IsInvisibility; 
+    public bool EnemyIsDetected => IsEnemyDetected() && !player.IsInvisibility;
 
     private void Awake()
     {
@@ -30,11 +31,11 @@ public class Enemy : Character
     {
         if (agent.hasPath && agent.velocity.sqrMagnitude == 0f)
         {
-            Vector3 destination = agent.destination; 
+            Vector3 destination = agent.destination;
             agent.ResetPath();
             agent.SetDestination(destination);
         }
-        if(_stateMachine.currentState == _attakState && player.IsInvisibility)
+        if (_stateMachine.currentState == _attakState && player.IsInvisibility)
         {
             _lureState.SetLurePoint(player.transform.position);
             _stateMachine.ChangeState(_lureState);
@@ -48,21 +49,22 @@ public class Enemy : Character
         _speakersManager = ServiceLocator.GetService<EnemyLureSpeakerManager>();
 
         _patroolState.onPlayerVisible += EnterAttackState;
-        _lureState.onPlayerVisible += EnterAttackState; 
+        _lureState.onPlayerVisible += EnterAttackState;
         _lureState.onPlayerUnvisible += EnterPatroolState;
         player.onDead += OnPlayerDead;
+        player.Skin.onFootStep += EnterPlayerLureState;
 
-        GameManager.onGameWin += ExitAllState; 
+        GameManager.onGameWin += ExitAllState;
         InitAllLures(true);
-        FindAllEnemiesSubscrip(true);
+        EnemiesSubscrip(true);
 
         EnterPatroolState();
     }
     protected override void ConstructTargets()
     {
-        _targets.Add(player); 
+        _targets.Add(player);
     }
-    private void FindAllEnemiesSubscrip(bool state)
+    private void EnemiesSubscrip(bool state)
     {
         foreach (Enemy enemy in _enemyManager.enemiesList)
         {
@@ -71,43 +73,39 @@ public class Enemy : Character
                 if (state)
                 {
                     if (_isRequestingAssistance)
-                        enemy.onPlayerVisible += OnPlayerDetected;
+                        enemy.onPlayerVisible += OnRequestingAssistance;
                 }
                 else if (_isRequestingAssistance)
-                    enemy.onPlayerVisible -= OnPlayerDetected;
+                    enemy.onPlayerVisible -= OnRequestingAssistance;
             }
         }
     }
     private void InitAllLures(bool value)
     {
         List<EnemyLureSpeaker> lures = _speakersManager.lureSpeakerList;
-        float dist = 0; 
 
         for (int i = 0; i < lures.Count; i++)
         {
             if (value)
-                 dist = Vector3.Distance(transform.position, lures[i].transform.position);
-            if (dist <= DETECTED_RADIUS)
-            {
-                if (value)
-                    lures[i].onLure += EnterLureState;
-                else
-                    lures[i].onLure -= EnterLureState;
-            }
+                lures[i].onLure += EnterLureState;
+            else
+                lures[i].onLure -= EnterLureState;
         }
     }
 
     private void OnPlayerDead(Character character)
     {
-        if (character != player) return; 
+        if (character != player) return;
 
-        EnterPatroolState(); 
+        EnterPatroolState();
     }
-    private void OnPlayerDetected(Vector3 pos)
+    private void OnRequestingAssistance(Vector3 pos)
     {
         float dist = Vector3.Distance(transform.position, pos);
         if (dist <= DETECTED_RADIUS)
-            _stateMachine.ChangeState(_attakState); 
+        {
+            _stateMachine.ChangeState(_attakState);
+        }
     }
     private void EnterAttackState()
     {
@@ -120,6 +118,20 @@ public class Enemy : Character
     }
     private void EnterLureState(Vector3 pos)
     {
+        float dist = Vector3.Distance(transform.position, pos);
+        if (dist > DETECTED_RADIUS || !_isRequestingAssistance) return;
+
+        if (_stateMachine.currentState == _attakState || _stateMachine.currentState == _lureState)
+            return;
+
+        _lureState.SetLurePoint(pos);
+        _stateMachine.ChangeState(_lureState);
+    }
+    private void EnterPlayerLureState(Vector3 pos)
+    {
+        float dist = Vector3.Distance(transform.position, pos);
+        if (dist > _visibleRange || !_isRequestingAssistance) return;
+
         if (_stateMachine.currentState == _attakState || _stateMachine.currentState == _lureState)
             return;
 
@@ -134,30 +146,31 @@ public class Enemy : Character
     public override void Dead(bool headShot)
     {
         base.Dead(headShot);
-        ExitAllState(); 
+        ExitAllState();
         _collider.enabled = false;
         if (_unitInventory.gameObject.activeSelf)
-            _unitInventory.SpawnItem(); 
+            _unitInventory.SpawnItem();
     }
     private void ExitAllState()
     {
         _stateMachine.ExitActiveState();
-        enabled = false; 
+        enabled = false;
     }
     private void OnDestroy()
     {
         InitAllLures(false);
-        FindAllEnemiesSubscrip(false);
+        EnemiesSubscrip(false);
         _lureState.onPlayerVisible -= EnterAttackState;
         _lureState.onPlayerUnvisible -= EnterPatroolState;
         _patroolState.onPlayerVisible -= EnterAttackState;
         player.onDead -= OnPlayerDead;
+        player.Skin.onFootStep -= EnterPlayerLureState;
         GameManager.onGameWin -= ExitAllState;
     }
     protected override void OnDrawGizmosSelected()
     {
         base.OnDrawGizmosSelected();
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, DETECTED_RADIUS); 
+        Gizmos.DrawWireSphere(transform.position, DETECTED_RADIUS);
     }
 }

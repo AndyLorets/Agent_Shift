@@ -3,6 +3,7 @@ using UnityEngine;
 public class AttackState : StateBase
 {
     [SerializeField] private WeaponBase _weapon;
+    [SerializeField] private CharacterDialogue[] _characterDialogue;
     private WeaponBehaviour _weaponBehaviour;
 
     private float _changeStateTimer;
@@ -24,8 +25,6 @@ public class AttackState : StateBase
     {
         base.Start();
         _weaponBehaviour = new WeaponBehaviour(_enemy, _weapon, _enemy.Animator);
-
-        enabled = false; 
     }
 
     private void LookAtPlayer()
@@ -86,7 +85,9 @@ public class AttackState : StateBase
         base.EnterState();
 
         _enemy.agent.speed = RUN_SPEED;
-        //CharacterMessanger.instance.SetDialogueMessage(_enemy.icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
+        int r = Random.Range(0, _characterDialogue.Length);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(_enemy.icon, _characterDialogue[r].text, _characterDialogue[r].clip);
+        ServiceLocator.GetService<AudioManager>().PlatAlert();
     }
     public override void ExitState()
     {

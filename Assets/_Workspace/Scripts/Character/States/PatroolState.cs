@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -52,6 +53,11 @@ public class PatroolState : StateBase
         _isMove = false;
         _enemy.Animator.SetBool(ANIM_WALK, _isMove);
     }
+    private void LookAtPlayer()
+    {
+        transform.DOLookAt(_enemy.player.transform.position, .5f);
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+    }
     private void SetMove()
     {
         if (_visibleCount > 0) return; 
@@ -89,6 +95,7 @@ public class PatroolState : StateBase
                 {
                     int r = Random.Range(0, _CharacterDialogue.Length);
                     ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(_enemy.icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
+                    LookAtPlayer(); 
                 }
             }
             else

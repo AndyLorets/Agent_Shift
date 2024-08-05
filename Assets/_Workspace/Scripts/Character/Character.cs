@@ -8,11 +8,11 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     [SerializeField] protected int _currentHP;
     [Space(5), Header("Visible")]
     [SerializeField, Range(3f, 10f)] protected float _visibleRange = 3f;
-    [SerializeField, Range(25f, 180f)] protected float _viewAngle = 45f;
+    [SerializeField, Range(25f, 250f)] protected float _viewAngle = 45f;
     [SerializeField] protected LayerMask _detectionLayer;
     [Space(5), Header("Components")]
-    [SerializeField] private Skin _skin;
     [SerializeField] private Sprite _icon;
+    [SerializeField] private Skin _skin;
 
     protected EnemyManager _enemyManager;
     protected List<Character> _targets = new List<Character>(); 
