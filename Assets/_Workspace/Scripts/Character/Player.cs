@@ -177,6 +177,9 @@ public class Player : Character
             Dead(headShot);
         else if (!IsArmom)
             Animator.SetTrigger(anim);
+
+        int r = Random.Range(0, _damageClips.Length);  
+        _audioSource.PlayOneShot(_damageClips[r]); 
     }
     public override void Dead(bool headShot)
     {

@@ -17,6 +17,9 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField] protected GameObject _bulletPrefab;
     [SerializeField] protected ParticleSystem _shootEffect;
     [SerializeField] protected Transform _shootPos;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _shootClip;
+    [SerializeField] private AudioClip _reloadClip;
 
     protected List<Transform> _bulletsOnMagazine;
     public Transform shootPos => _shootPos;
@@ -31,7 +34,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     public Action onStartReload;
     public Action<int, int> onEndReload;
-    public Action<int, int> onShoot; 
+    public Action<int, int> onShoot;
 
     protected virtual void Start()
     {
@@ -39,7 +42,7 @@ public abstract class WeaponBase : MonoBehaviour
     }
     protected virtual void Update()
     {
-        if(!_isReloading && !_hasBulletOnMagazine)
+        if (!_isReloading && !_hasBulletOnMagazine)
         {
             StartCoroutine(Reload());
         }
@@ -58,7 +61,10 @@ public abstract class WeaponBase : MonoBehaviour
         _bulletOnMagazine = _bulletOnMagazineCount;
         onEndReload?.Invoke(_bulletOnMagazine, _bulletsOnMagazine.Count);
     }
-    public abstract void Shoot(ITakeDamage takeDamageDamage, Vector3 pos, bool headshot);
+    public virtual void Shoot(ITakeDamage takeDamageDamage, Vector3 pos, bool headshot)
+    {
+        _audioSource.PlayOneShot(_shootClip); 
+    }
     protected virtual void BulletHitTarget(Transform bullet, ITakeDamage takeDamageDamage, bool headshoot)
     {
         _bulletsOnMagazine.Add(bullet);
@@ -72,7 +78,8 @@ public abstract class WeaponBase : MonoBehaviour
     protected virtual IEnumerator Reload()
     {
         _isReloading = true;
-        onStartReload?.Invoke(); 
+        onStartReload?.Invoke();
+        _audioSource.PlayOneShot(_reloadClip);
 
         yield return new WaitForSeconds(_reloadTime);
 

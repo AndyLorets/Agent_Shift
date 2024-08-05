@@ -73,14 +73,13 @@ public class BriefingManager : MonoBehaviour
 public class Briefing
 {
     [SerializeField] private Sprite _icon;
-    [SerializeField] private string _text;
-    [SerializeField] private AudioClip _audioClip;
     [SerializeField] private CinemachineVirtualCamera _cam;
+    [SerializeField] private CharacterDialogue _dialogue;
 
     public void PlayBriefing()
     {
         CharacterMessanger.OnResetAudioPlaying += StopBriefing;
-        ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(_icon, _text, _audioClip);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(_icon, _dialogue);
         _cam.Priority = 11;
     }
     public void StopBriefing()

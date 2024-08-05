@@ -75,7 +75,7 @@ public class AudioManager : MonoBehaviour
     {
         _item.Play();
     }
-    public void PlatAlert()
+    public void PlayAlert()
     {
         if (!_alert.isPlaying)
             _alert.Play(); 

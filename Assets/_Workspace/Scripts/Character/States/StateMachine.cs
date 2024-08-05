@@ -1,6 +1,6 @@
 public class StateMachine 
 {
-    public StateBase currentState; 
+    public StateBase currentState { get; private set; } 
     public void ChangeState(StateBase newState)
     {
         if(currentState == newState) return;   
@@ -12,5 +12,6 @@ public class StateMachine
     public void ExitActiveState()
     {
         currentState?.ExitState();
+        currentState = null;
     }
 }

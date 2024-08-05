@@ -23,23 +23,29 @@ public class CharacterMessanger : MonoBehaviour
         _canvasGroup = GetComponent<CanvasGroup>();
         _canvasGroup.alpha = 0; 
     }
-    public void SetDialogueMessage(Sprite sprite, string text, AudioClip audioClip)
+    public void SetDialogue(Sprite sprite, CharacterDialogue characterDialogue, bool skipActiveDialogue = false)
     {
-        if (audioClip != null && !CharacterDialogue.speaking)
+        AudioClip clip = characterDialogue.clip;
+        string text = characterDialogue.text;
+
+        if (skipActiveDialogue && CharacterDialogue.speaking)
+            Skip(); 
+
+        if (clip != null && !CharacterDialogue.speaking)
         {
-            _audioSource.PlayOneShot(audioClip);
+            _audioSource.PlayOneShot(clip);
             _icon.sprite = sprite; 
             _text.text = text;
 
             _canvasGroup.DOFade(1, tween_duration); 
 
             CharacterDialogue.speaking = true;
-            StartCoroutine(ResetAudioPlaying(audioClip));
+            StartCoroutine(ResetAudioPlaying(clip));
         }
     }
     private IEnumerator ResetAudioPlaying(AudioClip audioClip = null)
     {
-        yield return new WaitForSeconds(audioClip.length);
+        yield return new WaitForSeconds(audioClip.length + .5f);
         CharacterDialogue.speaking = false;
         ClearText();
         OnResetAudioPlaying?.Invoke(); 
@@ -50,6 +56,7 @@ public class CharacterMessanger : MonoBehaviour
         StopCoroutine(ResetAudioPlaying());
         ClearText();
         OnResetAudioPlaying?.Invoke();
+        CharacterDialogue.speaking = false;
     }
     private void ClearText()
     {

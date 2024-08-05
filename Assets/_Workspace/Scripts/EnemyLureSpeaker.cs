@@ -7,8 +7,8 @@ public class EnemyLureSpeaker : MonoBehaviour
     [SerializeField] private Transform _point;
     [SerializeField] private ParticleSystem _effect;
     [SerializeField] private InteractableHandler _interactHandler;
+    [SerializeField] private Enemy[] _enemies; 
 
-    public Action<Vector3> onLure;
     private AudioSource _audio;
 
     private void Awake()
@@ -19,9 +19,20 @@ public class EnemyLureSpeaker : MonoBehaviour
 
     private void ActiveLure()
     {
-        onLure?.Invoke(_point.position);
         _audio.Play();
         _effect.Play();
+
+        for (int i = 0; i < _enemies.Length; i++)
+        {
+            _enemies[i].EnterLureState(_point.position); 
+        }
+
+        Invoke(nameof(DeactiveLure), _audio.clip.length);
+    }
+    private void DeactiveLure()
+    {
+        _audio.Stop();
+        _effect.Stop();
     }
     private void OnTriggerEnter(Collider other)
     {

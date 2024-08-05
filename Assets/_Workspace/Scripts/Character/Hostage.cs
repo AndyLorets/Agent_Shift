@@ -9,7 +9,7 @@ public class Hostage : Character, ITaskable
 
     private StateMachine _stateMachine = new StateMachine();
 
-    [SerializeField] private CharacterDialogue[] _CharacterDialogue; 
+    [SerializeField] private CharacterDialogue[] _dialogue; 
 
     public NavMeshAgent agent { get; private set; }
     public string taskName { get; set; }
@@ -39,10 +39,10 @@ public class Hostage : Character, ITaskable
     }
     public void Released()
     {
-        int r = Random.Range(0, _CharacterDialogue.Length);
+        int r = Random.Range(0, _dialogue.Length);
 
         Animator.SetTrigger("StandUp");
-        ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogue[r]);
         ServiceLocator.GetService<TaskManager>().CompleteTask(taskName);
 
         Invoke(nameof(EnterFollowingState), 2f);

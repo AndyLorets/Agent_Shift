@@ -5,6 +5,8 @@ public class PistolWeapon : WeaponBase
 {
     public override void Shoot(ITakeDamage takeDamageDamage, Vector3 pos, bool headshoot)
     {
+        base.Shoot(takeDamageDamage, pos, headshoot); 
+
         _bulletOnMagazine--;
         _shootEffect.Play();
         onShoot?.Invoke(_bulletOnMagazine, _bulletsOnMagazine.Count);

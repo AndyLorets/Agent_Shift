@@ -8,13 +8,18 @@ public class Skin : MonoBehaviour
     public Animator animator => _animator;
     public System.Action onShoot;
     public System.Action<Vector3> onFootStep;
+
+    private const float FOOTSTEP_SPEED_RANGE = .8f; 
+
     public void Shoot()
     {
         onShoot?.Invoke();
     }
     public void FootStep()
     {
-        if (_animator.GetFloat("Vertical") >= .9f || _animator.GetFloat("Vertical") <= -.9f)
+        if (_footStepSource == null) return; 
+
+        if (_animator.GetFloat("Vertical") >= FOOTSTEP_SPEED_RANGE || _animator.GetFloat("Vertical") <= -FOOTSTEP_SPEED_RANGE)
         {
             onFootStep?.Invoke(transform.position);
             _footStepSource.PlayOneShot(_footStepClips[Random.Range(0, _footStepClips.Length)]);

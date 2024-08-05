@@ -50,5 +50,11 @@ public class WeaponBehaviour
     private void OnReloadWeapon()
     {
         _animator.SetTrigger(ANIM_RELAOD);
+        _currentShootTime = _shootDelay;
+    }
+    public void StopShooting()
+    {
+        if (_currentShootTime < .4f)
+            _currentShootTime = .4f;
     }
 }

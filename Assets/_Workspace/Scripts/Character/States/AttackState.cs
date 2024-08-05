@@ -3,22 +3,30 @@ using UnityEngine;
 public class AttackState : StateBase
 {
     [SerializeField] private WeaponBase _weapon;
-    [SerializeField] private CharacterDialogue[] _characterDialogue;
+    [SerializeField] private float _attackRadius;
+
     private WeaponBehaviour _weaponBehaviour;
-
     private float _changeStateTimer;
-    private bool _shooting;
-    bool _canChangeState => _changeStateTimer <= 0;
-    bool canChangeState;
 
-    private const float CHANGE_STATE_TIME = .3f;
+    private const float CHANGE_ATTACK_TIME = 1f;
+    private const float CHANGE_FOLLOW_TIME = 0.3f;
     private const float RUN_SPEED = 4f;
 
+    private State _state = State.None;
+    private enum State
+    {
+        None, Follow, Attack, Reload
+    }
+
     private Enemy _enemy;
+
     protected override void Awake()
     {
         base.Awake();
         _enemy = GetComponent<Enemy>();
+
+        _weapon.onStartReload += StartReload; 
+        _weapon.onEndReload += EndReload;
     }
 
     protected override void Start()
@@ -30,70 +38,90 @@ public class AttackState : StateBase
     private void LookAtPlayer()
     {
         transform.LookAt(_enemy.player.transform.position);
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0); 
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
+
     private void Update()
     {
-        Run();
-
-        if (_changeStateTimer >= 0)
+        if (_changeStateTimer > 0)
             _changeStateTimer -= Time.deltaTime;
+
+        Run();
     }
 
     private void Run()
     {
-        bool detected = _enemy.IsEnemyDetected();
         bool isMove = _enemy.agent.velocity.sqrMagnitude > 0;
+        bool detected = _enemy.IsEnemyDetected();
 
         _enemy.Animator.SetBool(ANIM_RUN, isMove);
-        _enemy.Animator.SetBool(ANIM_AIM, detected);
 
-        if (detected)
+        if (_changeStateTimer <= 0 && _state != State.Reload)
+        {
+            if (_state != State.Follow && !detected)
+            {
+                _state = State.Follow;
+                _enemy.Animator.SetBool(ANIM_AIM, false);
+                _changeStateTimer = CHANGE_FOLLOW_TIME;
+                _enemy.agent.SetDestination(_enemy.player.transform.position);
+                _weaponBehaviour.StopShooting();
+            }
+            else if (_state != State.Attack && detected)
+            {
+                _state = State.Attack;
+                _changeStateTimer = CHANGE_ATTACK_TIME;
+                _enemy.Animator.SetBool(ANIM_AIM, true);
+                _enemy.agent.SetDestination(transform.position);
+            }
+        }
+
+        if (_state == State.Attack)
+        {
             Attack();
-        else
+        }
+        else if (_state == State.Follow)
+        {
             Follow();
+        }
+    }
+    private void StartReload()
+    {
+        _enemy.Animator.SetBool(ANIM_AIM, false);
+        _state = State.Reload;
+    }
+    private void EndReload(int agr1, int agr2)
+    {
+        _state = State.None;
     }
     private void Attack()
     {
-        if (!_canChangeState) return;
-
-        if (!_shooting)
-        {
-            _shooting = true;
-            _changeStateTimer = CHANGE_STATE_TIME;
-
-            _enemy.agent.SetDestination(transform.position);
-        }
-
         LookAtPlayer();
         _weaponBehaviour.Run();
     }
+
     private void Follow()
     {
-        if (!_canChangeState) return; 
-
-        if (_shooting)
-        {
-            _shooting = false;
-            _changeStateTimer = CHANGE_STATE_TIME;
-        }
-
         _enemy.agent.SetDestination(_enemy.player.transform.position);
     }
+
     public override void EnterState()
     {
         base.EnterState();
-
         _enemy.agent.speed = RUN_SPEED;
-        int r = Random.Range(0, _characterDialogue.Length);
-        ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(_enemy.icon, _characterDialogue[r].text, _characterDialogue[r].clip);
-        ServiceLocator.GetService<AudioManager>().PlatAlert();
+        ServiceLocator.GetService<AudioManager>().PlayAlert();
     }
+
     public override void ExitState()
     {
         base.ExitState();
         _enemy.agent.SetDestination(transform.position);
         _enemy.Animator.SetBool(ANIM_RUN, false);
         _enemy.Animator.SetBool(ANIM_AIM, false);
+        _state = State.Follow; 
+    }
+    private void OnDestroy()
+    {
+        _weapon.onStartReload -= StartReload;
+        _weapon.onEndReload -= EndReload;
     }
 }

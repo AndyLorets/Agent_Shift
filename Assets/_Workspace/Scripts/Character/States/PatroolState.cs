@@ -6,16 +6,9 @@ public class PatroolState : StateBase
 {
     [SerializeField] private Vector3 _cubeSize;
     [SerializeField, Range(3, 7)] private float _waitTime = 3f;
-    [SerializeField, Range(1, 3)] private float _visibleReactionDuration = 2;
+    
+    private bool _isMove;
 
-    [SerializeField] private bool _isMove;
-    [SerializeField] private int _visibleCount;
-
-    [SerializeField] private CharacterDialogue[] _CharacterDialogue;
-
-    public System.Action onPlayerVisible;
-
-    private const float visible_reaction_duration = 1f;
     private const float AGENT_MOVE_SPEED = 1.2f;
 
     private Vector3 _startPos;
@@ -39,11 +32,9 @@ public class PatroolState : StateBase
     {
         base.EnterState();
 
-        _visibleCount = 0;
         _enemy.agent.speed = AGENT_MOVE_SPEED;
 
         SetMove();
-        StartCoroutine(CheckPlayer());
     }
     public override void ExitState()
     {
@@ -51,6 +42,7 @@ public class PatroolState : StateBase
         StopAllCoroutines();
 
         _isMove = false;
+        _enemy.agent.SetDestination(transform.position);
         _enemy.Animator.SetBool(ANIM_WALK, _isMove);
     }
     private void LookAtPlayer()
@@ -60,14 +52,10 @@ public class PatroolState : StateBase
     }
     private void SetMove()
     {
-        if (_visibleCount > 0) return; 
-
         _enemy.agent.SetDestination(GetRandomPointInsideCube());
     }
     private void StopMove()
     {
-        if (_visibleCount > 0) return;
- 
         _enemy.agent.SetDestination(transform.position);
 
         StartCoroutine(Waiting());
@@ -77,38 +65,7 @@ public class PatroolState : StateBase
     {
         yield return new WaitForSeconds(_waitTime);
 
-        while (_visibleCount > 0)
-            yield return null;
-
         SetMove();
-    }
-    private IEnumerator CheckPlayer()
-    {
-        while (enabled)
-        {
-            if (_enemy.EnemyIsDetected)
-            {
-                StopMove();
-                _visibleCount++;
-
-                if (_visibleCount == 1)
-                {
-                    int r = Random.Range(0, _CharacterDialogue.Length);
-                    ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(_enemy.icon, _CharacterDialogue[r].text, _CharacterDialogue[r].clip);
-                    LookAtPlayer(); 
-                }
-            }
-            else
-                _visibleCount = 0;
-
-            if (_visibleCount >= _visibleReactionDuration)
-            {
-                onPlayerVisible?.Invoke();
-            }
-
-            yield return new WaitForSeconds(visible_reaction_duration);
-
-        }
     }
     private Vector3 GetRandomPointInsideCube()
     {

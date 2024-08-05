@@ -270,18 +270,17 @@ MonoBehaviour:
   _detectionLayer:
     serializedVersion: 2
     m_Bits: 0
-  _skin: {fileID: 5420739428255868641}
   _icon: {fileID: 21300000, guid: 71cefcb34edbeb04dbfb52f718b274a2, type: 3}
-  <Alive>k__BackingField: 1
+  _skin: {fileID: 5420739428255868641}
   _followingState: {fileID: 1386161603218862386}
   _startAnimPos: 1
-  _CharacterDialogue:
+  _dialogue:
+  - text: Incredible, you found me!
+    clip: {fileID: 8300000, guid: 6e91e759071fba446aa8916d70c6cd63, type: 3}
   - text: Oh, thank you! I thought it was the end for me.
     clip: {fileID: 8300000, guid: 9b87a2e92ef49024aad71ad14ec4192c, type: 3}
   - text: Thank you! I'll never forget this.
     clip: {fileID: 8300000, guid: 8e6e0a8e3dc83944cb6c2db7404b99f7, type: 3}
-  - text: Incredible, you found me!
-    clip: {fileID: 8300000, guid: 6e91e759071fba446aa8916d70c6cd63, type: 3}
   - text: You're my hero! I owe you.
     clip: {fileID: 8300000, guid: 06df8c76b7eaa204cafcbe04781bd468, type: 3}
 --- !u!114 &1386161603218862386
@@ -291,11 +290,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4650441780134229719}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2752cfa4185c0e43ade5a78b5aed06a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 0}
 --- !u!82 &5696969994864512438
 AudioSource:
   m_ObjectHideFlags: 0
@@ -993,6 +993,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 5420739428255868640}
+  _footStepSource: {fileID: 0}
+  _footStepClips: []
 --- !u!4 &7454349208210744064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3191221269692976073, guid: 44d57cfa07de346458450744785d8a7e, type: 3}

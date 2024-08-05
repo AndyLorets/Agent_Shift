@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +12,10 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     [Space(5), Header("Components")]
     [SerializeField] private Sprite _icon;
     [SerializeField] private Skin _skin;
+    [SerializeField] protected AudioClip[] _damageClips;
+    [SerializeField] protected AudioClip[] _deathClips;
 
+    protected AudioSource _audioSource; 
     protected EnemyManager _enemyManager;
     protected List<Character> _targets = new List<Character>(); 
     public Sprite icon => _icon;
@@ -23,8 +25,8 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     public bool Alive { get; private set; } = true;
     protected bool _enemyDetected;
 
-    public Action<float, float, bool> onChangeHP;
-    public Action<Character> onDead;
+    public System.Action<float, float, bool> onChangeHP;
+    public System.Action<Character> onDead;
 
     protected const string ANIM_DAMAGE = "Damage";
     protected const string ANIM_DAMAGE_HEADSHOT = "Damage_HeadShot";
@@ -39,7 +41,8 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     protected abstract void ConstructTargets(); 
     protected virtual void Construct()
     {
-        _enemyManager = ServiceLocator.GetService<EnemyManager>();  
+        _enemyManager = ServiceLocator.GetService<EnemyManager>();
+        _audioSource = GetComponent<AudioSource>();
         _currentHP = _hp;
     }
     private bool CheckForEnemyInRange() => Physics.CheckSphere(transform.position, _visibleRange, _detectionLayer);
@@ -125,6 +128,9 @@ public abstract class Character : MonoBehaviour, ITakeDamage
             Dead(headShot);
         else
             Animator.SetTrigger(anim);
+
+        int r = Random.Range(0, _damageClips.Length);
+        _audioSource.PlayOneShot(_damageClips[r]); 
     }
     public virtual void Dead(bool headShot)
     {
@@ -133,6 +139,9 @@ public abstract class Character : MonoBehaviour, ITakeDamage
         enabled = false;
         Animator.SetTrigger(anim);
         onDead?.Invoke(this);
+
+        int r = Random.Range(0, _deathClips.Length);
+        _audioSource.PlayOneShot(_deathClips[r]);
     }
     protected virtual void OnDrawGizmosSelected()
     {

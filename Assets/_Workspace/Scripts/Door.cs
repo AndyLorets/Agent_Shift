@@ -50,7 +50,7 @@ public class Door : MonoBehaviour
             }
         }
         if (!_isOpen)
-            ServiceLocator.GetService<CharacterMessanger>().SetDialogueMessage(_playerIcon, _dialogue.text, _dialogue.clip);
+            ServiceLocator.GetService<CharacterMessanger>().SetDialogue(_playerIcon, _dialogue);
     }
     private void OpenDoor()
     {

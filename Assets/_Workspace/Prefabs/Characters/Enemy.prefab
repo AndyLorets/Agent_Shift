@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 671456104862700481}
   - component: {fileID: 2179556365350420672}
   - component: {fileID: 8545985410939153238}
+  - component: {fileID: 8418885654918142590}
   m_Layer: 7
   m_Name: M4_8
   m_TagString: Untagged
@@ -187,11 +188,110 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _bulletOnMagazineCount: 8
-  _reloadTime: 1
+  _reloadTime: 1.5
   _shootDelayTime: 1
   _bulletPrefab: {fileID: 8893093729779758195, guid: 92f9a1dad95a9dc42b09cfabc57cbafb, type: 3}
   _shootEffect: {fileID: 1811206124728092144}
   _shootPos: {fileID: 5963679268744548281}
+  _audioSource: {fileID: 8418885654918142590}
+  _shootClip: {fileID: 8300000, guid: 8602b7d5cd15c1943a50aa53f171c8cf, type: 3}
+  _reloadClip: {fileID: 8300000, guid: 3c5c1d4d7b9307c458890a4beb12e4ae, type: 3}
+--- !u!82 &8418885654918142590
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665646650476320966}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 8602b7d5cd15c1943a50aa53f171c8cf, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.7
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1312349048346786939
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,6 +502,7 @@ GameObject:
   - component: {fileID: 8536687069643991735}
   - component: {fileID: 5731343079593073561}
   - component: {fileID: 6428156848141824264}
+  - component: {fileID: 2380162905491219361}
   - component: {fileID: 4916038441406269865}
   - component: {fileID: 4341625314629210204}
   - component: {fileID: 3616283909976650226}
@@ -480,18 +581,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hp: 5
   _currentHP: 0
-  _visibleRange: 10
-  _viewAngle: 220
+  _visibleRange: 8
+  _viewAngle: 200
   _detectionLayer:
     serializedVersion: 2
     m_Bits: 8
   _icon: {fileID: 21300000, guid: 244008ae7b448f148aff58653352f9c4, type: 3}
   _skin: {fileID: 3915968520233763202}
-  _attakState: {fileID: 4341625314629210204}
-  _patroolState: {fileID: 4916038441406269865}
+  _damageClips:
+  - {fileID: 8300000, guid: aa48101fd9bd24b82af88afb182a9bf5, type: 3}
+  - {fileID: 8300000, guid: 450eaf4ebbde94988bfa31fe145db4ce, type: 3}
+  - {fileID: 8300000, guid: 794be7c4bd9e64c9bbb9776937807a9e, type: 3}
+  _deathClips:
+  - {fileID: 8300000, guid: 7a39ba789208642ea9fda609aea157b6, type: 3}
+  - {fileID: 8300000, guid: d14c998d6540344f89d98403b8d12b97, type: 3}
+  _startState: {fileID: 4916038441406269865}
+  _attackState: {fileID: 4341625314629210204}
+  _patrolState: {fileID: 4916038441406269865}
   _lureState: {fileID: 3616283909976650226}
   _unitInventory: {fileID: 321839853298967495}
   _isRequestingAssistance: 1
+  _visibleCountToAttack: 2
+  _dialogueOnHear:
+  - text: I heard something. This isn't good.
+    clip: {fileID: 8300000, guid: dc116d220765868429e94843c243664a, type: 3}
+  - text: What was that noise? Better look around.
+    clip: {fileID: 8300000, guid: bf24547976672ac49a275bf18f5d40cd, type: 3}
+  - text: Something moved over there. I'll check it out.
+    clip: {fileID: 8300000, guid: 2a691bb18f33fb645bb1f7f4739acd5c, type: 3}
+  - text: That was strange. I should investigate.
+    clip: {fileID: 8300000, guid: c1c4f80d5e6bf4c48a55e7fdab6d556d, type: 3}
+  - text: What was that? Better check it out.
+    clip: {fileID: 8300000, guid: f87a9568e7530764fa005612fca44fc3, type: 3}
+  _dialogueOnVisibled:
+  - text: Did you hear that? Something's there.
+    clip: {fileID: 8300000, guid: b08eb198e9682a84d9df18097ccc330d, type: 3}
+  - text: Hey, who's there? Come out!
+    clip: {fileID: 8300000, guid: 5c28a03fdae6dd447a72602aaec223af, type: 3}
+  - text: I saw something. Stay alert!
+    clip: {fileID: 8300000, guid: 598f85a5bbef32846841a2589f938fde, type: 3}
+  - text: Something's off here! Be cautious.
+    clip: {fileID: 8300000, guid: 5cbaae7e5d4dcf74383c560719c2020d, type: 3}
+  - text: Who's there? Show yourself!
+    clip: {fileID: 8300000, guid: 5a6e8db79e3457a48b4e3c0885fec467, type: 3}
+  _dialogueOnAttack:
+  - text: Target spotted!
+    clip: {fileID: 8300000, guid: d36f3245f63b0d84888d4cf75026885b, type: 3}
+  - text: Got you in sight!
+    clip: {fileID: 8300000, guid: d3e498ea558e4a942a3435bf77574a4d, type: 3}
+  - text: Found you! Let's finish this!
+    clip: {fileID: 8300000, guid: 2ada7251d3a19f04f8a7a25ade481c91, type: 3}
+  - text: Prepare for battle!
+    clip: {fileID: 8300000, guid: 269852a1fabeb144484a32250aa4d0e7, type: 3}
+--- !u!114 &2380162905491219361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4745462277145319092}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937f3557520a7914ca665116156afc8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4916038441406269865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,18 +659,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cubeSize: {x: 4, y: 0, z: 3}
   _waitTime: 3
-  _visibleReactionDuration: 2
-  _isMove: 0
-  _visibleCount: 0
-  _CharacterDialogue:
-  - text: Who's there? Show yourself!
-    clip: {fileID: 8300000, guid: 5a6e8db79e3457a48b4e3c0885fec467, type: 3}
-  - text: Something moved over there. I'll check it out.
-    clip: {fileID: 8300000, guid: 2a691bb18f33fb645bb1f7f4739acd5c, type: 3}
-  - text: Something's off here. Be cautious.
-    clip: {fileID: 8300000, guid: 5cbaae7e5d4dcf74383c560719c2020d, type: 3}
-  - text: I saw something. Stay alert.
-    clip: {fileID: 8300000, guid: 598f85a5bbef32846841a2589f938fde, type: 3}
 --- !u!114 &4341625314629210204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,9 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weapon: {fileID: 8545985410939153238}
-  _characterDialogue:
-  - text: Hey, who's there? Come out!
-    clip: {fileID: 8300000, guid: 5c28a03fdae6dd447a72602aaec223af, type: 3}
+  _attackRadius: 10
 --- !u!114 &3616283909976650226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,30 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f77ce48328c1c498f3a4caf7467d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waitTime: 3
-  _visibleReactionDuration: 2
-  _CharacterDialogue:
-  - text: What was that? Better check it out.
-    clip: {fileID: 8300000, guid: f87a9568e7530764fa005612fca44fc3, type: 3}
-  - text: Did you hear that? Something's there.
-    clip: {fileID: 8300000, guid: b08eb198e9682a84d9df18097ccc330d, type: 3}
-  - text: That was strange. I should investigate.
-    clip: {fileID: 8300000, guid: c1c4f80d5e6bf4c48a55e7fdab6d556d, type: 3}
-  - text: I heard something. This isn't good.
-    clip: {fileID: 8300000, guid: dc116d220765868429e94843c243664a, type: 3}
-  - text: What was that noise? Better look around.
-    clip: {fileID: 8300000, guid: bf24547976672ac49a275bf18f5d40cd, type: 3}
-  _CharacterDialogueVisible:
-  - text: Who's there? Show yourself!
-    clip: {fileID: 8300000, guid: 5a6e8db79e3457a48b4e3c0885fec467, type: 3}
-  - text: Hey, who's there? Come out!
-    clip: {fileID: 8300000, guid: 5c28a03fdae6dd447a72602aaec223af, type: 3}
-  - text: I saw something. Stay alert.
-    clip: {fileID: 8300000, guid: 598f85a5bbef32846841a2589f938fde, type: 3}
-  - text: Something moved over there. I'll check it out.
-    clip: {fileID: 8300000, guid: 2a691bb18f33fb645bb1f7f4739acd5c, type: 3}
-  - text: Something's off here. Be cautious.
-    clip: {fileID: 8300000, guid: 5cbaae7e5d4dcf74383c560719c2020d, type: 3}
+  _waitTime: 4
 --- !u!82 &8899845875140095215
 AudioSource:
   m_ObjectHideFlags: 0
@@ -582,7 +698,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -591,7 +707,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 30
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -626,7 +742,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

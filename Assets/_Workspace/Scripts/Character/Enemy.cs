@@ -1,25 +1,33 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : Character
 {
-    [SerializeField] private AttackState _attakState;
-    [SerializeField] private PatroolState _patroolState;
+    [SerializeField] private StateBase _startState;
+    [SerializeField] private AttackState _attackState;
+    [SerializeField] private PatroolState _patrolState;
     [SerializeField] private LureState _lureState;
     [SerializeField] private UnitInventory _unitInventory;
     [Space(5)]
     [SerializeField] private bool _isRequestingAssistance = true;
+    [SerializeField, Range(1, 3)] private int _visibleCountToAttack = 2;
+    [Space(5)]
+    [SerializeField] private CharacterDialogue[] _dialogueOnHear;
+    [SerializeField] private CharacterDialogue[] _dialogueOnVisibled;
+    [SerializeField] private CharacterDialogue[] _dialogueOnAttack;
 
     private Collider _collider;
-    private EnemyLureSpeakerManager _speakersManager;
     private StateMachine _stateMachine = new StateMachine();
 
     public System.Action<Vector3> onPlayerVisible;
     public NavMeshAgent agent { get; private set; }
     public Player player { get; private set; }
 
-    private const float DETECTED_RADIUS = 20f;
+    private int _visibleCount;
+
+    private const float CHECK_PLAYER_DURATION = 1f;
+
     public bool EnemyIsDetected => IsEnemyDetected() && !player.IsInvisibility;
 
     private void Awake()
@@ -35,7 +43,7 @@ public class Enemy : Character
             agent.ResetPath();
             agent.SetDestination(destination);
         }
-        if (_stateMachine.currentState == _attakState && player.IsInvisibility)
+        if (_stateMachine.currentState == _attackState && player.IsInvisibility)
         {
             _lureState.SetLurePoint(player.transform.position);
             _stateMachine.ChangeState(_lureState);
@@ -46,23 +54,30 @@ public class Enemy : Character
         base.Construct();
 
         player = ServiceLocator.GetService<Player>();
-        _speakersManager = ServiceLocator.GetService<EnemyLureSpeakerManager>();
 
-        _patroolState.onPlayerVisible += EnterAttackState;
-        _lureState.onPlayerVisible += EnterAttackState;
-        _lureState.onPlayerUnvisible += EnterPatroolState;
-        player.onDead += OnPlayerDead;
-        player.Skin.onFootStep += EnterPlayerLureState;
-
-        GameManager.onGameWin += ExitAllState;
-        InitAllLures(true);
-        EnemiesSubscrip(true);
-
-        EnterPatroolState();
+        Subscribe();
+        StartCoroutine(CheckPlayer());
+        _stateMachine.ChangeState(_startState); 
     }
     protected override void ConstructTargets()
     {
         _targets.Add(player);
+    }
+    private void Subscribe()
+    {
+        _lureState.onPlayerUnvisible += EnterPatrolState;
+        player.onDead += OnPlayerDead;
+        player.Skin.onFootStep += OnHearFootStep;
+        GameManager.onGameWin += ExitAllState;
+        EnemiesSubscrip(true);
+    }
+    private void Unsubscribe()
+    {
+        _lureState.onPlayerUnvisible -= EnterPatrolState;
+        player.onDead -= OnPlayerDead;
+        player.Skin.onFootStep -= OnHearFootStep;
+        GameManager.onGameWin -= ExitAllState;
+        EnemiesSubscrip(false);
     }
     private void EnemiesSubscrip(bool state)
     {
@@ -80,16 +95,37 @@ public class Enemy : Character
             }
         }
     }
-    private void InitAllLures(bool value)
+    private IEnumerator CheckPlayer()
     {
-        List<EnemyLureSpeaker> lures = _speakersManager.lureSpeakerList;
-
-        for (int i = 0; i < lures.Count; i++)
+        while (enabled)
         {
-            if (value)
-                lures[i].onLure += EnterLureState;
-            else
-                lures[i].onLure -= EnterLureState;
+            if (_stateMachine.currentState != _attackState)
+            {
+                if (EnemyIsDetected)
+                {
+                    ExitAllState();
+
+                    _visibleCount++;
+
+                    if (_visibleCount == 1)
+                    {
+                        int r = Random.Range(0, _dialogueOnVisibled.Length);
+                        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnVisibled[r]);
+                    }
+
+                    if (_visibleCount >= _visibleCountToAttack)
+                    {
+                        EnterAttackState();
+                        continue; 
+                    }
+                }
+                else if (_stateMachine.currentState == null)
+                {
+                    EnterPatrolState();
+                }
+            }
+
+            yield return new WaitForSeconds(CHECK_PLAYER_DURATION);
         }
     }
 
@@ -97,44 +133,55 @@ public class Enemy : Character
     {
         if (character != player) return;
 
-        EnterPatroolState();
+        EnterPatrolState();
     }
     private void OnRequestingAssistance(Vector3 pos)
     {
         float dist = Vector3.Distance(transform.position, pos);
-        if (dist <= DETECTED_RADIUS)
+        if (dist <= _visibleRange)
         {
-            _stateMachine.ChangeState(_attakState);
+            _stateMachine.ChangeState(_attackState);
         }
     }
     private void EnterAttackState()
     {
-        _stateMachine.ChangeState(_attakState);
+        if (_stateMachine.currentState == _attackState) return; 
+
+        int r = Random.Range(0, _dialogueOnAttack.Length);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnAttack[r], true);
+
+        _stateMachine.ChangeState(_attackState);
         onPlayerVisible?.Invoke(transform.position);
     }
-    private void EnterPatroolState()
+    private void EnterPatrolState()
     {
-        _stateMachine.ChangeState(_patroolState);
-    }
-    private void EnterLureState(Vector3 pos)
-    {
-        float dist = Vector3.Distance(transform.position, pos);
-        if (dist > DETECTED_RADIUS || !_isRequestingAssistance) return;
+        if (_stateMachine.currentState == _patrolState) return;
 
-        if (_stateMachine.currentState == _attakState || _stateMachine.currentState == _lureState)
+        _visibleCount = 0;
+        _stateMachine.ChangeState(_patrolState);
+    }
+    public void EnterLureState(Vector3 pos)
+    {
+        if (!Alive) return; 
+
+        if (_stateMachine.currentState == _attackState || _stateMachine.currentState == _lureState)
             return;
 
+        int r = Random.Range(0, _dialogueOnHear.Length);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnHear[r]);
         _lureState.SetLurePoint(pos);
         _stateMachine.ChangeState(_lureState);
     }
-    private void EnterPlayerLureState(Vector3 pos)
+    private void OnHearFootStep(Vector3 pos)
     {
         float dist = Vector3.Distance(transform.position, pos);
         if (dist > _visibleRange || !_isRequestingAssistance) return;
 
-        if (_stateMachine.currentState == _attakState || _stateMachine.currentState == _lureState)
+        if (_stateMachine.currentState == _attackState || _stateMachine.currentState == _lureState)
             return;
 
+        int r = Random.Range(0, _dialogueOnHear.Length);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnHear[r]);
         _lureState.SetLurePoint(pos);
         _stateMachine.ChangeState(_lureState);
     }
@@ -146,31 +193,23 @@ public class Enemy : Character
     public override void Dead(bool headShot)
     {
         base.Dead(headShot);
-        ExitAllState();
+
+        enabled = false; 
         _collider.enabled = false;
+
+        Unsubscribe();
+        ExitAllState();
+
         if (_unitInventory.gameObject.activeSelf)
             _unitInventory.SpawnItem();
     }
     private void ExitAllState()
     {
         _stateMachine.ExitActiveState();
-        enabled = false;
     }
     private void OnDestroy()
     {
-        InitAllLures(false);
-        EnemiesSubscrip(false);
-        _lureState.onPlayerVisible -= EnterAttackState;
-        _lureState.onPlayerUnvisible -= EnterPatroolState;
-        _patroolState.onPlayerVisible -= EnterAttackState;
-        player.onDead -= OnPlayerDead;
-        player.Skin.onFootStep -= EnterPlayerLureState;
-        GameManager.onGameWin -= ExitAllState;
+        Unsubscribe(); 
     }
-    protected override void OnDrawGizmosSelected()
-    {
-        base.OnDrawGizmosSelected();
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, DETECTED_RADIUS);
-    }
+   
 }
