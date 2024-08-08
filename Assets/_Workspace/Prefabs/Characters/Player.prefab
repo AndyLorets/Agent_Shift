@@ -2437,7 +2437,7 @@ MonoBehaviour:
   _bulletOnMagazineCount: 5
   _reloadTime: 2.4
   _shootDelayTime: 0.8
-  _bulletPrefab: {fileID: 8893093729779758195, guid: 92f9a1dad95a9dc42b09cfabc57cbafb, type: 3}
+  _bulletPrefab: {fileID: 6987340088765933737, guid: 92f9a1dad95a9dc42b09cfabc57cbafb, type: 3}
   _shootEffect: {fileID: 5643874763635253561}
   _shootPos: {fileID: 5777015112031617873}
   _audioSource: {fileID: 2856114653182014838}

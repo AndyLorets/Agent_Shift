@@ -138,9 +138,9 @@ public class Player : Character
                 _rig.DeactiveRig();
         }
     }
-    public override bool IsEnemyDetected(out ITakeDamage takeDamage, out Vector3 pos, out bool headshoot)
+    public override bool IsEnemyDetected(out Vector3 pos, out bool headshoot)
     {
-        bool isDetected = base.IsEnemyDetected(out takeDamage, out pos, out headshoot);
+        bool isDetected = base.IsEnemyDetected(out pos, out headshoot);
 
         if (isDetected)
         {
@@ -178,8 +178,10 @@ public class Player : Character
         else if (!IsArmom)
             Animator.SetTrigger(anim);
 
-        int r = Random.Range(0, _damageClips.Length);  
-        _audioSource.PlayOneShot(_damageClips[r]); 
+        int r = Random.Range(0, _damageClips.Length);
+
+        if (!IsArmom)
+            _audioSource.PlayOneShot(_damageClips[r]); 
     }
     public override void Dead(bool headShot)
     {

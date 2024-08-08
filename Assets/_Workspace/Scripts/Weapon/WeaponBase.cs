@@ -14,14 +14,14 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField, Range(.15f, 5f)] protected float _shootDelayTime = 1f;
 
     [Space(10), Header("Components")]
-    [SerializeField] protected GameObject _bulletPrefab;
+    [SerializeField] protected Bullet _bulletPrefab;
     [SerializeField] protected ParticleSystem _shootEffect;
     [SerializeField] protected Transform _shootPos;
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _shootClip;
-    [SerializeField] private AudioClip _reloadClip;
+    [SerializeField] protected AudioSource _audioSource;
+    [SerializeField] protected AudioClip _shootClip;
+    [SerializeField] protected AudioClip _reloadClip;
 
-    protected List<Transform> _bulletsOnMagazine;
+    protected List<Bullet> _bulletsOnMagazine;
     public Transform shootPos => _shootPos;
 
     protected int _bulletOnMagazine;
@@ -49,11 +49,11 @@ public abstract class WeaponBase : MonoBehaviour
     }
     protected virtual void Construct()
     {
-        _bulletsOnMagazine = new List<Transform>();
+        _bulletsOnMagazine = new List<Bullet>();
         for (int i = 0; i < _bulletOnMagazineCount; i++)
         {
-            Transform bullet = Instantiate(_bulletPrefab, _shootPos).transform;
-            bullet.localPosition = Vector3.zero;
+            Bullet bullet = Instantiate(_bulletPrefab, _shootPos);
+            bullet.transform.localPosition = Vector3.zero;
             bullet.gameObject.SetActive(false);
             _bulletsOnMagazine.Add(bullet);
         }
@@ -61,18 +61,30 @@ public abstract class WeaponBase : MonoBehaviour
         _bulletOnMagazine = _bulletOnMagazineCount;
         onEndReload?.Invoke(_bulletOnMagazine, _bulletsOnMagazine.Count);
     }
-    public virtual void Shoot(ITakeDamage takeDamageDamage, Vector3 pos, bool headshot)
+    public void Shoot(Vector3 pos, bool headshot)
     {
-        _audioSource.PlayOneShot(_shootClip); 
-    }
-    protected virtual void BulletHitTarget(Transform bullet, ITakeDamage takeDamageDamage, bool headshoot)
-    {
-        _bulletsOnMagazine.Add(bullet);
-        bullet.gameObject.SetActive(false);
-        bullet.transform.parent = _shootPos; 
-        bullet.transform.localPosition = Vector3.zero;
+        if (_bulletsOnMagazine.Count <= 0 || _isReloading) return; 
 
-        takeDamageDamage.TakeDamage(_damage, headshoot);
+        Bullet bullet = _bulletsOnMagazine[0];
+        bullet.gameObject.SetActive(true);
+        bullet.transform.parent = null;
+        bullet.Shoot(pos, _damage, headshot);
+        bullet.OnHitTarget += BulletHitTarget;
+
+        _audioSource.PlayOneShot(_shootClip);
+        _bulletsOnMagazine.Remove(bullet);
+        _bulletOnMagazine--;
+        _shootEffect.Play();
+        onShoot?.Invoke(_bulletOnMagazine, _bulletsOnMagazine.Count);
+    }
+    protected virtual void BulletHitTarget(Bullet bullet)
+    {
+        bullet.transform.parent = transform; 
+        bullet.transform.localPosition = Vector3.zero;
+        bullet.transform.localRotation = Quaternion.identity; 
+        bullet.OnHitTarget -= BulletHitTarget;
+
+        _bulletsOnMagazine.Add(bullet);
     }
 
     protected virtual IEnumerator Reload()

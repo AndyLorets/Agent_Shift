@@ -9,7 +9,6 @@ public class WeaponBehaviour
     private float _shootDelay;
     private float _currentShootTime;
 
-    private ITakeDamage _takeDamage;
     private Vector3 _shootPos;
 
     private const string ANIM_SHOOT = "Shoot";
@@ -29,7 +28,7 @@ public class WeaponBehaviour
     }
     public void Run()
     {
-        bool canShoot = _character.IsEnemyDetected(out _takeDamage, out _shootPos, out headshoot);
+        bool canShoot = _character.IsEnemyDetected(out _shootPos, out headshoot);
         if (canShoot)
         {
             Shooting();
@@ -42,7 +41,7 @@ public class WeaponBehaviour
         if (_currentShootTime <= 0 && !_weapon.isReloading)
         {
             _animator.SetTrigger(ANIM_SHOOT);
-            _weapon.Shoot(_takeDamage, _shootPos, headshoot);
+            _weapon.Shoot(_shootPos, headshoot);
             _currentShootTime = _shootDelay;
         }
     }

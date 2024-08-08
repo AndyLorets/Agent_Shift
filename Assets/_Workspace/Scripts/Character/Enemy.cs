@@ -12,10 +12,12 @@ public class Enemy : Character
     [Space(5)]
     [SerializeField] private bool _isRequestingAssistance = true;
     [SerializeField, Range(1, 3)] private int _visibleCountToAttack = 2;
+    [SerializeField, Range(.1f, 1f)] private float _hitChance = .5f;
     [Space(5)]
     [SerializeField] private CharacterDialogue[] _dialogueOnHear;
     [SerializeField] private CharacterDialogue[] _dialogueOnVisibled;
     [SerializeField] private CharacterDialogue[] _dialogueOnAttack;
+
 
     private Collider _collider;
     private StateMachine _stateMachine = new StateMachine();
@@ -189,6 +191,21 @@ public class Enemy : Character
     {
         EnterAttackState();
         base.TakeDamage(value, headShoot);
+    }
+    public override bool IsEnemyDetected(out Vector3 pos, out bool headshoot)
+    {
+        bool isDetected = base.IsEnemyDetected(out pos, out headshoot);
+
+        if (isDetected)
+        {
+            if (Random.value > _hitChance)
+            {
+                pos.y += Random.Range(_hitChance, 2);
+                pos.x += Random.Range(-1, -1);
+            }
+        }
+
+        return isDetected;
     }
     public override void Dead(bool headShot)
     {

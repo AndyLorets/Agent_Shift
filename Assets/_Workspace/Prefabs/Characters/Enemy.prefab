@@ -94,8 +94,8 @@ GameObject:
   - component: {fileID: 1793076471163684623}
   - component: {fileID: 671456104862700481}
   - component: {fileID: 2179556365350420672}
-  - component: {fileID: 8545985410939153238}
   - component: {fileID: 8418885654918142590}
+  - component: {fileID: 5307377904654351603}
   m_Layer: 7
   m_Name: M4_8
   m_TagString: Untagged
@@ -174,28 +174,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8545985410939153238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665646650476320966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d35712d609b464447b59020196297a12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 1
-  _bulletOnMagazineCount: 8
-  _reloadTime: 1.5
-  _shootDelayTime: 1
-  _bulletPrefab: {fileID: 8893093729779758195, guid: 92f9a1dad95a9dc42b09cfabc57cbafb, type: 3}
-  _shootEffect: {fileID: 1811206124728092144}
-  _shootPos: {fileID: 5963679268744548281}
-  _audioSource: {fileID: 8418885654918142590}
-  _shootClip: {fileID: 8300000, guid: 8602b7d5cd15c1943a50aa53f171c8cf, type: 3}
-  _reloadClip: {fileID: 8300000, guid: 3c5c1d4d7b9307c458890a4beb12e4ae, type: 3}
 --- !u!82 &8418885654918142590
 AudioSource:
   m_ObjectHideFlags: 0
@@ -292,6 +270,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5307377904654351603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665646650476320966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eea2640154767b4186d1545c881c01a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 1
+  _bulletOnMagazineCount: 15
+  _reloadTime: 1
+  _shootDelayTime: 2
+  _bulletPrefab: {fileID: 6987340088765933737, guid: 92f9a1dad95a9dc42b09cfabc57cbafb, type: 3}
+  _shootEffect: {fileID: 1811206124728092144}
+  _shootPos: {fileID: 5963679268744548281}
+  _audioSource: {fileID: 8418885654918142590}
+  _shootClip: {fileID: 8300000, guid: 8602b7d5cd15c1943a50aa53f171c8cf, type: 3}
+  _reloadClip: {fileID: 8300000, guid: 3c5c1d4d7b9307c458890a4beb12e4ae, type: 3}
 --- !u!1 &1312349048346786939
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,6 +602,7 @@ MonoBehaviour:
   _unitInventory: {fileID: 321839853298967495}
   _isRequestingAssistance: 1
   _visibleCountToAttack: 2
+  _hitChance: 0.7
   _dialogueOnHear:
   - text: I heard something. This isn't good.
     clip: {fileID: 8300000, guid: dc116d220765868429e94843c243664a, type: 3}
@@ -671,7 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 290195e58e2c6924c9bc6b554c89889c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 8545985410939153238}
+  _weapon: {fileID: 5307377904654351603}
   _attackRadius: 10
 --- !u!114 &3616283909976650226
 MonoBehaviour:

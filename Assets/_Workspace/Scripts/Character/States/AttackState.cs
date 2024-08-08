@@ -117,7 +117,8 @@ public class AttackState : StateBase
         _enemy.agent.SetDestination(transform.position);
         _enemy.Animator.SetBool(ANIM_RUN, false);
         _enemy.Animator.SetBool(ANIM_AIM, false);
-        _state = State.Follow; 
+        _state = State.Follow;
+        _weapon.StopAllCoroutines();
     }
     private void OnDestroy()
     {

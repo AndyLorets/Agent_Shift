@@ -79,11 +79,10 @@ public abstract class Character : MonoBehaviour, ITakeDamage
 
         return true;
     }
-    public virtual bool IsEnemyDetected(out ITakeDamage takeDamage, out Vector3 pos, out bool headshoot)
+    public virtual bool IsEnemyDetected(out Vector3 pos, out bool headshoot)
     {
         _enemyDetected = false;
 
-        takeDamage = null;
         pos = Vector3.zero;
         headshoot = false;
 
@@ -94,7 +93,6 @@ public abstract class Character : MonoBehaviour, ITakeDamage
 
         if(!IsLineClear(transform.position, nearestEnemy.transform.position) || !nearestEnemy.Alive) return false;
 
-        takeDamage = nearestEnemy.takeDamage;
         pos = nearestEnemy.transform.position + Vector3.up;
 
         _enemyDetected = true; 
