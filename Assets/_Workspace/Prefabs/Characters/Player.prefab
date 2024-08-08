@@ -572,6 +572,7 @@ GameObject:
   - component: {fileID: 7735777757861443454}
   - component: {fileID: 4415531423589596163}
   - component: {fileID: 7298531836205693579}
+  - component: {fileID: 6228161600957017350}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -787,6 +788,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6228161600957017350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762201228030563759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4a1f604e7683a43841be9da1c7bbcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sphereRadius: 0.3
+  _detectionRange: 1
+  _angle: 90
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1860592772773406367
 GameObject:
   m_ObjectHideFlags: 0
@@ -2435,8 +2454,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _bulletOnMagazineCount: 5
+  _shootCount: 1
   _reloadTime: 2.4
-  _shootDelayTime: 0.8
+  _shootDelay: 1
   _bulletPrefab: {fileID: 6987340088765933737, guid: 92f9a1dad95a9dc42b09cfabc57cbafb, type: 3}
   _shootEffect: {fileID: 5643874763635253561}
   _shootPos: {fileID: 5777015112031617873}

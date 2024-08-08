@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PatroolState : StateBase
 {
+    [SerializeField] private Transform _patroolTransform; 
     [SerializeField] private Vector3 _cubeSize;
     [SerializeField, Range(3, 7)] private float _waitTime = 3f;
     
@@ -11,13 +12,12 @@ public class PatroolState : StateBase
 
     private const float AGENT_MOVE_SPEED = 1.2f;
 
-    private Vector3 _startPos;
     private Enemy _enemy;
 
     protected override void Awake()
     {
-        base.Awake(); 
-        _startPos = transform.position;
+        base.Awake();
+        _patroolTransform.parent = transform.parent;
         _enemy = GetComponent<Enemy>();
     }
     private void Update()
@@ -67,19 +67,21 @@ public class PatroolState : StateBase
 
         SetMove();
     }
-    private Vector3 GetRandomPointInsideCube()
+ private Vector3 GetRandomPointInsideCube()
     {
-        Vector3 randomPoint = new Vector3(
+        Vector3 randomPointLocal = new Vector3(
             Random.Range(-_cubeSize.x / 2, _cubeSize.x / 2),
             Random.Range(-_cubeSize.y / 2, _cubeSize.y / 2),
             Random.Range(-_cubeSize.z / 2, _cubeSize.z / 2)
         );
-
-        return _startPos + randomPoint;
+        Vector3 randomPointWorld = _patroolTransform.TransformPoint(randomPointLocal);
+        return randomPointWorld;
     }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireCube(transform.position, _cubeSize);
+        Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
+        Gizmos.DrawWireCube(Vector3.zero, _cubeSize);
     }
 }

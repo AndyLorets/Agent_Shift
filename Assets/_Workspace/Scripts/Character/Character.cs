@@ -99,6 +99,28 @@ public abstract class Character : MonoBehaviour, ITakeDamage
 
         return true;
     }
+    public virtual bool IsEnemyDetected(out Vector3 pos, out ITakeDamage takeDamage)
+    {
+        _enemyDetected = false;
+
+        pos = Vector3.zero;
+        takeDamage = null;
+
+        if (!CheckForEnemyInRange()) return false;
+
+        Character nearestEnemy = FindNearestEnemy();
+        if (nearestEnemy == null) return false;
+
+        takeDamage = nearestEnemy.takeDamage;
+
+        if (!IsLineClear(transform.position, nearestEnemy.transform.position) || !nearestEnemy.Alive) return false;
+
+        pos = nearestEnemy.transform.position + Vector3.up;
+
+        _enemyDetected = true;
+
+        return true;
+    }
     private bool IsLineClear (Vector3 pointA, Vector3 pointB)
     {
         pointA += Vector3.up;

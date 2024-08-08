@@ -18,13 +18,13 @@ public class Enemy : Character
     [SerializeField] private CharacterDialogue[] _dialogueOnVisibled;
     [SerializeField] private CharacterDialogue[] _dialogueOnAttack;
 
-
     private Collider _collider;
     private StateMachine _stateMachine = new StateMachine();
 
     public System.Action<Vector3> onPlayerVisible;
     public NavMeshAgent agent { get; private set; }
     public Player player { get; private set; }
+    public bool onAttack { get; private set; }
 
     private int _visibleCount;
 
@@ -154,6 +154,7 @@ public class Enemy : Character
 
         _stateMachine.ChangeState(_attackState);
         onPlayerVisible?.Invoke(transform.position);
+        onAttack = true; 
     }
     private void EnterPatrolState()
     {
@@ -161,6 +162,7 @@ public class Enemy : Character
 
         _visibleCount = 0;
         _stateMachine.ChangeState(_patrolState);
+        onAttack = false;
     }
     public void EnterLureState(Vector3 pos)
     {
@@ -173,6 +175,7 @@ public class Enemy : Character
         ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnHear[r]);
         _lureState.SetLurePoint(pos);
         _stateMachine.ChangeState(_lureState);
+        onAttack = false;
     }
     private void OnHearFootStep(Vector3 pos)
     {
@@ -189,8 +192,9 @@ public class Enemy : Character
     }
     public override void TakeDamage(int value, bool headShoot)
     {
-        EnterAttackState();
         base.TakeDamage(value, headShoot);
+        if (_currentHP > 0)
+            EnterAttackState();
     }
     public override bool IsEnemyDetected(out Vector3 pos, out bool headshoot)
     {

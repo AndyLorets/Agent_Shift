@@ -10,8 +10,9 @@ public abstract class WeaponBase : MonoBehaviour
     [Space(5)]
     [SerializeField, Range(5, 30)] protected int _bulletOnMagazineCount = 8;
     [Space(5)]
+    [SerializeField, Range(1, 5)] protected int _shootCount = 1;
     [SerializeField, Range(1f, 5f)] protected float _reloadTime = 1;
-    [SerializeField, Range(.15f, 5f)] protected float _shootDelayTime = 1f;
+    [SerializeField, Range(.15f, 5f)] protected float _shootDelay = 1f;
 
     [Space(10), Header("Components")]
     [SerializeField] protected Bullet _bulletPrefab;
@@ -26,7 +27,8 @@ public abstract class WeaponBase : MonoBehaviour
 
     protected int _bulletOnMagazine;
     protected bool _isReloading;
-    public float shootDelay => _shootDelayTime;
+    public float shootDelay => _shootDelay;
+    public int shootCount => _shootCount;
     public bool isReloading => _isReloading;
     protected bool _hasBulletOnMagazine => _bulletOnMagazine > 0;
 
@@ -75,7 +77,7 @@ public abstract class WeaponBase : MonoBehaviour
         _bulletsOnMagazine.Remove(bullet);
         _bulletOnMagazine--;
         _shootEffect.Play();
-        onShoot?.Invoke(_bulletOnMagazine, _bulletsOnMagazine.Count);
+        onShoot?.Invoke(_bulletOnMagazine, _bulletOnMagazineCount);
     }
     protected virtual void BulletHitTarget(Bullet bullet)
     {

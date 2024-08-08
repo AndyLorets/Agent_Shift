@@ -12,6 +12,8 @@ public class Player : Character
     public bool IsInvisibility { get; private set; }
     public bool IsArmom { get; private set; }
     public Rigidbody rb { get; private set; }
+    public Joystick joystickMove => _joystickMovement;
+    public Joystick joystickAim => _joystickAim;
     public string CurrentWeaponName => "Pistol";
 
     private Collider _collider;
@@ -46,6 +48,7 @@ public class Player : Character
         PlayerAbilities.onInvisibility += SetInvisibility;
         PlayerAbilities.onArmor += SetArmor;
     }
+
     private void ConstructBehaviours()
     {
         _moveBehaviour = new IdleMoveBehaviour(this);
@@ -61,11 +64,8 @@ public class Player : Character
     }
     private Vector3 GetMoveDirection()
     {
-        float horizontal = 0;
-        float vertical = 0;
-
-        horizontal = Input.GetAxis("Horizontal") + _joystickMovement.Horizontal;
-        vertical = Input.GetAxis("Vertical") + _joystickMovement.Vertical;
+        float horizontal = Input.GetAxis("Horizontal") + _joystickMovement.Horizontal;
+        float vertical = Input.GetAxis("Vertical") + _joystickMovement.Vertical;
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical);
         return direction;

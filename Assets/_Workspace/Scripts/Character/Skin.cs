@@ -8,6 +8,7 @@ public class Skin : MonoBehaviour
     public Animator animator => _animator;
     public System.Action onShoot;
     public System.Action<Vector3> onFootStep;
+    public System.Action onKick;
 
     private const float FOOTSTEP_SPEED_RANGE = .8f; 
 
@@ -24,5 +25,9 @@ public class Skin : MonoBehaviour
             onFootStep?.Invoke(transform.position);
             _footStepSource.PlayOneShot(_footStepClips[Random.Range(0, _footStepClips.Length)]);
         }
+    }
+    public void Kick()
+    {
+        onKick?.Invoke();
     }
 }
