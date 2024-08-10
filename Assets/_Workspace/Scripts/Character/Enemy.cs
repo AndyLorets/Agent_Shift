@@ -47,8 +47,12 @@ public class Enemy : Character
         }
         if (_stateMachine.currentState == _attackState && player.IsInvisibility)
         {
-            _lureState.SetLurePoint(player.transform.position);
-            _stateMachine.ChangeState(_lureState);
+            ExitAllState();
+            CancelInvoke(nameof(EnterPatrolState));
+            Invoke(nameof(EnterPatrolState), 5f); 
+
+            int r = Random.Range(0, _dialogueOnVisibled.Length);
+            ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnVisibled[r]);
         }
     }
     protected override void Construct()
@@ -106,7 +110,6 @@ public class Enemy : Character
                 if (EnemyIsDetected)
                 {
                     ExitAllState();
-
                     _visibleCount++;
 
                     if (_visibleCount == 1)
@@ -118,15 +121,17 @@ public class Enemy : Character
                     if (_visibleCount >= _visibleCountToAttack)
                     {
                         EnterAttackState();
+                        _visibleCount = 0; 
                         continue; 
                     }
                 }
-                else if (_stateMachine.currentState == null)
+                else if (_stateMachine.currentState == null && _visibleCount > 0)
                 {
+                    _visibleCount = 0;
                     EnterPatrolState();
                 }
             }
-
+            print("CheckPlayer"); 
             yield return new WaitForSeconds(CHECK_PLAYER_DURATION);
         }
     }
@@ -147,7 +152,7 @@ public class Enemy : Character
     }
     private void EnterAttackState()
     {
-        if (_stateMachine.currentState == _attackState) return; 
+        if (_stateMachine.currentState == _attackState || player.IsInvisibility) return; 
 
         int r = Random.Range(0, _dialogueOnAttack.Length);
         ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnAttack[r], true);
@@ -160,7 +165,6 @@ public class Enemy : Character
     {
         if (_stateMachine.currentState == _patrolState) return;
 
-        _visibleCount = 0;
         _stateMachine.ChangeState(_patrolState);
         onAttack = false;
     }
@@ -189,6 +193,7 @@ public class Enemy : Character
         ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnHear[r]);
         _lureState.SetLurePoint(pos);
         _stateMachine.ChangeState(_lureState);
+        onAttack = false;
     }
     public override void TakeDamage(int value, bool headShoot)
     {
@@ -204,7 +209,7 @@ public class Enemy : Character
         {
             if (Random.value > _hitChance)
             {
-                pos.y += Random.Range(_hitChance, 2);
+                pos.y += Random.Range(_hitChance, 1f);
                 pos.x += Random.Range(-1, -1);
             }
         }
@@ -215,11 +220,13 @@ public class Enemy : Character
     {
         base.Dead(headShot);
 
-        enabled = false; 
-        _collider.enabled = false;
-
         Unsubscribe();
         ExitAllState();
+        CancelInvoke();
+
+        enabled = false;
+        _collider.enabled = false;
+        agent.enabled = false;
 
         if (_unitInventory.gameObject.activeSelf)
             _unitInventory.SpawnItem();
