@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : Character
 {
@@ -17,6 +19,9 @@ public class Enemy : Character
     [SerializeField] private CharacterDialogue[] _dialogueOnHear;
     [SerializeField] private CharacterDialogue[] _dialogueOnVisibled;
     [SerializeField] private CharacterDialogue[] _dialogueOnAttack;
+    [Space(5)]
+    [SerializeField] private CanvasGroup _alertCanvas;
+    [SerializeField] private Image _alertIcon; 
 
     private Collider _collider;
     private StateMachine _stateMachine = new StateMachine();
@@ -111,27 +116,39 @@ public class Enemy : Character
                 {
                     ExitAllState();
                     _visibleCount++;
-
+                    if (_alertCanvas.alpha != 1)
+                    {
+                        _alertCanvas.DOFade(1, 1f);
+                        _alertIcon.DOFillAmount(1, CHECK_PLAYER_DURATION);
+                    }
                     if (_visibleCount == 1)
                     {
                         int r = Random.Range(0, _dialogueOnVisibled.Length);
                         ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnVisibled[r]);
                     }
 
-                    if (_visibleCount >= _visibleCountToAttack)
+                    if (_visibleCount == _visibleCountToAttack)
                     {
                         EnterAttackState();
-                        _visibleCount = 0; 
+                        _visibleCount = 0;
                         continue; 
                     }
                 }
                 else if (_stateMachine.currentState == null && _visibleCount > 0)
                 {
-                    _visibleCount = 0;
                     EnterPatrolState();
                 }
+                else
+                {
+                    _visibleCount = 0;
+                    if (_alertCanvas.alpha != 0)
+                    {
+                        _alertIcon.DOFillAmount(0, CHECK_PLAYER_DURATION)
+                            .OnComplete(() => _alertCanvas.alpha = 0);
+                    }
+                }
             }
-            print("CheckPlayer"); 
+
             yield return new WaitForSeconds(CHECK_PLAYER_DURATION);
         }
     }
@@ -159,7 +176,10 @@ public class Enemy : Character
 
         _stateMachine.ChangeState(_attackState);
         onPlayerVisible?.Invoke(transform.position);
-        onAttack = true; 
+        onAttack = true;
+        _alertCanvas.DOKill();
+        _alertIcon.fillAmount = 0;
+        _alertCanvas.alpha = 0;
     }
     private void EnterPatrolState()
     {
@@ -227,6 +247,8 @@ public class Enemy : Character
         enabled = false;
         _collider.enabled = false;
         agent.enabled = false;
+        _alertCanvas.DOKill(); 
+        _alertCanvas.alpha = 0;
 
         if (_unitInventory.gameObject.activeSelf)
             _unitInventory.SpawnItem();

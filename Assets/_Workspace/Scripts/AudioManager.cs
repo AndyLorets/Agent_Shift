@@ -6,10 +6,11 @@ public class AudioManager : MonoBehaviour
 {
     [Header("Music")]
     [SerializeField] private AudioSource _musicSource;
-    [Space(5), SerializeField] private AudioClip _musicGameClip;
-    [SerializeField] private AudioClip _musicAlertClip;
+    [Space(5), SerializeField] private AudioClip _musicMenuClip;
+    [SerializeField] private AudioClip _musicBriefingClip;
+    [SerializeField] private AudioClip _musicGameClip;
     [SerializeField] private AudioClip _musicWinClip;
-    [SerializeField] private AudioClip _musicLoseClip; 
+    [SerializeField] private AudioClip _musicLoseClip;
     [Header("Fx")]
     [SerializeField] private AudioSource _door;
     [SerializeField] private AudioSource _taskWrite;
@@ -23,29 +24,37 @@ public class AudioManager : MonoBehaviour
     {
         ServiceLocator.RegisterService(this);
 
-        GameManager.onGameStart += PlayIdleMusic;
+        BriefingManager.onStartBriefing += PlayBriefingMusic;
         GameManager.onGameWin += PlayWinMusic;
         GameManager.onGameLose += PlayLoseMusic;
-        GameManager.onGameStart += StartCheckAlertState; 
+        GameManager.onGameStart += PlayGameMusic; 
     }
     private void OnDestroy()
     {
-        GameManager.onGameStart -= PlayIdleMusic;
+        BriefingManager.onStartBriefing -= PlayBriefingMusic;
         GameManager.onGameWin -= PlayWinMusic;
         GameManager.onGameLose -= PlayLoseMusic;
-        GameManager.onGameStart -= StartCheckAlertState;
+        GameManager.onGameStart -= PlayGameMusic;
     }
     private void Start()
     {
         _enemyManager = ServiceLocator.GetService<EnemyManager>();
         _startMusicVolume = _musicSource.volume; 
     }
-    private void StartCheckAlertState() => StartCoroutine(CheckAlertState());
-    private void PlayIdleMusic() => ChangeMusic(_musicGameClip);
+    private void PlayMenuMusic() => ChangeMusic(_musicMenuClip);
+    private void PlayBriefingMusic() => ChangeMusic(_musicBriefingClip);
+    private void PlayGameMusic() => ChangeMusic(_musicGameClip);
     private void PlayWinMusic() => ChangeMusic(_musicWinClip);
     private void PlayLoseMusic() => ChangeMusic(_musicLoseClip);
     private void ChangeMusic(AudioClip clip)
     {
+        if(_musicSource.clip == null)
+        {
+            _musicSource.clip = clip;
+            _musicSource.volume = _startMusicVolume;
+            _musicSource.Play(); 
+            return; 
+        }
         _musicSource.DOFade(0, .5f)
             .OnComplete(delegate ()
             {
@@ -72,42 +81,4 @@ public class AudioManager : MonoBehaviour
         if (!_alert.isPlaying)
             _alert.Play(); 
     }
-
-    private IEnumerator CheckAlertState()
-    {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(3); 
-
-        while (GameManager.gameState == GameManager.GameState.GamePlay)
-        {
-            bool shouldPlayAlertMusic = false;
-
-            if (_enemyManager.enemiesList.Count > 0)
-            {
-                foreach (var enemy in _enemyManager.enemiesList)
-                {
-                    if (enemy.onAttack)
-                    {
-                        shouldPlayAlertMusic = true;
-                        break;
-                    }
-                }
-            }
-
-            if (shouldPlayAlertMusic != _isAlert)
-            {
-                _isAlert = shouldPlayAlertMusic;
-                if (_isAlert)
-                {
-                    ChangeMusic(_musicAlertClip);
-                }
-                else
-                {
-                    ChangeMusic(_musicGameClip); 
-                }
-            }
-
-            yield return waitForSeconds;
-        }
-    }
-
 }

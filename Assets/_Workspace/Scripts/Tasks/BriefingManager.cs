@@ -27,6 +27,7 @@ public class BriefingManager : MonoBehaviour
     }
     private void Start()
     {
+        onStartBriefing?.Invoke();
         Invoke(nameof(PlayBriefing), 1f);
     }
     private void PlayBriefing()
@@ -35,11 +36,14 @@ public class BriefingManager : MonoBehaviour
         {
             _briefings[_currentBriefing].PlayBriefing();
         }
+
         _currentBriefing++;
         EndBriefing();
 
         if (_currentBriefing == 1)
+        {
             _skipBtn.gameObject.SetActive(true);
+        }
     }
     private void SkipBriefing()
     {
@@ -47,7 +51,6 @@ public class BriefingManager : MonoBehaviour
         _briefings[_currentBriefing - 1].StopBriefing();
         _currentBriefing = _briefings.Length + 1;
         EndBriefing();
-        _skipBtn.gameObject.SetActive(false);
     }
     private void EndBriefing()
     {
@@ -55,6 +58,7 @@ public class BriefingManager : MonoBehaviour
         {
             onEndBriefing?.Invoke();
             CharacterMessanger.OnResetAudioPlaying -= PlayBriefing;
+            _skipBtn.gameObject.SetActive(false);
         }
     }
     private void OnDestroy()
