@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System.Collections;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -17,9 +16,20 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _item;
     [SerializeField] private AudioSource _alert;
 
-    private EnemyManager _enemyManager;
-    private bool _isAlert;
-    private float _startMusicVolume; 
+    private AudioListener audioListener; 
+
+    private float _startMusicVolume;
+    public static bool SoundActiveState
+    {
+        get => PlayerPrefs.GetInt(nameof(SoundActiveState), 1) == 1;
+        set => PlayerPrefs.SetInt(nameof(SoundActiveState), value ? 1 : 0);
+    }
+    public static bool MusicActiveState
+    {
+        get => PlayerPrefs.GetInt(nameof(MusicActiveState), 1) == 1;
+        set => PlayerPrefs.SetInt(nameof(MusicActiveState), value ? 1 : 0);
+    }
+
     private void Awake()
     {
         ServiceLocator.RegisterService(this);
@@ -38,8 +48,9 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        _enemyManager = ServiceLocator.GetService<EnemyManager>();
-        _startMusicVolume = _musicSource.volume; 
+        _startMusicVolume = _musicSource.volume;
+        SetMusicMute();
+        SetSoundMute();
     }
     private void PlayMenuMusic() => ChangeMusic(_musicMenuClip);
     private void PlayBriefingMusic() => ChangeMusic(_musicBriefingClip);
@@ -48,7 +59,7 @@ public class AudioManager : MonoBehaviour
     private void PlayLoseMusic() => ChangeMusic(_musicLoseClip);
     private void ChangeMusic(AudioClip clip)
     {
-        if(_musicSource.clip == null)
+        if (_musicSource.clip == null)
         {
             _musicSource.clip = clip;
             _musicSource.volume = _startMusicVolume;
@@ -66,19 +77,35 @@ public class AudioManager : MonoBehaviour
 
     public void PlayOpenDoor()
     {
+        if (!SoundActiveState) return;
+
         _door.Play(); 
     }
     public void PlayTaskWrite()
     {
+        if (!SoundActiveState) return;
+
         _taskWrite.Play();
     }
     public void PlayItem()
     {
+        if (!SoundActiveState) return;
+
         _item.Play();
     }
     public void PlayAlert()
     {
+        if (!SoundActiveState) return;
+
         if (!_alert.isPlaying)
             _alert.Play(); 
+    }
+    public void SetMusicMute()
+    {
+        _musicSource.mute = !MusicActiveState;
+    }
+    public void SetSoundMute()
+    {
+        AudioListener.pause = !SoundActiveState;
     }
 }

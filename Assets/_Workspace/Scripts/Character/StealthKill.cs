@@ -28,6 +28,8 @@ public class StealthKill : MonoBehaviour
 
     void Update()
     {
+        if (!_player.Alive) return; 
+
         if (_player.joystickAim.Vertical != 0 || _player.joystickAim.Horizontal != 0 
             || _player.joystickMove.Vertical != 0 || _player.joystickMove.Horizontal != 0
             || _isKilling) return;

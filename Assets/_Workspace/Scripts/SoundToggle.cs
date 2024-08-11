@@ -1,25 +1,13 @@
-using UnityEngine.UI;
-using UnityEngine;
-
-public class SoundToggle : MonoBehaviour
+public class SoundToggle : ToggleButton
 {
-    [SerializeField] private Image _image;
-    [SerializeField] private Sprite _activeSprite;
-    [SerializeField] private Sprite _deactieSprite; 
-
-    private bool _active = true;
-    private void Start()
+    protected override bool _activeState
     {
-        SetCurrentSprite(); 
+        get => AudioManager.SoundActiveState;
+        set => AudioManager.SoundActiveState = value;
     }
-    public void Toggle()
+    public override void Toggle()
     {
-        _active = !_active;
-        SetCurrentSprite(); 
-    }
-
-    private void SetCurrentSprite()
-    {
-        _image.sprite = _active ? _activeSprite : _deactieSprite;
+        base.Toggle();
+        ServiceLocator.GetService<AudioManager>().SetSoundMute();
     }
 }

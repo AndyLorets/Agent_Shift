@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static Action onGameWin;
     public static Action onGameLose;
 
+    [SerializeField] private CinemachineVirtualCamera _menuCam;
+    [SerializeField] private CinemachineVirtualCamera _gamePlayCam;
     public enum GameState
     {
         Briefing, GamePlay, End
@@ -32,10 +34,16 @@ public class GameManager : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         gameState = GameState.Briefing;
     }
+    public void StartBriefing()
+    {
+        ServiceLocator.GetService<BriefingManager>().StartBriefing();
+        _menuCam.Priority = 0;
+    }
     private void OnStartGame()
     {
         gameState = GameState.GamePlay;
         onGameStart?.Invoke();
+        _gamePlayCam.Priority = 10;
     }
     private void OnEndGame()
     {
@@ -43,9 +51,10 @@ public class GameManager : MonoBehaviour
     }
     public void Restart()
     {
-        gameState = GameState.Briefing;
+        ServiceLocator.GetService<PauseManager>().Pause(false);
         ServiceLocator.ClearAllServices();
+        gameState = GameState.Briefing;
         CharacterDialogue.speaking = false;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 }

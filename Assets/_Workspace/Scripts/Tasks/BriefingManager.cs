@@ -18,6 +18,8 @@ public class BriefingManager : MonoBehaviour
 
     private void Awake()
     {
+        ServiceLocator.RegisterService(this);
+
         CharacterMessanger.OnResetAudioPlaying += PlayBriefing;
         GameManager.onGameWin += OnGameWin;
         GameManager.onGameLose += OnGameLose;
@@ -25,7 +27,7 @@ public class BriefingManager : MonoBehaviour
         _skipBtn.onClick.AddListener(SkipBriefing);
         _skipBtn.gameObject.SetActive(false);
     }
-    private void Start()
+    public void StartBriefing()
     {
         onStartBriefing?.Invoke();
         Invoke(nameof(PlayBriefing), 1f);

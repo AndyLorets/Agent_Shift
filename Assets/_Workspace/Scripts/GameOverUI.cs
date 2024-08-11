@@ -24,6 +24,7 @@ public class GameOverUI : MonoBehaviour
     {
         GameManager.onGameLose -= OnLoseGame;
         GameManager.onGameWin -= OnWinGame;
+        _group.DOKill();
     }
     private void Start()
     {
