@@ -54,8 +54,8 @@ public class Player : Character
         GameDataController gameDataController = ServiceLocator.GetService<GameDataController>();
 
         _hp = gameDataController.PlayerData.hp;
-        _headShotChance = gameDataController.PlayerData.abilitiesData.headShotChance;
-        _weapon.SetParameters(gameDataController.PlayerData.weaponData.pistolDamage, gameDataController.PlayerData.weaponData.pistolShootDelay);
+        _headShotChance = gameDataController.PlayerData.abilitiesData.headShotChanceCurrentValue;
+        _weapon.SetParameters(gameDataController.PlayerData.weaponData.pistolCurrentDamage, gameDataController.PlayerData.weaponData.pistolCurrentShootDelay);
         _currentHP = _hp;
     }
     private void ConstructBehaviours()
@@ -172,7 +172,7 @@ public class Player : Character
         PlayerAbilities.onArmor -= SetArmor;
         BriefingManager.onStartBriefing -= LoadData;
     }
-    public override void TakeDamage(int value, bool headShot)
+    public override void TakeDamage(float value, bool headShot)
     {
         value = IsArmom ? 0 : value;
 

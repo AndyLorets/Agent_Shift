@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class WeaponBase : MonoBehaviour
 {
     [Header("Parameters")]
-    [SerializeField, Range(1, 10)] protected int _damage = 1;
+    [SerializeField, Range(1, 10)] protected float _damage = 1;
     [Space(5)]
     [SerializeField, Range(5, 30)] protected int _bulletOnMagazineCount = 8;
     [Space(5)]
@@ -63,7 +63,7 @@ public abstract class WeaponBase : MonoBehaviour
         _bulletOnMagazine = _bulletOnMagazineCount;
         onEndReload?.Invoke(_bulletOnMagazine, _bulletsOnMagazine.Count);
     }
-    public void SetParameters(int damage, float delay)
+    public void SetParameters(float damage, float delay)
     {
         _damage = damage; 
         _shootDelay = delay;

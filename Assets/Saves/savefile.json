@@ -1,0 +1,34 @@
+{
+    "currentLevel": 0,
+    "moneyCount": 500,
+    "hp": 10,
+    "abilitiesData": {
+        "armorCurrentValue": 10.0,
+        "armorMaxValue": 10.0,
+        "armorIncreaseValue": 1.0,
+        "armorPrice": 30,
+        "armorPriceIncreaseValue": 5,
+        "invisibilityCurrentValue": 20.0,
+        "invisibilityMaxValue": 20.0,
+        "invisibilityIncreaseValue": 1.0,
+        "invisibilityPrice": 55,
+        "invisibilityPriceIncreaseValue": 5,
+        "headShotChanceCurrentValue": 80.0,
+        "headShotChanceMaxValue": 80.0,
+        "headShotChanceIncreaseValue": 10.0,
+        "headShotChancePrice": 45,
+        "headShotChancePriceIncreaseValue": 5
+    },
+    "weaponData": {
+        "pistolCurrentDamage": 5.0,
+        "pistolMaxDamage": 5.0,
+        "pistolIncreaseDamage": 1.0,
+        "pistolDamagePrice": 30,
+        "pistolDamagePriceIncreaseValue": 5,
+        "pistolCurrentShootDelay": 0.29999998211860659,
+        "pistolMaxShootDelay": 0.30000001192092898,
+        "pistolIncreaseShootDelay": -0.10000000149011612,
+        "pistolShootDelayPrice": 13,
+        "pistolShootDelayPriceIncreaseValue": 2
+    }
+}

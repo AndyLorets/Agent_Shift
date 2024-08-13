@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class SaveManager
 {
-    private static string folderPath = Path.Combine(Application.persistentDataPath, "Saves");
+    private static string folderPath = Path.Combine(Application.dataPath, "Saves");
     private static string filePath = Path.Combine(folderPath, "savefile.json");
 
     static SaveManager()
@@ -13,8 +13,6 @@ public static class SaveManager
             Directory.CreateDirectory(folderPath);
         }
     }
-
-
     public static void SavePlayerData(PlayerData data)
     {
         try
@@ -27,8 +25,6 @@ public static class SaveManager
             Debug.LogError($"Error saving player data: {e.Message}");
         }
     }
-
-    // Метод для загрузки данных игрока
     public static PlayerData LoadPlayerData()
     {
         if (File.Exists(filePath))
@@ -56,7 +52,7 @@ public static class SaveManager
 public class PlayerData
 {
     public int currentLevel;
-    public int moneyCount;
+    public int moneyCount = 500;
     public int hp = 10;
 
     public AbilitiesData abilitiesData = new AbilitiesData();
@@ -66,16 +62,36 @@ public class PlayerData
 [System.Serializable]
 public class AbilitiesData
 {
-    public float armorTime = 5f;
-    public float invisibilityTime = 10f;
-    public int headShotChance = 10;
+    public float armorCurrentValue = 5f;
+    public float armorMaxValue = 10f;
+    public float armorIncreaseValue = 1f;
+    public int armorPrice = 5;
+    public int armorPriceIncreaseValue = 5;
 
+    public float invisibilityCurrentValue = 10f;
+    public float invisibilityMaxValue = 20f;
+    public float invisibilityIncreaseValue = 1f;
+    public int invisibilityPrice = 5;
+    public int invisibilityPriceIncreaseValue = 5;
+
+    public float headShotChanceCurrentValue = 10f;
+    public float headShotChanceMaxValue = 80f;
+    public float headShotChanceIncreaseValue = 10f;
+    public int headShotChancePrice = 10;
+    public int headShotChancePriceIncreaseValue = 5;
 }
 [System.Serializable]
 public class WeaponData
 {
-    public int pistolDamage = 1;
-    public int riffleDamage = 1;
-    public float pistolShootDelay = .3f;
-    public float riffleShootDelay = .3f;
+    public float pistolCurrentDamage = 1;
+    public float pistolMaxDamage = 5;
+    public float pistolIncreaseDamage = 1;
+    public int pistolDamagePrice = 10;
+    public int pistolDamagePriceIncreaseValue = 5;
+
+    public float pistolCurrentShootDelay = .7f;
+    public float pistolMaxShootDelay = .3f;
+    public float pistolIncreaseShootDelay = -.1f;
+    public int pistolShootDelayPrice = 5;
+    public int pistolShootDelayPriceIncreaseValue = 2;
 }

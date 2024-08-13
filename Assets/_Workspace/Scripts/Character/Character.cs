@@ -3,8 +3,8 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour, ITakeDamage
 {
-    [SerializeField] protected int _hp;
-    [SerializeField] protected int _currentHP;
+    [SerializeField] protected float _hp;
+    [SerializeField] protected float _currentHP;
     [Space(5), Header("Visible")]
     [SerializeField, Range(3f, 10f)] protected float _visibleRange = 3f;
     [SerializeField, Range(25f, 250f)] protected float _viewAngle = 45f;
@@ -136,7 +136,7 @@ public abstract class Character : MonoBehaviour, ITakeDamage
         }
         return false;
     }
-    public virtual void TakeDamage(int value, bool headShot)
+    public virtual void TakeDamage(float value, bool headShot)
     {
         string anim = headShot ? ANIM_DAMAGE_HEADSHOT : ANIM_DAMAGE;
         value = headShot ? value * 3 : value;

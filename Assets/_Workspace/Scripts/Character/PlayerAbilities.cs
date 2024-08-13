@@ -23,9 +23,9 @@ public class PlayerAbilities : MonoBehaviour
     private void Load()
     {
         AbilitiesData abilitiesData = ServiceLocator.GetService<GameDataController>().PlayerData.abilitiesData;
-        _armorTime = abilitiesData.armorTime;
-        _invisibilityTime = abilitiesData.invisibilityTime;
-        _headShotChance = abilitiesData.headShotChance; 
+        _armorTime = abilitiesData.armorCurrentValue;
+        _invisibilityTime = abilitiesData.invisibilityCurrentValue;
+        _headShotChance = abilitiesData.headShotChanceCurrentValue; 
     }
     public void ActiveInvisibility()
     {

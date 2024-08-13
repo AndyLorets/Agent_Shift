@@ -4,14 +4,14 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private Vector3 _lastPos;
-    private int _damage;
+    private float _damage;
     private bool _headShot;
 
     public Action<Bullet> OnHitTarget; 
 
     private const float SPEED = 40f;
 
-    public void Shoot(Vector3 pos, int damgae, bool headShot)
+    public void Shoot(Vector3 pos, float damgae, bool headShot)
     {
         _damage = damgae;
         _headShot = headShot; 

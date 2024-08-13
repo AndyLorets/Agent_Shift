@@ -215,7 +215,7 @@ public class Enemy : Character
         _stateMachine.ChangeState(_lureState);
         onAttack = false;
     }
-    public override void TakeDamage(int value, bool headShoot)
+    public override void TakeDamage(float value, bool headShoot)
     {
         base.TakeDamage(value, headShoot);
         if (_currentHP > 0)
