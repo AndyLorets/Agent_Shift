@@ -63,6 +63,11 @@ public abstract class WeaponBase : MonoBehaviour
         _bulletOnMagazine = _bulletOnMagazineCount;
         onEndReload?.Invoke(_bulletOnMagazine, _bulletsOnMagazine.Count);
     }
+    public void SetParameters(int damage, float delay)
+    {
+        _damage = damage; 
+        _shootDelay = delay;
+    }
     public void Shoot(Vector3 pos, bool headshot)
     {
         if (_bulletsOnMagazine.Count <= 0 || _isReloading) return; 

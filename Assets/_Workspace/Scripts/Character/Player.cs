@@ -7,7 +7,6 @@ public class Player : Character
     [SerializeField] private Joystick _joystickAim;
     [SerializeField] private WeaponLineRender _weaponLineRender;
     [SerializeField] private CharacterRigController _rig;
-    [SerializeField] private PlayerAbilities _playerAbilities;
 
     public bool IsInvisibility { get; private set; }
     public bool IsArmom { get; private set; }
@@ -21,6 +20,7 @@ public class Player : Character
     private WeaponBehaviour _weaponBehaviour;
     private bool _isAiming => _joystickAim.Horizontal != 0 || _joystickAim.Vertical != 0;
     private bool _aiming;
+    private float _headShotChance; 
     public WeaponBase currentWeapon => _weapon;
     private void Awake()
     {
@@ -47,8 +47,17 @@ public class Player : Character
 
         PlayerAbilities.onInvisibility += SetInvisibility;
         PlayerAbilities.onArmor += SetArmor;
+        BriefingManager.onStartBriefing += LoadData;
     }
+    private void LoadData()
+    {
+        GameDataController gameDataController = ServiceLocator.GetService<GameDataController>();
 
+        _hp = gameDataController.PlayerData.hp;
+        _headShotChance = gameDataController.PlayerData.abilitiesData.headShotChance;
+        _weapon.SetParameters(gameDataController.PlayerData.weaponData.pistolDamage, gameDataController.PlayerData.weaponData.pistolShootDelay);
+        _currentHP = _hp;
+    }
     private void ConstructBehaviours()
     {
         _moveBehaviour = new IdleMoveBehaviour(this);
@@ -145,7 +154,7 @@ public class Player : Character
         if (isDetected)
         {
             float randomValue = Random.Range(0f, 100f);
-            headshoot = randomValue <= _playerAbilities.headShotChance;
+            headshoot = randomValue <= _headShotChance;
 
             if (headshoot)
             {
@@ -161,6 +170,7 @@ public class Player : Character
     {
         PlayerAbilities.onInvisibility -= SetInvisibility;
         PlayerAbilities.onArmor -= SetArmor;
+        BriefingManager.onStartBriefing -= LoadData;
     }
     public override void TakeDamage(int value, bool headShot)
     {

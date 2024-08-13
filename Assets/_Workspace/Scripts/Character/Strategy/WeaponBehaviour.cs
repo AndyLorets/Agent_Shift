@@ -6,7 +6,7 @@ public class WeaponBehaviour
     private Character _character;
     private Animator _animator; 
 
-    private float _shootDelay;
+    private float _shootDelay => _weapon.shootDelay;
     private float _currentShootTime;
 
     private Vector3 _shootPos;
@@ -23,7 +23,6 @@ public class WeaponBehaviour
         _character = character;
         _weapon = weapon;
         _animator = animator;
-        _shootDelay = weapon.shootDelay;
         _shootCount = weapon.shootCount;
 
         _currentShootCount = _shootCount;

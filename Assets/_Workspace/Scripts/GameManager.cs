@@ -48,6 +48,12 @@ public class GameManager : MonoBehaviour
     private void OnEndGame()
     {
         gameState = GameState.End;
+
+    }
+    public void NextLevel()
+    {
+        ServiceLocator.GetService<GameDataController>().PlayerData.currentLevel++;
+        ServiceLocator.GetService<GameDataController>().SaveData();
     }
     public void Restart()
     {

@@ -3,14 +3,30 @@ using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
 {
-    [SerializeField] private float _invisibilityTime = 10f;
-    [SerializeField] private float _armorTime = 5f;
-    public float headShotChance = 100f;
+    private float _invisibilityTime;
+    private float _armorTime;
+    private float _headShotChance;
 
     public static System.Action<float> onChangeInvisibilitTime;
     public static System.Action<bool> onInvisibility;
     public static System.Action<float> onChangeArmorTime;
     public static System.Action<bool> onArmor;
+
+    private void Awake()
+    {
+        BriefingManager.onStartBriefing += Load; 
+    }
+    private void OnDestroy()
+    {
+        BriefingManager.onStartBriefing -= Load;
+    }
+    private void Load()
+    {
+        AbilitiesData abilitiesData = ServiceLocator.GetService<GameDataController>().PlayerData.abilitiesData;
+        _armorTime = abilitiesData.armorTime;
+        _invisibilityTime = abilitiesData.invisibilityTime;
+        _headShotChance = abilitiesData.headShotChance; 
+    }
     public void ActiveInvisibility()
     {
         StartCoroutine(Invisibility());
