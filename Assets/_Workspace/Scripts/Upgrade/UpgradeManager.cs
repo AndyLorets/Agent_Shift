@@ -36,7 +36,7 @@ public class UpgradeManager : MonoBehaviour
 
         if (currentValue > maxValue && moneyCount >= price)
         {
-            currentValue += increaseValue;
+            currentValue -= increaseValue;
             price += priceIncreaseValue;
             _wallet.RemoveMoney(price);
             _gameData.SaveData();
@@ -93,10 +93,20 @@ public class UpgradeManager : MonoBehaviour
     public void UpgradePistolShootDelay()
     {
         ref float currentValue = ref _gameData.PlayerData.weaponData.pistolCurrentShootDelay;
-        float maxValue = _gameData.PlayerData.weaponData.pistolMaxShootDelay;
+        float maxValue = _gameData.PlayerData.weaponData.pistolMinShootDelay;
         float increaseValue = _gameData.PlayerData.weaponData.pistolIncreaseShootDelay;
         ref int price = ref _gameData.PlayerData.weaponData.pistolShootDelayPrice;
         ref int priceIncreaseValue = ref _gameData.PlayerData.weaponData.pistolShootDelayPriceIncreaseValue;
+
+        TryUpgradeDecrease(ref currentValue, maxValue, increaseValue, ref price, ref priceIncreaseValue);
+    }
+    public void UpgradeHP()
+    {
+        ref float currentValue = ref _gameData.PlayerData.currentHp;
+        float maxValue = _gameData.PlayerData.maxHp;
+        float increaseValue = _gameData.PlayerData.hpIncreaseValue;
+        ref int price = ref _gameData.PlayerData.hpPrice;
+        ref int priceIncreaseValue = ref _gameData.PlayerData.hpPriceIncreaseValue;
 
         TryUpgradeDecrease(ref currentValue, maxValue, increaseValue, ref price, ref priceIncreaseValue);
     }

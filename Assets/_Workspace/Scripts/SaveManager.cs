@@ -51,47 +51,76 @@ public static class SaveManager
 [System.Serializable]
 public class PlayerData
 {
-    public int currentLevel;
-    public int moneyCount = 500;
-    public int hp = 10;
+    public int currentLevel = 1;
+    public int moneyCount = 0;
+
+    public float startHp = 10f;
+    public float currentHp;
+    public float maxHp = 50f;
+    public float hpIncreaseValue = 10f;
+    public int hpPrice = 5;
+    public int hpPriceIncreaseValue = 5;
 
     public AbilitiesData abilitiesData = new AbilitiesData();
-    public WeaponData weaponData = new WeaponData();    
+    public WeaponData weaponData = new WeaponData();   
+    
+    public PlayerData()
+    {
+        currentHp = startHp; 
+    }
 }
 
 [System.Serializable]
 public class AbilitiesData
 {
-    public float armorCurrentValue = 5f;
+    public float armorStartValue = 5f;
+    public float armorCurrentValue;
     public float armorMaxValue = 10f;
     public float armorIncreaseValue = 1f;
     public int armorPrice = 5;
     public int armorPriceIncreaseValue = 5;
 
-    public float invisibilityCurrentValue = 10f;
+    public float invisibilityStartValue = 10f;
+    public float invisibilityCurrentValue;
     public float invisibilityMaxValue = 20f;
     public float invisibilityIncreaseValue = 1f;
     public int invisibilityPrice = 5;
     public int invisibilityPriceIncreaseValue = 5;
 
-    public float headShotChanceCurrentValue = 10f;
+    public float headShotChanceStartValue = 10f;
+    public float headShotChanceCurrentValue;
     public float headShotChanceMaxValue = 80f;
     public float headShotChanceIncreaseValue = 10f;
     public int headShotChancePrice = 10;
     public int headShotChancePriceIncreaseValue = 5;
+
+    public AbilitiesData()
+    {
+        armorCurrentValue = armorStartValue;
+        invisibilityCurrentValue = invisibilityStartValue;
+        headShotChanceCurrentValue = headShotChanceStartValue;
+    }
 }
 [System.Serializable]
 public class WeaponData
 {
-    public float pistolCurrentDamage = 1;
+    public float pistolStartDamage = 1;
+    public float pistolCurrentDamage;
     public float pistolMaxDamage = 5;
     public float pistolIncreaseDamage = 1;
     public int pistolDamagePrice = 10;
     public int pistolDamagePriceIncreaseValue = 5;
 
-    public float pistolCurrentShootDelay = .7f;
-    public float pistolMaxShootDelay = .3f;
-    public float pistolIncreaseShootDelay = -.1f;
+    public float pistolStartShootDelay = .7f;
+    public float pistolCurrentShootDelay;
+    public float pistolMinShootDelay = .3f;
+    public float pistolIncreaseShootDelay = .1f;
     public int pistolShootDelayPrice = 5;
     public int pistolShootDelayPriceIncreaseValue = 2;
+
+    public WeaponData()
+    {
+        pistolCurrentDamage = pistolStartDamage;
+        pistolCurrentShootDelay = pistolStartShootDelay; 
+    }
 }

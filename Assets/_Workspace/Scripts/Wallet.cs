@@ -7,6 +7,11 @@ public class Wallet : MonoBehaviour
     private void Awake()
     {
         ServiceLocator.RegisterService(this);
+        GameManager.onGameWin += SaveData; 
+    }
+    private void OnDestroy()
+    {
+        GameManager.onGameWin -= SaveData;
     }
     private void Start()
     {
@@ -22,5 +27,9 @@ public class Wallet : MonoBehaviour
     {
         CurrentMoney -= value;
         onMoneyChanged?.Invoke();
+    }
+    private void SaveData()
+    {
+        ServiceLocator.GetService<GameDataController>().PlayerData.moneyCount = CurrentMoney; 
     }
 }

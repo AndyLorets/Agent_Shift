@@ -53,7 +53,7 @@ public class Player : Character
     {
         GameDataController gameDataController = ServiceLocator.GetService<GameDataController>();
 
-        _hp = gameDataController.PlayerData.hp;
+        _hp = gameDataController.PlayerData.currentHp;
         _headShotChance = gameDataController.PlayerData.abilitiesData.headShotChanceCurrentValue;
         _weapon.SetParameters(gameDataController.PlayerData.weaponData.pistolCurrentDamage, gameDataController.PlayerData.weaponData.pistolCurrentShootDelay);
         _currentHP = _hp;
@@ -181,6 +181,7 @@ public class Player : Character
 
         _currentHP -= value;
 
+        onTakeDamage?.Invoke(value);
         onChangeHP?.Invoke(_currentHP, _hp, headShot);
 
         if (_currentHP <= 0)

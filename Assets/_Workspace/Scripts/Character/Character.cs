@@ -26,6 +26,7 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     protected bool _enemyDetected;
 
     public System.Action<float, float, bool> onChangeHP;
+    public System.Action<float> onTakeDamage;
     public System.Action<Character> onDead;
 
     protected const string ANIM_DAMAGE = "Damage";
@@ -141,6 +142,7 @@ public abstract class Character : MonoBehaviour, ITakeDamage
         string anim = headShot ? ANIM_DAMAGE_HEADSHOT : ANIM_DAMAGE;
         value = headShot ? value * 3 : value;
 
+        onTakeDamage?.Invoke(value);
         onChangeHP?.Invoke(_currentHP, _hp, headShot);
 
         _currentHP -= value;
