@@ -21,12 +21,14 @@ public class Wallet : MonoBehaviour
     public void AddMoney(int value)
     {
         CurrentMoney += value;
-        onMoneyChanged?.Invoke(); 
+        onMoneyChanged?.Invoke();
+        //ServiceLocator.GetService<AudioManager>().PlayMoney();
     }
     public void RemoveMoney(int value)
     {
         CurrentMoney -= value;
         onMoneyChanged?.Invoke();
+        ServiceLocator.GetService<AudioManager>().PlayMoney(); 
     }
     private void SaveData()
     {

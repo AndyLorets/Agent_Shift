@@ -36,11 +36,11 @@ public class TaskManager : MonoBehaviour
             _currentTask++;
             if (_currentTask < _tasks.Count)
             {
-                task.complate = true; 
+                task.complate = true;
                 onTaskUpdate?.Invoke(_tasks[_currentTask].taskName);
             }
             else
-                GameManager.onGameWin?.Invoke(); 
+                ServiceLocator.GetService<GameManager>().WinGame(); 
         }       
     }
     private void OnDestroy()

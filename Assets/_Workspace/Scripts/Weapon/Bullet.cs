@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour
             ITakeDamage takeDamage = hit.collider.GetComponent<ITakeDamage>();
             if (takeDamage != null)
             {
-                takeDamage.TakeDamage(_damage, _headShot); 
+                takeDamage.TakeDamage(_damage, _headShot);
             }
 
             HitTarget();

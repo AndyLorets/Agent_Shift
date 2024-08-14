@@ -15,6 +15,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _taskWrite;
     [SerializeField] private AudioSource _item;
     [SerializeField] private AudioSource _alert;
+    [SerializeField] private AudioSource _headShot;
+    [SerializeField] private AudioSource _money;
 
     private AudioListener audioListener; 
 
@@ -100,6 +102,28 @@ public class AudioManager : MonoBehaviour
         if (!_alert.isPlaying)
             _alert.Play(); 
     }
+    public void PlayHeadShot()
+    {
+        if (!SoundActiveState) return;
+
+        if (!_headShot.isPlaying)
+            _headShot.Play();
+        else
+            _headShot.PlayOneShot(_headShot.clip);
+    }
+    public void PlayMoney()
+    {
+        if (!SoundActiveState) return;
+
+        if (!_money.isPlaying)
+            _money.Play();
+        else
+        {
+            _money.Stop();
+            _money.Play();
+        }
+    }
+
     public void SetMusicMute()
     {
         _musicSource.mute = !MusicActiveState;

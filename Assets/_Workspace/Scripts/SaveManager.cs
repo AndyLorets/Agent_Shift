@@ -3,9 +3,13 @@ using UnityEngine;
 
 public static class SaveManager
 {
+#if UNITY_EDITOR
     private static string folderPath = Path.Combine(Application.dataPath, "Saves");
     private static string filePath = Path.Combine(folderPath, "savefile.json");
-
+#else
+    private static string folderPath = Path.Combine(Application.persistentDataPath, "Saves");
+    private static string filePath = Path.Combine(folderPath, "savefile.json");
+#endif
     static SaveManager()
     {
         if (!Directory.Exists(folderPath))
@@ -52,7 +56,7 @@ public static class SaveManager
 public class PlayerData
 {
     public int currentLevel = 1;
-    public int moneyCount = 0;
+    public int moneyCount = 1000;
 
     public float startHp = 10f;
     public float currentHp;

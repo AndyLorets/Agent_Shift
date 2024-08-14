@@ -9,11 +9,10 @@ public abstract class ToggleButton : MonoBehaviour
 
     protected abstract bool _activeState { get; set; }
 
-    private void Start()
+    private void OnEnable()
     {
         SetCurrentSprite();
     }
-
     public virtual void Toggle()
     {
         _activeState = !_activeState;

@@ -18,15 +18,15 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        onGameWin += OnEndGame;
-        onGameLose += OnEndGame;
         BriefingManager.onEndBriefing += OnStartGame;
     }
     private void OnDisable()
     {
-        onGameWin -= OnEndGame;
-        onGameLose -= OnEndGame;
         BriefingManager.onEndBriefing -= OnStartGame;
+    }
+    private void Awake()
+    {
+        ServiceLocator.RegisterService(this); 
     }
     private void Start()
     {
@@ -45,22 +45,31 @@ public class GameManager : MonoBehaviour
         onGameStart?.Invoke();
         _gamePlayCam.Priority = 10;
     }
-    private void OnEndGame()
+    public void WinGame()
     {
         gameState = GameState.End;
-
+        ServiceLocator.GetService<Wallet>().AddMoney(100); 
+        onGameWin?.Invoke(); 
+    }
+    public void LoseGame()
+    {
+        gameState = GameState.End;
+        onGameLose?.Invoke();
     }
     public void NextLevel()
     {
         ServiceLocator.GetService<GameDataController>().PlayerData.currentLevel++;
         ServiceLocator.GetService<GameDataController>().SaveData();
+        Restart();
     }
     public void Restart()
     {
+        gameState = GameState.Briefing;
+
         ServiceLocator.GetService<PauseManager>().Pause(false);
         ServiceLocator.ClearAllServices();
-        gameState = GameState.Briefing;
         CharacterDialogue.speaking = false;
+
         SceneManager.LoadScene(1);
     }
 }

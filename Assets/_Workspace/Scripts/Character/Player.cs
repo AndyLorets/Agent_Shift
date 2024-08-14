@@ -200,7 +200,7 @@ public class Player : Character
         _collider.enabled = false;
         rb.isKinematic = true;
 
-        GameManager.onGameLose?.Invoke(); 
+        ServiceLocator.GetService<GameManager>().LoseGame(); 
     }
 }
 

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour
 {
+    private MessageUI _messageUI; 
     private GameDataController _gameData;
     private Wallet _wallet;
     private void Awake()
@@ -10,6 +11,7 @@ public class UpgradeManager : MonoBehaviour
     }
     private void Start()
     {
+        _messageUI = ServiceLocator.GetService<MessageUI>();    
         _gameData = ServiceLocator.GetService<GameDataController>();
         _wallet = ServiceLocator.GetService<Wallet>();
     }
@@ -18,32 +20,46 @@ public class UpgradeManager : MonoBehaviour
     {
         int moneyCount = _wallet.CurrentMoney;
 
-        if (currentValue < maxValue && moneyCount >= price)
+        if(moneyCount < price)
         {
+            _messageUI.ShowMessage("Not enough Money");
+            return false;
+        }
+
+        if (currentValue < maxValue)
+        {
+            _wallet.RemoveMoney(price);
             currentValue += increaseValue;
             price += priceIncreaseValue;
-            _wallet.RemoveMoney(price);
             _gameData.SaveData();
+            //ServiceLocator.GetService<AudioManager>().PlayUpgrade(); 
             return true;
         }
 
-        Debug.Log("Not enough money or value is already at maximum.");
+        _messageUI.ShowMessage("Value is already at maximum.");
         return false;
     }
     private bool TryUpgradeDecrease(ref float currentValue, float maxValue, float increaseValue, ref int price, ref int priceIncreaseValue)
     {
         int moneyCount = _wallet.CurrentMoney;
 
+        if (moneyCount < price)
+        {
+            _messageUI.ShowMessage("Not enough Money");
+            return false;
+        }
+
         if (currentValue > maxValue && moneyCount >= price)
         {
+            _wallet.RemoveMoney(price);
             currentValue -= increaseValue;
             price += priceIncreaseValue;
-            _wallet.RemoveMoney(price);
             _gameData.SaveData();
+            //ServiceLocator.GetService<AudioManager>().PlayUpgrade();
             return true;
         }
 
-        Debug.Log("Not enough money or value is already at maximum.");
+        _messageUI.ShowMessage("Value is already at maximum.");
         return false;
     }
     public void UpgradeArmor()
@@ -108,6 +124,6 @@ public class UpgradeManager : MonoBehaviour
         ref int price = ref _gameData.PlayerData.hpPrice;
         ref int priceIncreaseValue = ref _gameData.PlayerData.hpPriceIncreaseValue;
 
-        TryUpgradeDecrease(ref currentValue, maxValue, increaseValue, ref price, ref priceIncreaseValue);
+        TryUpgrade(ref currentValue, maxValue, increaseValue, ref price, ref priceIncreaseValue);
     }
 }
