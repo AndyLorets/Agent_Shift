@@ -16,7 +16,8 @@ public class StealthKill : MonoBehaviour
     private ITakeDamage _targetTakeDamage;
     private bool _isKilling;
 
-    private const string ANIM_KICK = "Kick"; 
+    private const string ANIM_KICK = "Kick";
+    private const float FOOTSTEP_SPEED_RANGE = .8f;
 
     void Start()
     {
@@ -34,11 +35,9 @@ public class StealthKill : MonoBehaviour
 
     void Update()
     {
-        if (!_player.Alive) return; 
+        if (!_player.Alive || _isKilling) return; 
 
-        if (_player.joystickAim.Vertical != 0 || _player.joystickAim.Horizontal != 0 
-            || _player.joystickMove.Vertical != 0 || _player.joystickMove.Horizontal != 0
-            || _isKilling) return;
+        if (_player.Animator.GetFloat("Vertical") >= FOOTSTEP_SPEED_RANGE || _player.Animator.GetFloat("Vertical") <= -FOOTSTEP_SPEED_RANGE) return;
 
         PerformStealthKill();
     }

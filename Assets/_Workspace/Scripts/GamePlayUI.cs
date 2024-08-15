@@ -17,19 +17,20 @@ public class GamePlayUI : MonoBehaviour
     }
     private void Awake()
     {
-        _canvasGroup = GetComponent<CanvasGroup>(); 
+        _canvasGroup = GetComponent<CanvasGroup>();
+        ServiceLocator.RegisterService(this); 
     }
     private void Start()
     {
         Hide(); 
     }
-    private void Show()
+    public void Show()
     {
         _canvasGroup.alpha = 1;
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
     }
-    private void Hide()
+    public void Hide()
     {
         _canvasGroup.alpha = 0;
         _canvasGroup.interactable = false;

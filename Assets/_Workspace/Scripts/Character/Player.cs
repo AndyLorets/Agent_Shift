@@ -74,8 +74,8 @@ public class Player : Character
     }
     private Vector3 GetMoveDirection()
     {
-        float horizontal = Input.GetAxis("Horizontal") + _joystickMovement.Horizontal;
-        float vertical = Input.GetAxis("Vertical") + _joystickMovement.Vertical;
+        float horizontal = CanControll ? Input.GetAxis("Horizontal") + _joystickMovement.Horizontal : 0;
+        float vertical = CanControll ? Input.GetAxis("Vertical") + _joystickMovement.Vertical : 0;
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical);
         return direction;
@@ -92,8 +92,6 @@ public class Player : Character
     private void SetArmor(bool value) => IsArmom = value;
     private void RunBehaviours()
     {
-        if (!CanControll) return;
-
         _moveBehaviour.Move(GetMoveDirection(), GetAimDirection());
         if (_isAiming && !IsInvisibility)
         {
