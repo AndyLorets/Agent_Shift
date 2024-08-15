@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _alert;
     [SerializeField] private AudioSource _headShot;
     [SerializeField] private AudioSource _money;
+    [SerializeField] private AudioSource _kick;
 
     private AudioListener audioListener; 
 
@@ -123,7 +124,18 @@ public class AudioManager : MonoBehaviour
             _money.Play();
         }
     }
+    public void PlayKick()
+    {
+        if (!SoundActiveState) return;
 
+        if (!_kick.isPlaying)
+            _kick.Play();
+        else
+        {
+            _kick.Stop();
+            _kick.Play();
+        }
+    }
     public void SetMusicMute()
     {
         _musicSource.mute = !MusicActiveState;

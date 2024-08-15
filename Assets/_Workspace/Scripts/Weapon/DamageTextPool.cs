@@ -26,7 +26,7 @@ public class DamageTextPool : MonoBehaviour
     }
     private void ShowDamageText(float damage)
     {
-        if (_damageTextPool.Count == 0) return;
+        if (_damageTextPool.Count == 0 || damage > 999) return;
 
         DamageText damageTextInstance = _damageTextPool.Dequeue();
         damageTextInstance.gameObject.SetActive(true);

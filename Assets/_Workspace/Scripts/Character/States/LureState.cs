@@ -48,7 +48,8 @@ public class LureState : StateBase
     }
     private void SetMove()
     {
-        _enemy.agent.SetDestination(_lurePoint);
+        if (_enemy.Alive)
+            _enemy.agent.SetDestination(_lurePoint);
     }
     private void StopMove()
     {

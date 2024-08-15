@@ -20,7 +20,8 @@ public class Player : Character
     private WeaponBehaviour _weaponBehaviour;
     private bool _isAiming => _joystickAim.Horizontal != 0 || _joystickAim.Vertical != 0;
     private bool _aiming;
-    private float _headShotChance; 
+    private float _headShotChance;
+    public bool CanControll { get; set; } = true; 
     public WeaponBase currentWeapon => _weapon;
     private void Awake()
     {
@@ -91,8 +92,10 @@ public class Player : Character
     private void SetArmor(bool value) => IsArmom = value;
     private void RunBehaviours()
     {
+        if (!CanControll) return;
+
         _moveBehaviour.Move(GetMoveDirection(), GetAimDirection());
-        if (_isAiming)
+        if (_isAiming && !IsInvisibility)
         {
             _weaponBehaviour.Run();
         }

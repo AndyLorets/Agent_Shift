@@ -253,7 +253,7 @@ public class Enemy : Character
         if (_unitInventory.gameObject.activeSelf)
             _unitInventory.SpawnItem();
     }
-    private void ExitAllState()
+    public void ExitAllState()
     {
         _stateMachine.ExitActiveState();
     }

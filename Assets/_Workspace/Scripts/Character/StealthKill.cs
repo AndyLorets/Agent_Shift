@@ -1,3 +1,5 @@
+using DG.Tweening;
+using TMPro.Examples;
 using UnityEngine;
 
 public class StealthKill : MonoBehaviour
@@ -5,8 +7,10 @@ public class StealthKill : MonoBehaviour
     [SerializeField] private float _sphereRadius = .3f; 
     [SerializeField] private float _detectionRange = 1f; 
     [SerializeField] private float _angle = 90f; 
-    [SerializeField] private LayerMask _enemyLayer; 
+    [SerializeField] private LayerMask _enemyLayer;
 
+    private AudioManager _audioManager; 
+    private CameraController _cameraController; 
     private Player _player;
     private Skin _skin;
     private ITakeDamage _targetTakeDamage;
@@ -16,6 +20,8 @@ public class StealthKill : MonoBehaviour
 
     void Start()
     {
+        _cameraController = ServiceLocator.GetService<CameraController>();
+        _audioManager = ServiceLocator.GetService<AudioManager>();  
         _player = GetComponent<Player>();
         _skin = _player.Skin;
         _skin.onKick += Kill;
@@ -57,12 +63,16 @@ public class StealthKill : MonoBehaviour
             Vector3 directionToEnemy = hit.transform.position - transform.position;
             float angleToEnemy = Vector3.Angle(directionToEnemy, transform.forward);
             Enemy enemy = hit.collider.GetComponent<Enemy>();
+
             if (angleToEnemy < _angle / 2 && !enemy.IsEnemyDetected())
             {
                 targetTakeDamage = enemy.takeDamage;
-    
+                enemy.ExitAllState();
+
+                transform.DOMove(hit.point - transform.forward * 1.35f, .2f);
                 transform.LookAt(hit.point);
-                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0); 
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                _player.CanControll = false;
                 return true;
             }
         }
@@ -73,10 +83,13 @@ public class StealthKill : MonoBehaviour
     {
         if (_targetTakeDamage != null)
         {
-            _targetTakeDamage.TakeDamage(100, false);
+            _targetTakeDamage.TakeDamage(1000, false);
             _targetTakeDamage = null;
+            _cameraController.InpulseCamera();
+            _audioManager.PlayKick(); 
         }
         _isKilling = false;
+        _player.CanControll = true;
     }
 
     void OnDrawGizmosSelected()
