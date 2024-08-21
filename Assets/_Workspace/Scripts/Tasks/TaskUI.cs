@@ -6,20 +6,15 @@ using UnityEngine;
 public class TaskUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private TaskManager _taskManager;
-
+    
+    private TaskManager _taskManager;
     private AudioManager _audioManager; 
-    private void OnEnable()
-    {
-        _taskManager.onTaskUpdate += UpdateTask; 
-    }
-    private void OnDisable()
-    {
-        _taskManager.onTaskUpdate -= UpdateTask;
-    }
+
     private void Start()
     {
-        _audioManager = ServiceLocator.GetService<AudioManager>(); 
+        _audioManager = ServiceLocator.GetService<AudioManager>();
+        _taskManager = ServiceLocator.GetService<TaskManager>();
+        _taskManager.onTaskUpdate += UpdateTask;
     }
     private void UpdateTask(string text)
     {
@@ -35,5 +30,9 @@ public class TaskUI : MonoBehaviour
            _audioManager.PlayTaskWrite();
             yield return new WaitForSeconds(0.1f); 
         }
+    }
+    private void OnDestroy()
+    {
+        _taskManager.onTaskUpdate -= UpdateTask;
     }
 }

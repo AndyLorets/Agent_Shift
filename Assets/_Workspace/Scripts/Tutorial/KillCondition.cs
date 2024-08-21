@@ -4,8 +4,8 @@ public class KillCondition : TutorialCondition
 {
     [SerializeField] private Enemy _enemy;
     [SerializeField] private CharacterDialogue _dialogueOnFail;
+    [SerializeField] private Joystick _aimJoysick;
 
-    private const float FOOTSTEP_SPEED_RANGE = .8f;
     private Vector3 _playerStartPos;
  
     public override void EnableCondition()
@@ -15,7 +15,8 @@ public class KillCondition : TutorialCondition
         _enemy.onDead += EnemyDead;
         _playerStartPos = _player.transform.position;
         _player.Skin.onFootStep += Repeit;
-        _enemy.enabled = false; 
+        _enemy.enabled = false;
+        _aimJoysick.gameObject.SetActive(false);
     }
     private void EnemyDead(Character character)
     {

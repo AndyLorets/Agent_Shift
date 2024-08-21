@@ -161,6 +161,8 @@ public class Enemy : Character
     }
     private void OnRequestingAssistance(Vector3 pos)
     {
+        if (!Alive) return; 
+
         float dist = Vector3.Distance(transform.position, pos);
         if (dist <= _visibleRange)
         {

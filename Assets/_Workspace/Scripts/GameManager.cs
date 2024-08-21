@@ -66,10 +66,8 @@ public class GameManager : MonoBehaviour
     {
         gameState = GameState.Briefing;
 
-        ServiceLocator.GetService<PauseManager>().Pause(false);
-        ServiceLocator.ClearAllServices();
         CharacterDialogue.speaking = false;
-
-        SceneManager.LoadScene(1);
+        ServiceLocator.GetService<PauseManager>().Pause(false);
+        ServiceLocator.GetService<SceneLoader>().LoadScene(ServiceLocator.GetService<GameDataController>().PlayerData.currentLevel);
     }
 }

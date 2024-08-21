@@ -56,7 +56,7 @@ public static class SaveManager
 public class PlayerData
 {
     public int currentLevel = 1;
-    public int moneyCount = 1000;
+    public int moneyCount = 0;
 
     public float startHp = 10f;
     public float currentHp;

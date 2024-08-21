@@ -18,9 +18,9 @@ public class Player : Character
     private Collider _collider;
     private MoveBehaviour _moveBehaviour;
     private WeaponBehaviour _weaponBehaviour;
+    private PlayerAbilities _playerAbilities; 
     private bool _isAiming => _joystickAim.Horizontal != 0 || _joystickAim.Vertical != 0;
     private bool _aiming;
-    private float _headShotChance;
     public bool CanControll { get; set; } = true; 
     public WeaponBase currentWeapon => _weapon;
     private void Awake()
@@ -38,7 +38,8 @@ public class Player : Character
     {
         base.Construct();
         rb = GetComponent<Rigidbody>();
-        _collider = GetComponent<Collider>();   
+        _collider = GetComponent<Collider>();
+        _playerAbilities = GetComponent<PlayerAbilities>(); 
 
         _weaponLineRender.Construct(_viewAngle, _visibleRange);
         _rig.Construct(_weapon);
@@ -54,9 +55,8 @@ public class Player : Character
     {
         GameDataController gameDataController = ServiceLocator.GetService<GameDataController>();
 
-        _hp = gameDataController.PlayerData.currentHp;
-        _headShotChance = gameDataController.PlayerData.abilitiesData.headShotChanceCurrentValue;
         _weapon.SetParameters(gameDataController.PlayerData.weaponData.pistolCurrentDamage, gameDataController.PlayerData.weaponData.pistolCurrentShootDelay);
+        _hp = gameDataController.PlayerData.currentHp;
         _currentHP = _hp;
     }
     private void ConstructBehaviours()
@@ -82,8 +82,8 @@ public class Player : Character
     }
     private Vector3 GetAimDirection()
     {
-        float horizontal = _joystickAim.Horizontal;
-        float vertical = _joystickAim.Vertical;
+        float horizontal = CanControll ? _joystickAim.Horizontal : 0;
+        float vertical = CanControll ? _joystickAim.Vertical : 0;
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical);
         return direction;
@@ -155,7 +155,7 @@ public class Player : Character
         if (isDetected)
         {
             float randomValue = Random.Range(0f, 100f);
-            headshoot = randomValue <= _headShotChance;
+            headshoot = randomValue <= _playerAbilities.headShotChance;
 
             if (headshoot)
             {

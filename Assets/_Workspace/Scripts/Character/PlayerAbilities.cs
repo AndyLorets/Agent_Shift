@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
 {
-    private float _invisibilityTime;
-    private float _armorTime;
-    private float _headShotChance;
+    public float invisibilityTime { get; set; }
+    public float armorTime { get; set; }
+    public float headShotChance { get; set; }
 
     public static System.Action<float> onChangeInvisibilitTime;
     public static System.Action<bool> onInvisibility;
@@ -23,9 +23,9 @@ public class PlayerAbilities : MonoBehaviour
     private void Load()
     {
         AbilitiesData abilitiesData = ServiceLocator.GetService<GameDataController>().PlayerData.abilitiesData;
-        _armorTime = abilitiesData.armorCurrentValue;
-        _invisibilityTime = abilitiesData.invisibilityCurrentValue;
-        _headShotChance = abilitiesData.headShotChanceCurrentValue; 
+        armorTime = abilitiesData.armorCurrentValue;
+        invisibilityTime = abilitiesData.invisibilityCurrentValue;
+        headShotChance = abilitiesData.headShotChanceCurrentValue; 
     }
     public void ActiveInvisibility()
     {
@@ -38,14 +38,14 @@ public class PlayerAbilities : MonoBehaviour
     private IEnumerator Invisibility()
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(1); 
-        float t = _invisibilityTime;
+        float t = invisibilityTime;
 
         onInvisibility?.Invoke(true);
 
         while (t > 0)
         {
             t--; 
-            onChangeInvisibilitTime?.Invoke(t / _invisibilityTime);  
+            onChangeInvisibilitTime?.Invoke(t / invisibilityTime);  
             yield return waitForSeconds;
         }
 
@@ -54,14 +54,14 @@ public class PlayerAbilities : MonoBehaviour
     private IEnumerator Armor()
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(1);
-        float t = _armorTime;
+        float t = armorTime;
 
         onArmor?.Invoke(true);
 
         while (t > 0)
         {
             t--;
-            onChangeArmorTime?.Invoke(t / _armorTime);
+            onChangeArmorTime?.Invoke(t / armorTime);
             yield return waitForSeconds;
         }
 

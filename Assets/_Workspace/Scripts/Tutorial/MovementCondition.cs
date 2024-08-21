@@ -3,7 +3,7 @@ using UnityEngine;
 public class MovementCondition : TutorialCondition
 {
     [SerializeField] private Rigidbody _playerRB;
-
+    [SerializeField] private GameObject[] _hideObjects; 
     private Canvas _canvas;
 
     private float _t; 
@@ -13,6 +13,11 @@ public class MovementCondition : TutorialCondition
 
         _canvas = GetComponent<Canvas>();
         _canvas.enabled = false;
+
+        for (int i = 0; i < _hideObjects.Length; i++)
+        {
+            _hideObjects[i].gameObject.SetActive(false);
+        }
     }
     protected override void Ready()
     {
@@ -26,8 +31,7 @@ public class MovementCondition : TutorialCondition
             _t += Time.deltaTime;
             if (_t < 2f) return; 
 
-            CompleteStep();
-            gameObject.SetActive(false);    
+            CompleteStep();   
         }
     }
 }

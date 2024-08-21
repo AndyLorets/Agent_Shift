@@ -1,10 +1,11 @@
-using Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] private Tutorial[] _tutorials;
-
+    [SerializeField] protected CharacterDialogue _dialogueOnEnd;
+    [SerializeField] private Sprite _icon; 
     private int _currentStep;
 
     private void Awake()
@@ -49,7 +50,15 @@ public class TutorialManager : MonoBehaviour
 
     private void EndTutorial()
     {
-        // Логика завершения туториала (например, разблокировка основного геймплея)
+        CharacterMessanger characterMessanger = ServiceLocator.GetService<CharacterMessanger>();
+        characterMessanger.SetDialogue(_icon, _dialogueOnEnd);
+        CharacterMessanger.OnResetAudioPlaying += StartGameLevel;
+        PlayerPrefs.SetInt("Tutorial", 1);
+    }
+    private void StartGameLevel()
+    {
+        CharacterMessanger.OnResetAudioPlaying -= StartGameLevel;
+        ServiceLocator.GetService<SceneLoader>().LoadScene(1); 
     }
 }
 
@@ -59,7 +68,7 @@ public class Tutorial
     [SerializeField] private TutorialCondition _condition; 
     public void Init()
     {
-        _condition.gameObject.SetActive(false);
+        _condition.Initialize();
     }
     public void ShowStep(System.Action onStepCompleted)
     { 
@@ -76,12 +85,22 @@ public abstract class TutorialCondition : MonoBehaviour
     [SerializeField] protected Sprite _icon;
     [SerializeField] protected CharacterDialogue _dialogueOnStart;
     [SerializeField] protected CharacterDialogue _dialogueOnEnd;
+    [SerializeField] private Transform _playerPos;
+
+    private Vector3 _playerPosition;
+    private Quaternion _playerRotation; 
 
     protected Player _player;
     protected GamePlayUI _gamePlayUI;
     protected CharacterMessanger _characterMessanger;
 
-    protected bool _isComplate; 
+    protected bool _isComplate;
+    public void Initialize()
+    {
+        _playerPosition = _playerPos.transform.position;
+        _playerRotation = _playerPos.transform.rotation; 
+        gameObject.SetActive(false);
+    }
     public virtual void EnableCondition()
     {
         _gamePlayUI = ServiceLocator.GetService<GamePlayUI>();
@@ -91,7 +110,9 @@ public abstract class TutorialCondition : MonoBehaviour
         CharacterMessanger.OnResetAudioPlaying += Ready;
 
         _gamePlayUI.Hide();
-        _player.CanControll = false; 
+        _player.CanControll = false;
+        _player.transform.position = _playerPosition;
+        _player.transform.rotation = _playerRotation;
     }
     protected virtual void Ready()
     {
@@ -101,6 +122,8 @@ public abstract class TutorialCondition : MonoBehaviour
     }
     protected void CompleteStep()
     {
+        if (_isComplate) return; 
+
         _isComplate = true;
         _characterMessanger.SetDialogue(_icon, _dialogueOnEnd);
         CharacterMessanger.OnResetAudioPlaying += ConditionMet;
@@ -109,8 +132,6 @@ public abstract class TutorialCondition : MonoBehaviour
     }
     private void ConditionMet()
     {
-        if (!_isComplate) return; 
-
         OnConditionMet?.Invoke();
         CharacterMessanger.OnResetAudioPlaying -= ConditionMet;
         gameObject.SetActive(false);

@@ -27,7 +27,7 @@ public class CameraUI : MonoBehaviour
     {
         _camera.enabled = false; 
     }
-    private void Active()
+    public void Active()
     {
         _camera.enabled = true;
     }
