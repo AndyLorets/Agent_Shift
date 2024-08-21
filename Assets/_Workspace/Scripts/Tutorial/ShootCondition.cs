@@ -28,6 +28,8 @@ public class ShootCondition : TutorialCondition
     private void OnEnemyDead(Character character)
     {
         _enemy.onDead -= OnEnemyDead;
+        _ready = false; 
+        _canvas.enabled = false;
         CompleteStep();
     }
     private void Update()

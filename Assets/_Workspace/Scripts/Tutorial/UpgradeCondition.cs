@@ -6,6 +6,7 @@ public class UpgradeCondition : TutorialCondition
     [SerializeField] private CanvasGroup _menuCanvas;
     [SerializeField] private CanvasGroup _upgradesCanvas;
     [SerializeField] private CanvasGroup _walletCanvas;
+    [SerializeField] private Animation _animBtnContinue;
 
     private Canvas _canvas;
 
@@ -36,6 +37,7 @@ public class UpgradeCondition : TutorialCondition
     {
         _walletCanvas.alpha = 1; 
         _upgradesCanvas.interactable = true;
+        _animBtnContinue.Play();
         CharacterMessanger.OnResetAudioPlaying -= EnableContinueBtn;
     }
     public void EndTutorial()
