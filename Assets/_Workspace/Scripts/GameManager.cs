@@ -34,6 +34,13 @@ public class GameManager : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         gameState = GameState.Briefing;
     }
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.CapsLock))
+            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+#endif
+    }
     public void StartBriefing()
     {
         ServiceLocator.GetService<BriefingManager>().StartBriefing();

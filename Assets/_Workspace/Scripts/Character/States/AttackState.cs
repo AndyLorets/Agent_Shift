@@ -9,10 +9,10 @@ public class AttackState : StateBase
     private float _changeStateTimer;
 
     private const float CHANGE_ATTACK_TIME = 1f;
-    private const float CHANGE_FOLLOW_TIME = 0.3f;
+    private const float CHANGE_FOLLOW_TIME = 0.5f;
     private const float RUN_SPEED = 4f;
 
-    private State _state = State.None;
+    [SerializeField] private State _state = State.None;
     private enum State
     {
         None, Follow, Attack, Reload
@@ -51,7 +51,7 @@ public class AttackState : StateBase
 
     private void Run()
     {
-        bool isMove = _enemy.agent.velocity.sqrMagnitude > 0;
+        bool isMove = _enemy.agent.velocity.sqrMagnitude > .1f;
         bool detected = _enemy.IsEnemyDetected();
 
         _enemy.Animator.SetBool(ANIM_RUN, isMove);
@@ -97,6 +97,8 @@ public class AttackState : StateBase
     {
         LookAtPlayer();
         _weaponBehaviour.Run();
+        if (_enemy.agent.velocity.sqrMagnitude > .1f)
+            _enemy.agent.SetDestination(transform.position);
     }
 
     private void Follow()

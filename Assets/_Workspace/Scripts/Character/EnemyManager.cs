@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic; 
 public class EnemyManager : MonoBehaviour
 {
-    public List<Enemy> enemiesList { get; private set; } = new List<Enemy>();
+    public List<Character> enemiesList { get; private set; } = new List<Character>();
     private void Awake()
     {
         ServiceLocator.RegisterService(this);

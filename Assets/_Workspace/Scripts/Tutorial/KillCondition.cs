@@ -61,7 +61,7 @@ public class KillCondition : TutorialCondition
     private void Repeit(Vector3 value)
     {
         _characterMessanger.SetDialogue(_icon, _dialogueOnFail);
-        _gamePlayUI.Hide();
+        _hud.Hide();
         _player.CanControll = false; 
         _player.transform.position = _playerStartPos;
         CharacterMessanger.OnResetAudioPlaying += Ready;

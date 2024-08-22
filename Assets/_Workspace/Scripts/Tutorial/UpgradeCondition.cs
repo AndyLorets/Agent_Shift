@@ -24,7 +24,7 @@ public class UpgradeCondition : TutorialCondition
         _canvas.enabled = true;
         _menuCanvas.blocksRaycasts = true;
         _menuCanvas.interactable = true;
-        _gamePlayUI.Hide();
+        _hud.Hide();
     }
     public void OpenUpgrades()
     {

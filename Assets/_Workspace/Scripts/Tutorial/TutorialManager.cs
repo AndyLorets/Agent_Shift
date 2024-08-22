@@ -91,7 +91,7 @@ public abstract class TutorialCondition : MonoBehaviour
     private Quaternion _playerRotation; 
 
     protected Player _player;
-    protected GamePlayUI _gamePlayUI;
+    protected HUD _hud;
     protected CharacterMessanger _characterMessanger;
 
     protected bool _isComplate;
@@ -103,20 +103,20 @@ public abstract class TutorialCondition : MonoBehaviour
     }
     public virtual void EnableCondition()
     {
-        _gamePlayUI = ServiceLocator.GetService<GamePlayUI>();
+        _hud = ServiceLocator.GetService<HUD>();
         _player = ServiceLocator.GetService<Player>();  
         _characterMessanger = ServiceLocator.GetService<CharacterMessanger>();
         _characterMessanger.SetDialogue(_icon, _dialogueOnStart); 
         CharacterMessanger.OnResetAudioPlaying += Ready;
 
-        _gamePlayUI.Hide();
+        _hud.Hide();
         _player.CanControll = false;
         _player.transform.position = _playerPosition;
         _player.transform.rotation = _playerRotation;
     }
     protected virtual void Ready()
     {
-        _gamePlayUI.Show();
+        _hud.Show();
         _player.CanControll = true;
         CharacterMessanger.OnResetAudioPlaying -= Ready;
     }
@@ -127,7 +127,7 @@ public abstract class TutorialCondition : MonoBehaviour
         _isComplate = true;
         _characterMessanger.SetDialogue(_icon, _dialogueOnEnd);
         CharacterMessanger.OnResetAudioPlaying += ConditionMet;
-        _gamePlayUI.Hide();
+        _hud.Hide();
         _player.CanControll = false;
     }
     private void ConditionMet()

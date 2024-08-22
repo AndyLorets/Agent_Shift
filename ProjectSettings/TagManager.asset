@@ -19,9 +19,9 @@ TagManager:
   - Door
   - UIWorld
   - Bullet
-  - 
-  - 
-  - 
+  - Floor
+  - Wall
+  - Ground
   - 
   - 
   - 

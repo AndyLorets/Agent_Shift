@@ -134,7 +134,12 @@ public abstract class Character : MonoBehaviour, ITakeDamage
             {
                 return true;
             }
+            //else
+            //{
+            //    Debug.Log(hit.collider.name + " " + transform.name);
+            //}
         }
+
         return false;
     }
     public virtual void TakeDamage(float value, bool headShot)

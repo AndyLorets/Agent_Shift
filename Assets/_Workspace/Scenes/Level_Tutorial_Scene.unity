@@ -204,8 +204,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 5e77f31ca7a3a3d4e8b4ec7265d8d1f6, type: 3}
   _playerPos: {fileID: 1492108993}
   _enemy: {fileID: 1722816350}
-  _aimJoysick: {fileID: 887239797}
-  _moveJoysick: {fileID: 1211599736}
+  _aimJoysick: {fileID: 6756306278978303827}
+  _moveJoysick: {fileID: 6756306278978303829}
 --- !u!224 &71164964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2063,11 +2063,6 @@ Transform:
   m_Father: {fileID: 1468593361}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &355865629 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3215868470682600162, guid: 91c33e5d39bac714289ef4d61f0b35c1, type: 3}
-  m_PrefabInstance: {fileID: 6756306278978303824}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &363792365
 GameObject:
   m_ObjectHideFlags: 0
@@ -2112,8 +2107,8 @@ MonoBehaviour:
   _dialogueOnFail:
     text: You're moving too fast!
     clip: {fileID: 8300000, guid: 83a284155e5c04746a758ec6af5253e6, type: 3}
-  _aimJoysick: {fileID: 887239797}
-  _moveJoysick: {fileID: 1211599736}
+  _aimJoysick: {fileID: 6756306278978303827}
+  _moveJoysick: {fileID: 6756306278978303829}
 --- !u!224 &363792369
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5814,10 +5809,10 @@ MonoBehaviour:
   _playerPos: {fileID: 2017957896}
   _playerRB: {fileID: 641375431}
   _hideObjects:
-  - {fileID: 355865629}
+  - {fileID: 6756306278978303828}
   - {fileID: 1470316070}
   - {fileID: 962009375}
-  _moveJoysick: {fileID: 1211599736}
+  _moveJoysick: {fileID: 6756306278978303829}
 --- !u!114 &764781851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6168,17 +6163,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874193956}
   m_CullTransparentMesh: 1
---- !u!114 &887239797 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3215868470682600166, guid: 91c33e5d39bac714289ef4d61f0b35c1, type: 3}
-  m_PrefabInstance: {fileID: 6756306278978303824}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355865629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a47f546fc70ec8428172694e78e4288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &902136644 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6428156848141824264, guid: ebce923376c81704d986f4ca3461355d, type: 3}
@@ -10278,17 +10262,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193723333}
   m_CullTransparentMesh: 1
---- !u!114 &1211599736 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3215868469146573011, guid: 91c33e5d39bac714289ef4d61f0b35c1, type: 3}
-  m_PrefabInstance: {fileID: 6756306278978303824}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a47f546fc70ec8428172694e78e4288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1216792850
 GameObject:
   m_ObjectHideFlags: 0
@@ -11304,7 +11277,7 @@ MonoBehaviour:
   - {fileID: 902136644}
   - {fileID: 1759245011}
   _armorBtn: {fileID: 1470316070}
-  _moveJoysick: {fileID: 1211599736}
+  _moveJoysick: {fileID: 6756306278978303829}
   _playerAbilities: {fileID: 2017957900}
   _cameraUI: {fileID: 1092567820}
 --- !u!224 &1529186884
@@ -14912,3 +14885,30 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &6756306278978303827 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6549440211544105128, guid: 91c33e5d39bac714289ef4d61f0b35c1, type: 3}
+  m_PrefabInstance: {fileID: 6756306278978303824}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6756306278978303828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba0d0e7a039f526499c356a3c5cd6d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &6756306278978303828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6549440211544105126, guid: 91c33e5d39bac714289ef4d61f0b35c1, type: 3}
+  m_PrefabInstance: {fileID: 6756306278978303824}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6756306278978303829 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8914474555387139295, guid: 91c33e5d39bac714289ef4d61f0b35c1, type: 3}
+  m_PrefabInstance: {fileID: 6756306278978303824}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba0d0e7a039f526499c356a3c5cd6d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

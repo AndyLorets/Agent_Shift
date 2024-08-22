@@ -68,8 +68,7 @@ public class Player : Character
     {
         for (int i = 0; i < _enemyManager.enemiesList.Count; i++)
         {
-            Character character = _enemyManager.enemiesList[i];
-            _targets.Add(character);
+            _targets = _enemyManager.enemiesList;
         }
     }
     private Vector3 GetMoveDirection()

@@ -964,7 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd1f62102b0a4241881211e55e4668f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 10
+  _hp: 5000
   _currentHP: 0
   _visibleRange: 10
   _viewAngle: 25
@@ -1196,6 +1196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3376410634571869790}
   - component: {fileID: 4359902015070724629}
+  - component: {fileID: 2155094403598541891}
   m_Layer: 3
   m_Name: Hair_style_One
   m_TagString: Untagged
@@ -1331,6 +1332,18 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.00068195164, y: 0.91366524, z: -0.002564516}
     m_Extent: {x: 0.08444268, y: 0.06861019, z: 0.121485084}
   m_DirtyAABB: 0
+--- !u!114 &2155094403598541891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034237763718482458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2090805191641723852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,6 +1454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5951175269480926272}
   - component: {fileID: 638554838936030557}
+  - component: {fileID: 6792341797081260965}
   m_Layer: 3
   m_Name: Oculus
   m_TagString: Untagged
@@ -1576,6 +1590,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0006245151, y: 0.8205164, z: 0.05123493}
     m_Extent: {x: 0.094320916, y: 0.043256402, z: 0.08580083}
   m_DirtyAABB: 0
+--- !u!114 &6792341797081260965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417236199591346730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2514692932953953904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,6 +1848,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5471161372840242011}
   - component: {fileID: 267882752032522831}
+  - component: {fileID: 3031107457798527280}
   m_Layer: 3
   m_Name: Pistol_R
   m_TagString: Untagged
@@ -1957,6 +1984,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.25877446, y: -0.15457404, z: -0.014676791}
     m_Extent: {x: 0.07134174, y: 0.15939105, z: 0.10198645}
   m_DirtyAABB: 0
+--- !u!114 &3031107457798527280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3313837818060791061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3367403134311745185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,6 +2296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8113567865462782140}
   - component: {fileID: 1010463385684028632}
+  - component: {fileID: 8316504958343430780}
   m_Layer: 3
   m_Name: Mask
   m_TagString: Untagged
@@ -2392,6 +2432,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0020090044, y: 0.7649075, z: -0.0066730827}
     m_Extent: {x: 0.19742665, y: 0.2081463, z: 0.17253384}
   m_DirtyAABB: 0
+--- !u!114 &8316504958343430780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204971742123021881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4274469629313580814
 GameObject:
   m_ObjectHideFlags: 0
@@ -2402,6 +2454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 744566736257978716}
   - component: {fileID: 2675599022635599412}
+  - component: {fileID: 76746072}
   m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
@@ -2537,6 +2590,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0005104244, y: 0.44552094, z: -0.042537123}
     m_Extent: {x: 0.43921423, y: 0.34233528, z: 0.29408076}
   m_DirtyAABB: 0
+--- !u!114 &76746072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4274469629313580814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4281288067601602927
 GameObject:
   m_ObjectHideFlags: 0
@@ -3204,6 +3269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6465845691700202741}
   - component: {fileID: 8533876782895739896}
+  - component: {fileID: 1049544982349374063}
   m_Layer: 3
   m_Name: Arms_with_glowes
   m_TagString: Untagged
@@ -3339,6 +3405,18 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0015667975, y: 0.2662299, z: -0.01700905}
     m_Extent: {x: 0.75058615, y: 0.27574834, z: 0.19090346}
   m_DirtyAABB: 0
+--- !u!114 &1049544982349374063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5846043747912686495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5847961354503157276
 GameObject:
   m_ObjectHideFlags: 0
@@ -3381,6 +3459,7 @@ GameObject:
   m_Component:
   - component: {fileID: 133863466036246220}
   - component: {fileID: 5602309204002748131}
+  - component: {fileID: 5761200770867351122}
   m_Layer: 3
   m_Name: Knee_armor_R
   m_TagString: Untagged
@@ -3516,6 +3595,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.14751184, y: -0.4350661, z: 0.025529902}
     m_Extent: {x: 0.09705117, y: 0.09682733, z: 0.11420709}
   m_DirtyAABB: 0
+--- !u!114 &5761200770867351122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5934902187056094526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6322036070224920040
 GameObject:
   m_ObjectHideFlags: 0
@@ -3778,6 +3869,7 @@ GameObject:
   m_Component:
   - component: {fileID: 338891395911609129}
   - component: {fileID: 1631300396675620768}
+  - component: {fileID: 1843068884225175404}
   m_Layer: 3
   m_Name: Legs
   m_TagString: Untagged
@@ -3913,6 +4005,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00062157214, y: -0.3533669, z: -0.0004881993}
     m_Extent: {x: 0.27247345, y: 0.54610777, z: 0.1870692}
   m_DirtyAABB: 0
+--- !u!114 &1843068884225175404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6942625983918828768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7227978161761091852
 GameObject:
   m_ObjectHideFlags: 0
@@ -3954,6 +4058,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6247377405854615117}
   - component: {fileID: 1305292265831422088}
+  - component: {fileID: 2733086483624811710}
   m_Layer: 3
   m_Name: Strap_body_down
   m_TagString: Untagged
@@ -4089,6 +4194,18 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.008954264, y: 0.24912685, z: 0.03297868}
     m_Extent: {x: 0.20865613, y: 0.051008046, z: 0.14044625}
   m_DirtyAABB: 0
+--- !u!114 &2733086483624811710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7251907409857762650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7337595395629797499
 GameObject:
   m_ObjectHideFlags: 0
@@ -4313,6 +4430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 568093797321251381}
   - component: {fileID: 3173764248104469799}
+  - component: {fileID: 5503009622586583583}
   m_Layer: 3
   m_Name: Legs_strap_R
   m_TagString: Untagged
@@ -4448,6 +4566,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.16445708, y: -0.18322003, z: 0.019218057}
     m_Extent: {x: 0.17291531, y: 0.16547155, z: 0.14808573}
   m_DirtyAABB: 0
+--- !u!114 &5503009622586583583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810574431696520812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7927573129104937246
 GameObject:
   m_ObjectHideFlags: 0
@@ -4458,6 +4588,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8393649129043758630}
   - component: {fileID: 8513951466512481404}
+  - component: {fileID: 837178902011530844}
   m_Layer: 3
   m_Name: Strap_body_top
   m_TagString: Untagged
@@ -4593,6 +4724,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0019006729, y: 0.48624104, z: 0.12739587}
     m_Extent: {x: 0.18985355, y: 0.07182926, z: 0.12637532}
   m_DirtyAABB: 0
+--- !u!114 &837178902011530844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7927573129104937246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8088854416429468426
 GameObject:
   m_ObjectHideFlags: 0
@@ -4698,6 +4841,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5791910398037506141}
   - component: {fileID: 7452209201940589696}
+  - component: {fileID: 3427429658930613922}
   m_Layer: 3
   m_Name: Knee_armor_L
   m_TagString: Untagged
@@ -4833,6 +4977,18 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.14627564, y: -0.43506294, z: 0.025447004}
     m_Extent: {x: 0.09704879, y: 0.09682959, z: 0.114204325}
   m_DirtyAABB: 0
+--- !u!114 &3427429658930613922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460399959649174780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8613689217993055621
 GameObject:
   m_ObjectHideFlags: 0
@@ -5060,6 +5216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5443345369324142661}
   - component: {fileID: 4099612010558190677}
+  - component: {fileID: 1314404835826470656}
   m_Layer: 3
   m_Name: Boots_R
   m_TagString: Untagged
@@ -5195,6 +5352,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00046408176, y: -0.859951, z: 0.007660322}
     m_Extent: {x: 0.2926424, y: 0.20398137, z: 0.20250985}
   m_DirtyAABB: 0
+--- !u!114 &1314404835826470656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9070752472453594431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9100590020263780809
 GameObject:
   m_ObjectHideFlags: 0
@@ -5236,6 +5405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1715615874134821135}
   - component: {fileID: 8880206183459010275}
+  - component: {fileID: 8771093037130158823}
   m_Layer: 3
   m_Name: Eye
   m_TagString: Untagged
@@ -5371,6 +5541,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00020696223, y: 0.8231765, z: 0.07922085}
     m_Extent: {x: 0.05495222, y: 0.019546568, z: 0.018338071}
   m_DirtyAABB: 0
+--- !u!114 &8771093037130158823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9128268572503330400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e64ea36e6c8846a980fe62aa21698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &73508459570178468
 PrefabInstance:
   m_ObjectHideFlags: 0
