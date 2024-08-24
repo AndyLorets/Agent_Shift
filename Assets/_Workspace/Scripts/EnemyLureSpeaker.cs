@@ -2,12 +2,12 @@ using System;
 using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class EnemyLureSpeaker : MonoBehaviour
-{
+{ 
     [SerializeField] private Sprite _interactSprite; 
     [SerializeField] private Transform _point;
     [SerializeField] private ParticleSystem _effect;
     [SerializeField] private InteractableHandler _interactHandler;
-    [SerializeField] private Enemy[] _enemies; 
+    [SerializeField] private Enemy[] _enemies;
 
     private AudioSource _audio;
 
@@ -16,9 +16,14 @@ public class EnemyLureSpeaker : MonoBehaviour
         _audio = GetComponent<AudioSource>();
         _interactHandler.Init(_interactSprite, ActiveLure); 
     }
-
     private void ActiveLure()
     {
+        if(_audio.isPlaying)
+        {
+            DeactiveLure();
+            return;
+        }
+
         _audio.Play();
         _effect.Play();
 

@@ -2888,9 +2888,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1860427149}
     m_Modifications:
+    - target: {fileID: 2380162905491219361, guid: ebce923376c81704d986f4ca3461355d, type: 3}
+      propertyPath: _animType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4745462277145319092, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_Name
       value: Enemy (Solder)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745462277145319092, guid: ebce923376c81704d986f4ca3461355d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4916038441406269865, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: _cubeSize.x
@@ -2903,7 +2911,7 @@ PrefabInstance:
     - target: {fileID: 6428156848141824264, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: _startState
       value: 
-      objectReference: {fileID: 1722816349}
+      objectReference: {fileID: 1994509843}
     - target: {fileID: 6428156848141824264, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: _isRequestingAssistance
       value: 1
@@ -2914,7 +2922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8559161636426699394, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.87
+      value: -0.901
       objectReference: {fileID: 0}
     - target: {fileID: 8559161636426699394, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2922,23 +2930,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8559161636426699394, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.08
+      value: -3.76
       objectReference: {fileID: 0}
     - target: {fileID: 8559161636426699394, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9238795
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 8559161636426699394, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8559161636426699394, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.38268346
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 8559161636426699394, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8559161636426699394, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2946,7 +2954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8559161636426699394, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 8559161636426699394, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -4846,6 +4854,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Solder)
       objectReference: {fileID: 0}
+    - target: {fileID: 4745462277145319092, guid: ebce923376c81704d986f4ca3461355d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4916038441406269865, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: _cubeSize.z
       value: 0
@@ -5455,6 +5467,10 @@ PrefabInstance:
     - target: {fileID: 4745462277145319092, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_Name
       value: Enemy (Solder)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745462277145319092, guid: ebce923376c81704d986f4ca3461355d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8559161636426699394, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: m_RootOrder
@@ -7637,17 +7653,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5353616153204862413, guid: 431cce82ac7ee6d449833a93bd21832f, type: 3}
   m_PrefabInstance: {fileID: 1722726037}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1722816349 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4916038441406269865, guid: ebce923376c81704d986f4ca3461355d, type: 3}
-  m_PrefabInstance: {fileID: 599740134}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b85b368f48b10244b917035202aee25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1731555786
 GameObject:
   m_ObjectHideFlags: 0
@@ -8427,6 +8432,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Solder)
       objectReference: {fileID: 0}
+    - target: {fileID: 4745462277145319092, guid: ebce923376c81704d986f4ca3461355d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6428156848141824264, guid: ebce923376c81704d986f4ca3461355d, type: 3}
       propertyPath: _startState
       value: 
@@ -8795,6 +8804,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 292a1f2b7663bf44d92c6993be14e891, type: 3}
   m_PrefabInstance: {fileID: 1964453159}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1994509843 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2380162905491219361, guid: ebce923376c81704d986f4ca3461355d, type: 3}
+  m_PrefabInstance: {fileID: 599740134}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937f3557520a7914ca665116156afc8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1997164308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9593,6 +9613,18 @@ PrefabInstance:
     - target: {fileID: 1056108532445777557, guid: c54d370aa684dfe4b84b018d08cb8620, type: 3}
       propertyPath: m_Name
       value: Lure_Speaker
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913698387896995453, guid: c54d370aa684dfe4b84b018d08cb8620, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 8396976568160116421, guid: c54d370aa684dfe4b84b018d08cb8620, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8396976568160116421, guid: c54d370aa684dfe4b84b018d08cb8620, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c54d370aa684dfe4b84b018d08cb8620, type: 3}
