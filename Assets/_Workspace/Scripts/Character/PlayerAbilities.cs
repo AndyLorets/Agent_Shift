@@ -12,9 +12,15 @@ public class PlayerAbilities : MonoBehaviour
     public static System.Action<float> onChangeArmorTime;
     public static System.Action<bool> onArmor;
 
+    private AudioManager _audioManager; 
+
     private void Awake()
     {
         BriefingManager.onStartBriefing += Load; 
+    }
+    private void Start()
+    {
+        _audioManager = ServiceLocator.GetService<AudioManager>();
     }
     private void OnDestroy()
     {
@@ -41,6 +47,7 @@ public class PlayerAbilities : MonoBehaviour
         float t = invisibilityTime;
 
         onInvisibility?.Invoke(true);
+        _audioManager.PlayAbilityOn();
 
         while (t > 0)
         {
@@ -50,6 +57,7 @@ public class PlayerAbilities : MonoBehaviour
         }
 
         onInvisibility?.Invoke(false);
+        _audioManager.PlayAbilityOff();
     }
     private IEnumerator Armor()
     {
@@ -57,6 +65,7 @@ public class PlayerAbilities : MonoBehaviour
         float t = armorTime;
 
         onArmor?.Invoke(true);
+        _audioManager.PlayAbilityOn();
 
         while (t > 0)
         {
@@ -66,5 +75,6 @@ public class PlayerAbilities : MonoBehaviour
         }
 
         onArmor?.Invoke(false);
+        _audioManager.PlayAbilityOff();
     }
 }

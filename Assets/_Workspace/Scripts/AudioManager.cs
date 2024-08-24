@@ -18,6 +18,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _headShot;
     [SerializeField] private AudioSource _money;
     [SerializeField] private AudioSource _kick;
+    [SerializeField] private AudioSource _abilityOn;
+    [SerializeField] private AudioSource _abilityOff;
 
     private AudioListener audioListener; 
 
@@ -135,6 +137,24 @@ public class AudioManager : MonoBehaviour
             _kick.Stop();
             _kick.Play();
         }
+    }
+    public void PlayAbilityOn()
+    {
+        if (!SoundActiveState) return;
+
+        if (!_abilityOn.isPlaying)
+            _abilityOn.Play();
+        else
+            _abilityOn.PlayOneShot(_abilityOn.clip);       
+    }
+    public void PlayAbilityOff()
+    {
+        if (!SoundActiveState) return;
+
+        if (!_abilityOff.isPlaying)
+            _abilityOff.Play();
+        else
+            _abilityOff.PlayOneShot(_abilityOff.clip);
     }
     public void SetMusicMute()
     {

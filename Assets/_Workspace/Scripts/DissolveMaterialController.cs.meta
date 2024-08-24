@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 482e64ea36e6c8846a980fe62aa21698
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _shaderMobileInvisibility: {fileID: 4800000, guid: 652726b7396e95a4e8e0d1af8a23f1a5, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

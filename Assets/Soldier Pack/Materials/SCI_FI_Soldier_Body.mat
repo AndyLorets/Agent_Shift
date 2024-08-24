@@ -119,7 +119,7 @@ Material:
     - _EnableOutline: 0
     - _FresnelMax: 1.5
     - _FresnelMin: 0
-    - _GlossMapScale: 1
+    - _GlossMapScale: 0.3
     - _Glossiness: 1
     - _GlossyReflections: 0
     - _IndirectIntensity: 1

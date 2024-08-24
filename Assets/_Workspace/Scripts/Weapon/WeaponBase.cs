@@ -86,7 +86,7 @@ public abstract class WeaponBase : MonoBehaviour
     }
     protected virtual void BulletHitTarget(Bullet bullet)
     {
-        bullet.transform.parent = transform; 
+        bullet.transform.parent = _shootPos; 
         bullet.transform.localPosition = Vector3.zero;
         bullet.transform.localRotation = Quaternion.identity; 
         bullet.OnHitTarget -= BulletHitTarget;
