@@ -58,9 +58,9 @@ public class BriefingManager : MonoBehaviour
     {
         if (_currentBriefing == _briefings.Length + 1)
         {
-            onEndBriefing?.Invoke();
             CharacterMessanger.OnResetAudioPlaying -= PlayBriefing;
             _skipBtn.gameObject.SetActive(false);
+            onEndBriefing?.Invoke();
         }
     }
     private void OnDestroy()

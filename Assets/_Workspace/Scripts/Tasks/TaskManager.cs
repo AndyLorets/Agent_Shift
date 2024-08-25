@@ -26,6 +26,8 @@ public class TaskManager : MonoBehaviour
     }
     private void ActiveTask()
     {
+        if (_tasks.Count == 0) return; 
+        
         onTaskUpdate?.Invoke(_tasks[_currentTask].taskName); 
     }
     public void CompleteTask(string taskName)
