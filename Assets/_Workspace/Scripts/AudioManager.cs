@@ -20,6 +20,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _kick;
     [SerializeField] private AudioSource _abilityOn;
     [SerializeField] private AudioSource _abilityOff;
+    [SerializeField] private AudioSource _keypad;
+    [SerializeField] private AudioSource _cancel;
+    [SerializeField] private AudioSource _success;
 
     private AudioListener audioListener; 
 
@@ -155,6 +158,24 @@ public class AudioManager : MonoBehaviour
             _abilityOff.Play();
         else
             _abilityOff.PlayOneShot(_abilityOff.clip);
+    }
+    public void PlayKeypad()
+    {
+        if (!SoundActiveState) return;
+
+        _keypad.Play();
+    }
+    public void PlayCancel()
+    {
+        if (!SoundActiveState) return;
+
+        _cancel.Play();
+    }
+    public void PlaySuccess()
+    {
+        if (!SoundActiveState) return;
+
+        _success.Play();
     }
     public void SetMusicMute()
     {

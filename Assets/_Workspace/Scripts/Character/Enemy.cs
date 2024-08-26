@@ -21,7 +21,8 @@ public class Enemy : Character
     [SerializeField] private CharacterDialogue[] _dialogueOnAttack;
     [Space(5)]
     [SerializeField] private CanvasGroup _alertCanvas;
-    [SerializeField] private Image _alertIcon; 
+    [SerializeField] private Image _alertIcon;
+    [SerializeField] private GameObject _miniMapIcon; 
 
     private Collider _collider;
     private StateMachine _stateMachine = new StateMachine();
@@ -174,7 +175,7 @@ public class Enemy : Character
         if (_stateMachine.currentState == _attackState || player.IsInvisibility) return; 
 
         int r = Random.Range(0, _dialogueOnAttack.Length);
-        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnAttack[r], true);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnAttack[r], 1);
 
         _stateMachine.ChangeState(_attackState);
         onPlayerVisible?.Invoke(transform.position);
@@ -251,6 +252,7 @@ public class Enemy : Character
         agent.enabled = false;
         _alertCanvas.DOKill(); 
         _alertCanvas.alpha = 0;
+        _miniMapIcon.SetActive(false);
 
         if (_unitInventory.gameObject.activeSelf)
             _unitInventory.SpawnItem();

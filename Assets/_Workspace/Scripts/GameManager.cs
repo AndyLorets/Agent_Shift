@@ -1,15 +1,19 @@
-using System;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 public class GameManager : MonoBehaviour
 {
-    public static Action onGameStart;
-    public static Action onGameWin;
-    public static Action onGameLose;
-
     [SerializeField] private CinemachineVirtualCamera _menuCam;
     [SerializeField] private CinemachineVirtualCamera _gamePlayCam;
+    [Space(5), Header("Dialogue")]
+    [SerializeField] private Sprite _icon; 
+    [SerializeField] private CharacterDialogue[] _winDialogue;
+    [SerializeField] private CharacterDialogue[] _loseDialogue;
+
+    public static System.Action onGameStart;
+    public static System.Action onGameWin;
+    public static System.Action onGameLose;
+
     public enum GameState
     {
         Briefing, GamePlay, End
@@ -55,17 +59,32 @@ public class GameManager : MonoBehaviour
     public void WinGame()
     {
         gameState = GameState.End;
-        ServiceLocator.GetService<Wallet>().AddMoney(100); 
+
+        int r = Random.Range(0, _winDialogue.Length);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(_icon, _winDialogue[r], 5);
+        ServiceLocator.GetService<Wallet>().AddMoney(100);
+        ServiceLocator.GetService<Player>().CanControll = false; 
+
         onGameWin?.Invoke(); 
     }
     public void LoseGame()
     {
         gameState = GameState.End;
+
+        int r = Random.Range(0, _loseDialogue.Length);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(_icon, _loseDialogue[r], 5);
+        ServiceLocator.GetService<Player>().CanControll = false;
+
         onGameLose?.Invoke();
     }
     public void NextLevel()
     {
-        ServiceLocator.GetService<GameDataController>().PlayerData.currentLevel++;
+        PlayerData playerData = ServiceLocator.GetService<GameDataController>().PlayerData;
+        if (playerData.currentLevel < 2)
+            playerData.currentLevel++;
+        else
+            playerData.currentLevel = 1;
+
         ServiceLocator.GetService<GameDataController>().SaveData();
         Restart();
     }

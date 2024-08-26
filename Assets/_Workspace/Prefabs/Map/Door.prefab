@@ -272,6 +272,7 @@ GameObject:
   - component: {fileID: 8233184960168161483}
   - component: {fileID: 8233184960168161482}
   - component: {fileID: 8233184960168161493}
+  - component: {fileID: 6229665499038802562}
   m_Layer: 10
   m_Name: Interactable_Btn
   m_TagString: Untagged
@@ -409,6 +410,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 8233184960142835902}
   _button: {fileID: 8233184960168161483}
+--- !u!225 &6229665499038802562
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8233184960168161495}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8233184960416929243
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +658,6 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: fb9cdc74f3115b645acd7d92fce08c0b, type: 3}
   _interactHandler: {fileID: 8233184960168161493}
   _unlockType: 0
-  _isOpen: 1
   _doorCode: 
   _doorUnlocker: {fileID: 8592038939243323087, guid: 08da2a21520720e4d8395d68edaf150e, type: 3}
 --- !u!1 &8233184960905424950

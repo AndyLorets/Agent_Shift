@@ -109,8 +109,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280098077
-  m_fontColor: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
+    rgba: 4279111182
+  m_fontColor: {r: 0.05660379, g: 0.05660379, b: 0.05660379, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -204,6 +204,7 @@ Transform:
   m_Children:
   - {fileID: 3423452973640540027}
   - {fileID: 5024736982259167010}
+  - {fileID: 918694228159700950}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -232,11 +233,99 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc03bbfe1784304084adb04e0585e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 8114254756130470349}
-  _interactHandler: {fileID: 4876275520119418113}
-  _interactSprite: {fileID: 21300000, guid: ba2ebd72b743dff4fb7d23c5e03e81db, type: 3}
   _noteContent: {fileID: 3623958108586005590, guid: 271e0c7065a8cf64dae63c3c9b65f1d1, type: 3}
-  _value: 'Door key: 0104'
+  _text: {fileID: 8114254756130470349}
+  _value: 'Door code: <color=#FF0000><u>0104</u></color>'
+  _interactSprite: {fileID: 21300000, guid: ba2ebd72b743dff4fb7d23c5e03e81db, type: 3}
+  _interactHandler: {fileID: 4876275520119418113}
+  _icon: {fileID: 21300000, guid: c0a858d2598abe04fb79686f9aa87684, type: 3}
+  _dialogue:
+    text: Hmm, looks like this is something I should remember.
+    clip: {fileID: 8300000, guid: 25f08f9f525e5564b8e2817c7f7d2b9f, type: 3}
+--- !u!1 &5697460884206276960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 918694228159700950}
+  - component: {fileID: 3670154338951889281}
+  m_Layer: 15
+  m_Name: MiniMap_Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &918694228159700950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5697460884206276960}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0.399, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4354023681401937962}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -90, y: 45, z: 90}
+--- !u!212 &3670154338951889281
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5697460884206276960}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: ba2ebd72b743dff4fb7d23c5e03e81db, type: 3}
+  m_Color: {r: 1, g: 0.89839494, b: 0, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 5.12, y: 5.12}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &7527958972514146994
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +466,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8095175575863787452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.83, z: 0.75}
+  m_LocalPosition: {x: 0, y: 0.83, z: 0.801}
   m_LocalScale: {x: 1, y: 1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -11,6 +11,7 @@ public class DoorEditor : Editor
     SerializedProperty unlockTypeProp;
     SerializedProperty doorCodeProp;
     SerializedProperty doorUnlockerProp;
+    SerializedProperty taskName;
 
     private void OnEnable()
     {
@@ -21,6 +22,7 @@ public class DoorEditor : Editor
         unlockTypeProp = serializedObject.FindProperty("_unlockType");
         doorCodeProp = serializedObject.FindProperty("_doorCode");
         doorUnlockerProp = serializedObject.FindProperty("_doorUnlocker");
+        taskName = serializedObject.FindProperty("_taskName");
     }
 
     public override void OnInspectorGUI()
@@ -40,7 +42,10 @@ public class DoorEditor : Editor
             EditorGUILayout.PropertyField(doorCodeProp);
             EditorGUILayout.PropertyField(doorUnlockerProp);
         }
-
+        if ((Door.UnlockType)unlockTypeProp.enumValueIndex == Door.UnlockType.Task)
+        {
+            EditorGUILayout.PropertyField(taskName);
+        }
         serializedObject.ApplyModifiedProperties();
     }
 }

@@ -43,6 +43,8 @@ public class FollowingState : StateBase
             _hostage.Animator.SetBool(ANIM_RUN, isRun);
             _hostage.Animator.SetBool(ANIM_WALK, isWalk);
 
+            if(_player.IsInvisibility) yield return null;
+
             if (dist > WALK_DISTANCE)
             {
                 _hostage.agent.SetDestination(playerPosition);

@@ -22,7 +22,7 @@ public class UIContentManager : MonoBehaviour
     public void Open(GameObject content)
     {
         _hud.Hide();
-        _canvasGroup.DOFade(1, 1).SetUpdate(true);
+        _canvasGroup.DOFade(1, .5f).SetUpdate(true);
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true; 
 
@@ -37,7 +37,7 @@ public class UIContentManager : MonoBehaviour
     public void Close()
     {
         _hud.Show();
-        _canvasGroup.DOFade(0, 1).SetUpdate(true);
+        _canvasGroup.DOFade(0, .5f).SetUpdate(true);
         _canvasGroup.interactable = false;
         _canvasGroup.blocksRaycasts = false;
 

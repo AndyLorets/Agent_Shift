@@ -11,13 +11,14 @@ public class Door : MonoBehaviour
     [SerializeField] private UnlockType _unlockType;
     [SerializeField] private string _doorCode;
     [SerializeField] private KeypadDoorUnlocker _doorUnlocker;
+    [SerializeField] private string _taskName;  
 
     private KeypadDoorUnlocker _currentDoorUnlocker; 
 
     private bool _isOpen;
     public enum UnlockType
     {
-       None, Key, Code
+       None, Key, Code, Task
     }
 
     private Animation _animation;
@@ -34,11 +35,24 @@ public class Door : MonoBehaviour
     private void Start()
     {
         if (_unlockType == UnlockType.None)
+        {
             OpenDoor();
+            _collider.enabled = false;
+            _interactHandler.SetEnable(false);
+        }
+        else if (_unlockType == UnlockType.Task)
+        {
+            ServiceLocator.GetService<TaskManager>().onTaskComplete += TaskComplate;
+            _collider.enabled = false;
+            _interactHandler.SetEnable(false);
+        }
         else
             _interactHandler.Init(_interactSprite, Action());
-
-        _interactHandler.SetEnable(!_isOpen);
+    }
+    private void TaskComplate(string taskTame)
+    {
+        if (_taskName == taskTame)
+            OpenDoor();
     }
     private UnityAction Action()
     {
@@ -67,7 +81,8 @@ public class Door : MonoBehaviour
     {
         _currentDoorUnlocker = Instantiate(_doorUnlocker);
         _currentDoorUnlocker.Init(_doorCode, OpenDoor);
-        ServiceLocator.GetService<UIContentManager>().Open(_currentDoorUnlocker.gameObject); 
+        ServiceLocator.GetService<UIContentManager>().Open(_currentDoorUnlocker.gameObject);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(_playerIcon, _dialogue);
     }
 
     private void OpenDoor()
@@ -85,5 +100,12 @@ public class Door : MonoBehaviour
     {
         if (!_isOpen && other.CompareTag(TagsObj.PLAYER))
             _interactHandler.SetInteractable(false);
+    }
+    private void OnDestroy()
+    {
+        if (_unlockType == UnlockType.Task)
+        {
+            ServiceLocator.GetService<TaskManager>().onTaskComplete -= TaskComplate;
+        }
     }
 }

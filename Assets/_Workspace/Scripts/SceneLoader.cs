@@ -27,9 +27,9 @@ public class SceneLoader : MonoBehaviour
 
         bool hasTutorial = PlayerPrefs.HasKey("Tutorial");
         int currentLevel = _gameData.PlayerData.currentLevel;
-        int nextSceneIndex = hasTutorial ? currentLevel : SceneManager.sceneCount + 1;
+        int sceneIndex = hasTutorial ? currentLevel : 3;
 
-        LoadScene(nextSceneIndex); 
+        LoadScene(sceneIndex); 
     }
 
     public void LoadScene(int sceneIndex)

@@ -14,12 +14,14 @@ public class KeypadDoorUnlocker : MonoBehaviour
 
     private UnityAction _action;
     private UIContentManager _UIContentManager;
+    private AudioManager _audioManager; 
 
     private const string ENTER_CODE = "Enter Code"; 
     private void Start()
     {
         Clear();
         _UIContentManager = ServiceLocator.GetService<UIContentManager>();
+        _audioManager = ServiceLocator.GetService<AudioManager>();
     }
 
     public void Init(string correctCode, UnityAction action)
@@ -37,7 +39,8 @@ public class KeypadDoorUnlocker : MonoBehaviour
         }           
 
         _enteredCode += num;
-        _text.text = _enteredCode; 
+        _text.text = _enteredCode;
+        _audioManager.PlayKeypad();
     }
     public void Clear()
     {
@@ -53,6 +56,7 @@ public class KeypadDoorUnlocker : MonoBehaviour
         {
             SetInteractableBtns(false);
             _text.text = "Success!";
+            _audioManager.PlaySuccess();
 
             yield return waitForSeconds;
 
@@ -63,6 +67,7 @@ public class KeypadDoorUnlocker : MonoBehaviour
         {
             SetInteractableBtns(false);
             _text.text = "ERROR!";
+            _audioManager.PlayCancel();
 
             yield return waitForSeconds;
 

@@ -12,6 +12,7 @@ public class CharacterMessanger : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
 
     private CanvasGroup _canvasGroup;
+    private int _currentPriority; 
 
     private const float tween_duration = .3f;
 
@@ -23,12 +24,12 @@ public class CharacterMessanger : MonoBehaviour
         _canvasGroup = GetComponent<CanvasGroup>();
         _canvasGroup.alpha = 0; 
     }
-    public void SetDialogue(Sprite sprite, CharacterDialogue characterDialogue, bool skipActiveDialogue = false)
+    public void SetDialogue(Sprite sprite, CharacterDialogue characterDialogue, int priority = 0)
     {
         AudioClip clip = characterDialogue.clip;
         string text = characterDialogue.text;
 
-        if (skipActiveDialogue && CharacterDialogue.speaking)
+        if (priority > _currentPriority && CharacterDialogue.speaking)
             Skip(); 
 
         if (clip != null && !CharacterDialogue.speaking)
@@ -37,15 +38,16 @@ public class CharacterMessanger : MonoBehaviour
             _icon.sprite = sprite; 
             _text.text = text;
 
-            _canvasGroup.DOFade(1, tween_duration); 
+            _canvasGroup.DOFade(1, tween_duration).SetUpdate(true); 
 
             CharacterDialogue.speaking = true;
+            _currentPriority = priority;
             StartCoroutine(ResetAudioPlaying(clip));
         }
     }
     private IEnumerator ResetAudioPlaying(AudioClip audioClip = null)
     {
-        yield return new WaitForSeconds(audioClip.length + .5f);
+        yield return new WaitForSecondsRealtime(audioClip.length + .5f);
         CharacterDialogue.speaking = false;
         ClearText();
         OnResetAudioPlaying?.Invoke(); 
@@ -60,6 +62,6 @@ public class CharacterMessanger : MonoBehaviour
     }
     private void ClearText()
     {
-        _canvasGroup.DOFade(0, tween_duration);
+        _canvasGroup.DOFade(0, tween_duration).SetUpdate(true);
     }
 }

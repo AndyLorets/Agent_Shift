@@ -51,10 +51,11 @@ public class Hostage : Character, ITaskable
     {
         _stateMachine.ChangeState(_followingState);
     }
+    public override void TakeDamage(float value, bool headShot)
+    {
+    }
     public override void Dead(bool headShot)
     {
-        base.Dead(headShot);
-        _stateMachine.ExitActiveState();
     }
 
     protected override void ConstructTargets()
