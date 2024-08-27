@@ -141,10 +141,10 @@ public class Player : Character
     {
         if (!_isAiming)
         {
-            if (GetMoveDirection().sqrMagnitude > 0.03f)
-                _rig.ActiveRig();
-            else
-                _rig.DeactiveRig();
+            //if (GetMoveDirection().sqrMagnitude > 0.03f)
+            //    _rig.ActiveRig();
+            //else
+            //    _rig.DeactiveRig();
         }
     }
     public override bool IsEnemyDetected(out Vector3 pos, out bool headshoot)

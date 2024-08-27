@@ -389,6 +389,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4062420496091636469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5744784451127478388}
+  - component: {fileID: 6059390197246516858}
+  m_Layer: 3
+  m_Name: BloodEffect_Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5744784451127478388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062420496091636469}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7115774893136607322}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6059390197246516858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062420496091636469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c6df492433ba9a4cafc4aa9481448b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 4787146697146794734, guid: e9050f838eb01db44b8958e4d8266866, type: 3}
 --- !u!1 &4251140709683583746
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,6 +518,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &4278962192337806330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2420461085655607957}
+  - component: {fileID: 4005624096632512543}
+  m_Layer: 3
+  m_Name: HitEffect_Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2420461085655607957
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4278962192337806330}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7115774893136607322}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4005624096632512543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4278962192337806330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c6df492433ba9a4cafc4aa9481448b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 5387569215582099641, guid: 5d03a22cfcbe98f42b2e8ca0b47904fe, type: 3}
 --- !u!1 &4745462277145319092
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,7 +662,7 @@ MonoBehaviour:
   _viewAngle: 200
   _detectionLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 65544
   _icon: {fileID: 21300000, guid: 244008ae7b448f148aff58653352f9c4, type: 3}
   _skin: {fileID: 5510812216996871895}
   _damageClips:
@@ -1054,6 +1144,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Modular_Soldier
       objectReference: {fileID: 0}
+    - target: {fileID: 5307377904654351603, guid: 7c26261d9f19a1a488f9e2454c0a953a, type: 3}
+      propertyPath: _hitEffectPool
+      value: 
+      objectReference: {fileID: 4005624096632512543}
+    - target: {fileID: 5307377904654351603, guid: 7c26261d9f19a1a488f9e2454c0a953a, type: 3}
+      propertyPath: _bloodEffectPool
+      value: 
+      objectReference: {fileID: 6059390197246516858}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c26261d9f19a1a488f9e2454c0a953a, type: 3}
 --- !u!114 &3712547230242276262 stripped
@@ -1083,3 +1181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abc453b04febaee419e55e2f88621d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &7115774893136607322 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1793076471163684623, guid: 7c26261d9f19a1a488f9e2454c0a953a, type: 3}
+  m_PrefabInstance: {fileID: 8800603341611499349}
+  m_PrefabAsset: {fileID: 0}

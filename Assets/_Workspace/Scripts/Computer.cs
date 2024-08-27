@@ -7,31 +7,30 @@ public class Computer : MonoBehaviour, ITaskable
     [SerializeField] private Sprite _interactSprite;
     [SerializeField] private InteractableHandler _interactHandler;
     [Space(5)]
-    [SerializeField] private GameObject _loading;
-    [SerializeField] private Image _loadingFillAmount;
-    [SerializeField, Range(5, 20)] private float _loadingDuration = 5f;
+    [SerializeField] private PuzzleWires _puzzleWires;
+    [Space(5)]
+    [SerializeField] private Sprite _icon;
+    [SerializeField] private CharacterDialogue _dialogue;
 
+    private PuzzleWires _currentPuzzleWires;
     public string taskName { get; set; }
 
     void Start()
     {
         _interactHandler.Init(_interactSprite, StartAction);
-        _loading.SetActive(false);
-        _loadingFillAmount.fillAmount = 0; 
     }
     private void StartAction()
     {
-        _interactHandler.SetEnable(false);
-        _loading.SetActive(true); 
-        _loadingFillAmount.DOFillAmount(1, _loadingDuration)
-            .OnComplete(() => EndAction());
-
-        ServiceLocator.GetService<AudioManager>().PlayItem();
+        _currentPuzzleWires = Instantiate(_puzzleWires);
+        _currentPuzzleWires.onComplete += EndAction; 
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(_icon, _dialogue, 5);
+        ServiceLocator.GetService<UIContentManager>().Open(_currentPuzzleWires.gameObject);
     }
     private void EndAction()
     {
         ServiceLocator.GetService<TaskManager>().CompleteTask(taskName);
-        _loading.SetActive(false);
+        _currentPuzzleWires.onComplete -= EndAction;
+        _interactHandler.SetEnable(false);
     }
     private void OnTriggerEnter(Collider other)
     {

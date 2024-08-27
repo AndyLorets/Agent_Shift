@@ -16,6 +16,8 @@ public abstract class WeaponBase : MonoBehaviour
 
     [Space(10), Header("Components")]
     [SerializeField] protected Bullet _bulletPrefab;
+    [SerializeField] private ObjectPool _bloodEffectPool;
+    [SerializeField] private ObjectPool _hitEffectPool;
     [SerializeField] protected ParticleSystem _shootEffect;
     [SerializeField] protected Transform _shootPos;
     [SerializeField] protected AudioSource _audioSource;
@@ -55,6 +57,7 @@ public abstract class WeaponBase : MonoBehaviour
         for (int i = 0; i < _bulletOnMagazineCount; i++)
         {
             Bullet bullet = Instantiate(_bulletPrefab, _shootPos);
+            bullet.Initialize(_bloodEffectPool, _hitEffectPool);
             bullet.transform.localPosition = Vector3.zero;
             bullet.gameObject.SetActive(false);
             _bulletsOnMagazine.Add(bullet);

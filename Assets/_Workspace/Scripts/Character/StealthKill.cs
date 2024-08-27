@@ -8,6 +8,7 @@ public class StealthKill : MonoBehaviour
     [SerializeField] private float _detectionRange = 1f; 
     [SerializeField] private float _angle = 90f; 
     [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private ParticleSystem _hitEffect; 
 
     private AudioManager _audioManager; 
     private CameraController _cameraController; 
@@ -67,7 +68,7 @@ public class StealthKill : MonoBehaviour
             {
                 targetTakeDamage = enemy.takeDamage;
                 enemy.ExitAllState();
-
+                _hitEffect.transform.position = hit.transform.position + Vector3.up; 
                 transform.DOMove(hit.point - transform.forward * 1.35f, .2f);
                 transform.LookAt(hit.point);
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
@@ -82,6 +83,7 @@ public class StealthKill : MonoBehaviour
     {
         if (_targetTakeDamage != null)
         {
+            _hitEffect.Play();
             _targetTakeDamage.TakeDamage(1000, false);
             _targetTakeDamage = null;
             _cameraController.InpulseCamera();

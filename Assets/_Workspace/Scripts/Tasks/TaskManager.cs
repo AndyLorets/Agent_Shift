@@ -36,7 +36,7 @@ public class TaskManager : MonoBehaviour
     {
         float x = _tasks[_currentTask].taskableSource.transform.position.x;
         float z = _tasks[_currentTask].taskableSource.transform.position.z;
-        _minimapPoint.transform.position = new Vector3(x, 1, z);
+        _minimapPoint.transform.position = new Vector3(x, 2, z);
     }
     public void CompleteTask(string taskName)
     {
