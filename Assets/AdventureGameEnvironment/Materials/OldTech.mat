@@ -8,15 +8,15 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: OldTech
-  m_Shader: {fileID: 4800000, guid: f8d49205b3b0a644195633020367689d, type: 3}
-  m_ValidKeywords:
-  - TCP2_DISABLE_WRAPPED_LIGHT
-  - _GLOSSYREFLECTIONS_OFF
+  m_Shader: {fileID: 4800000, guid: 652726b7396e95a4e8e0d1af8a23f1a5, type: 3}
+  m_ValidKeywords: []
   m_InvalidKeywords:
+  - TCP2_DISABLE_WRAPPED_LIGHT
   - TCP2_REFLECTIONS_FRESNEL
   - TCP2_RIM_LIGHTING_LIGHTMASK
   - TCP2_SHADOW_LIGHT_COLOR
   - TCP2_UV_NORMALS_FULL
+  - _GLOSSYREFLECTIONS_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -112,6 +112,7 @@ Material:
     - Vector1_5A9E5888: 0
     - Vector1_CD9CB9E8: 0.1
     - Vector1_F5DCAAE8: 0.5
+    - _Alpha: 0.5
     - _AlphaClip: 0
     - _Blend: 0
     - _Border: 0.01

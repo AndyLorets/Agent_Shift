@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1308801435129322528}
   - component: {fileID: 1308801435129322530}
   - component: {fileID: 4939951907665798103}
-  - component: {fileID: 740890711851797515}
   m_Layer: 5
   m_Name: Puzzle_1
   m_TagString: Untagged
@@ -77,18 +76,6 @@ MonoBehaviour:
   - {fileID: 3756768860051175260}
   - {fileID: 8440457052797654483}
   - {fileID: 8502586539151550099}
---- !u!225 &740890711851797515
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1308801435129322529}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &1334690287084500876
 GameObject:
   m_ObjectHideFlags: 0

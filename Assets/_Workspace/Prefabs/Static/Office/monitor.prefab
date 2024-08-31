@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb81b583746ba9449abc39afc683607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactSprite: {fileID: 21300000, guid: d99431bdd791f493fb1633a8eb4f9b5a, type: 3}
+  _interactSprite: {fileID: 21300000, guid: 5182316776815427ea47960325562c43, type: 3}
   _interactHandler: {fileID: 1904619576196534528}
   _puzzleWires: {fileID: 4939951907665798103, guid: 0508f3058f2c8cf43bbaf6e117caedaa, type: 3}
   _icon: {fileID: 21300000, guid: c0a858d2598abe04fb79686f9aa87684, type: 3}
@@ -640,6 +640,10 @@ PrefabInstance:
     - target: {fileID: 3797315615098552322, guid: c2e511ea3540abc4ab56580d7bffb455, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4200396432350852033, guid: c2e511ea3540abc4ab56580d7bffb455, type: 3}
+      propertyPath: m_Maskable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8171347867119249672, guid: c2e511ea3540abc4ab56580d7bffb455, type: 3}
       propertyPath: m_Name

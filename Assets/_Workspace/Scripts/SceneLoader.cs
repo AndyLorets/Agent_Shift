@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    [SerializeField] private Transform _loadingIcon; 
+    [SerializeField] private Transform _loadingIcon;
+    [SerializeField] private TMP_InputField levelInputField;
 
     private CanvasGroup _canvasGroup;
     private GameDataController _gameData; 
@@ -27,11 +28,24 @@ public class SceneLoader : MonoBehaviour
 
         bool hasTutorial = PlayerPrefs.HasKey("Tutorial");
         int currentLevel = _gameData.PlayerData.currentLevel;
-        int sceneIndex = hasTutorial ? currentLevel : 3;
+        int sceneIndex = hasTutorial ? currentLevel : SceneManager.sceneCountInBuildSettings - 1;
 
-        LoadScene(sceneIndex); 
+        //LoadScene(sceneIndex);
     }
-
+    public void LoadLevel()
+    {
+        if (!string.IsNullOrEmpty(levelInputField.text))
+        {
+            int levelIndex;
+            if (int.TryParse(levelInputField.text, out levelIndex))
+            {
+                if (levelIndex > 0 && levelIndex < SceneManager.sceneCountInBuildSettings)
+                {
+                    LoadScene(levelIndex);
+                }              
+            }
+        }
+    }
     public void LoadScene(int sceneIndex)
     {
         ServiceLocator.ClearAllServices();

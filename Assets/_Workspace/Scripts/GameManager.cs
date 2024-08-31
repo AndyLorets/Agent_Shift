@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         PlayerData playerData = ServiceLocator.GetService<GameDataController>().PlayerData;
-        if (playerData.currentLevel < 2)
+        if (playerData.currentLevel < 3)
             playerData.currentLevel++;
         else
             playerData.currentLevel = 1;
