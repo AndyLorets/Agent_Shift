@@ -88,6 +88,8 @@ public class Door : MonoBehaviour
     private void OpenDoor()
     {
         _isOpen = true;
+        _collider.enabled = false;
+        _interactHandler.SetEnable(false);
         _animation.PlayQueued(ANIM_OPEN);
         ServiceLocator.GetService<AudioManager>().PlayOpenDoor(); 
     }

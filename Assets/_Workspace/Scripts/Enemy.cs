@@ -22,7 +22,8 @@ public class Enemy : Character
     [Space(5)]
     [SerializeField] private CanvasGroup _alertCanvas;
     [SerializeField] private Image _alertIcon;
-    [SerializeField] private GameObject _miniMapIcon; 
+    [SerializeField] private GameObject _miniMapIcon;
+    [SerializeField] private VisionCone _visionCone;
 
     private Collider _collider;
     private StateMachine _stateMachine = new StateMachine();
@@ -34,10 +35,20 @@ public class Enemy : Character
 
     private int _visibleCount;
 
-    private const float CHECK_PLAYER_DURATION = 1f;
+    private const float CHECK_PLAYER_DURATION = .5f;
 
     public bool EnemyIsDetected => IsEnemyDetected() && !player.IsInvisibility;
 
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        transform.name = $"Enemy {_startState.GetType()}";
+    }
+#endif
+    private void OnEnable()
+    {
+        StartCoroutine(CheckPlayer());
+    }
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -67,11 +78,10 @@ public class Enemy : Character
 
         player = ServiceLocator.GetService<Player>();
         if (_startState == _attackState)
-            _attackState.isFirstState = true; 
-
+            _attackState.isFirstState = true;
+        _visionCone.Init(_visibleRange, _viewAngle);
+        _stateMachine.ChangeState(_startState);
         Subscribe();
-        StartCoroutine(CheckPlayer());
-        _stateMachine.ChangeState(_startState); 
     }
     protected override void ConstructTargets()
     {
@@ -125,6 +135,7 @@ public class Enemy : Character
                     {
                         _alertCanvas.DOFade(1, 1f);
                         _alertIcon.DOFillAmount(1, CHECK_PLAYER_DURATION);
+                        _visionCone.SetColor(VisionCone.ColorType.Visible);
                     }
                     if (_visibleCount == 1 && dist > 3)
                     {
@@ -147,6 +158,7 @@ public class Enemy : Character
                     _visibleCount = 0;
                     if (_alertCanvas.alpha != 0)
                     {
+                        _visionCone.SetColor(VisionCone.ColorType.Idle);
                         _alertIcon.DOFillAmount(0, CHECK_PLAYER_DURATION)
                             .OnComplete(() => _alertCanvas.alpha = 0);
                     }
@@ -171,6 +183,7 @@ public class Enemy : Character
         if (dist <= _visibleRange)
         {
             _stateMachine.ChangeState(_attackState);
+            _visionCone.SetColor(VisionCone.ColorType.Attack);
         }
     }
     private void EnterAttackState()
@@ -179,7 +192,7 @@ public class Enemy : Character
 
         int r = Random.Range(0, _dialogueOnAttack.Length);
         ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogueOnAttack[r], 1);
-
+        _visionCone.SetColor(VisionCone.ColorType.Attack);
         _stateMachine.ChangeState(_attackState);
         onPlayerVisible?.Invoke(transform.position);
         onAttack = true;
@@ -190,7 +203,7 @@ public class Enemy : Character
     private void EnterPatrolState()
     {
         if (_stateMachine.currentState == _patrolState) return;
-
+        _visionCone.SetColor(VisionCone.ColorType.Idle);
         _stateMachine.ChangeState(_patrolState);
         onAttack = false;
     }
@@ -210,7 +223,7 @@ public class Enemy : Character
     private void OnHearFootStep(Vector3 pos)
     {
         float dist = Vector3.Distance(transform.position, pos);
-        if (dist > _visibleRange || !_isRequestingAssistance) return;
+        if (dist > _visibleRange) return;
 
         if (_stateMachine.currentState == _attackState || _stateMachine.currentState == _lureState || !gameObject.activeSelf)
             return;
@@ -252,6 +265,8 @@ public class Enemy : Character
 
         enabled = false;
         _collider.enabled = false;
+        _visionCone.enabled = false;
+        _visionCone.gameObject.SetActive(false);
         agent.enabled = false;
         _alertCanvas.DOKill(); 
         _alertCanvas.alpha = 0;
@@ -268,5 +283,4 @@ public class Enemy : Character
     {
         Unsubscribe(); 
     }
-   
 }

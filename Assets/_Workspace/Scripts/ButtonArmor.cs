@@ -43,7 +43,7 @@ public class ButtonArmor : MonoBehaviour
     private void AnimateButtonFillAmount(bool isActive)
     {
         float endValue = isActive ? 0f : 1f;
-        float duration = isActive ? 0.3f : 5f;
+        float duration = isActive ? 0.3f : PlayerAbilities.RESET_DURATION;
 
         _btnFillAmount.DOFillAmount(endValue, duration)
                       .SetEase(Ease.Linear)

@@ -79,14 +79,14 @@ public class AbilitiesData
 {
     public float armorStartValue = 5f;
     public float armorCurrentValue;
-    public float armorMaxValue = 10f;
+    public float armorMaxValue = 15f;
     public float armorIncreaseValue = 1f;
     public int armorPrice = 5;
     public int armorPriceIncreaseValue = 5;
 
-    public float invisibilityStartValue = 10f;
+    public float invisibilityStartValue = 5f;
     public float invisibilityCurrentValue;
-    public float invisibilityMaxValue = 20f;
+    public float invisibilityMaxValue = 15f;
     public float invisibilityIncreaseValue = 1f;
     public int invisibilityPrice = 5;
     public int invisibilityPriceIncreaseValue = 5;

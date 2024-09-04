@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class PatroolState : StateBase
 {
+    [SerializeField] private PatroolType _patroolType;
+    [SerializeField, Range(3, 7)] private float _waitTime = 3f;
+    [Space(5)]
     [SerializeField] private Transform _patroolTransform; 
     [SerializeField] private Vector3 _cubeSize;
-    [SerializeField, Range(3, 7)] private float _waitTime = 3f;
-    
+    [SerializeField] private Vector3[] _points;
+    [Space(5)]
+    [SerializeField] private bool _drawGizmos = true; 
+    private int _currentPoint; 
+    public enum PatroolType
+    {
+        Random, Points
+    }
+
     private bool _isMove;
 
     private const float AGENT_MOVE_SPEED = 1.2f;
@@ -17,8 +27,15 @@ public class PatroolState : StateBase
     protected override void Awake()
     {
         base.Awake();
-        _patroolTransform.parent = transform.parent;
+
         _enemy = GetComponent<Enemy>();
+
+        if (_patroolType == PatroolType.Random)
+            _patroolTransform.parent = transform.parent;
+        if (_patroolType == PatroolType.Points)
+            ConstructPoints();
+
+        _drawGizmos = false;
     }
     private void Update()
     {
@@ -41,18 +58,25 @@ public class PatroolState : StateBase
         base.ExitState();
         StopAllCoroutines();
 
-        _isMove = false;
         _enemy.agent.SetDestination(transform.position);
+        _isMove = false;
         _enemy.Animator.SetBool(ANIM_WALK, _isMove);
-    }
-    private void LookAtPlayer()
-    {
-        transform.DOLookAt(_enemy.player.transform.position, .5f);
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
     private void SetMove()
     {
-        _enemy.agent.SetDestination(GetRandomPointInsideCube());
+        if (_patroolType == PatroolType.Random)
+        {
+            _enemy.agent.SetDestination(GetRandomPointInsideCube());
+        }
+        if (_patroolType == PatroolType.Points)
+        {
+            if (_currentPoint < _points.Length - 1)
+                _currentPoint++;
+            else
+                _currentPoint = 0;
+
+            _enemy.agent.SetDestination(_points[_currentPoint]);
+        }
     }
     private void StopMove()
     {
@@ -67,7 +91,14 @@ public class PatroolState : StateBase
 
         SetMove();
     }
- private Vector3 GetRandomPointInsideCube()
+    private void ConstructPoints()
+    {
+        for (int i = 0; i < _points.Length; i++)
+        {
+            _points[i] += transform.position;  
+        }
+    }
+    private Vector3 GetRandomPointInsideCube()
     {
         Vector3 randomPointLocal = new Vector3(
             Random.Range(-_cubeSize.x / 2, _cubeSize.x / 2),
@@ -80,8 +111,23 @@ public class PatroolState : StateBase
 
     private void OnDrawGizmosSelected()
     {
+        if (!_drawGizmos) return; 
+
         Gizmos.color = Color.cyan;
-        Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
-        Gizmos.DrawWireCube(Vector3.zero, _cubeSize);
+
+        if (_patroolType == PatroolType.Random)
+        {
+            Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
+            Gizmos.DrawWireCube(Vector3.zero, _cubeSize);
+        }
+        if (_patroolType == PatroolType.Points)
+        {
+            for (int i = 0; i < _points.Length; i++)
+            {
+                if (i < _points.Length - 1)
+                    Gizmos.DrawLine(transform.position + _points[i], transform.position + _points[i + 1]); 
+                Gizmos.DrawSphere(transform.position + _points[i], .1f); 
+            }
+        }
     }
 }

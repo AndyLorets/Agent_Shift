@@ -7,6 +7,8 @@ public class PlayerAbilities : MonoBehaviour
     public float armorTime { get; set; }
     public float headShotChance { get; set; }
 
+    public const float RESET_DURATION = 30f;
+
     public static System.Action<float> onChangeInvisibilitTime;
     public static System.Action<bool> onInvisibility;
     public static System.Action<float> onChangeArmorTime;

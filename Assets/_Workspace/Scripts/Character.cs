@@ -5,8 +5,10 @@ public abstract class Character : MonoBehaviour, ITakeDamage
 {
     [SerializeField] protected float _hp;
     [SerializeField] protected float _currentHP;
+    [Space(5)]
+    [SerializeField] private bool _drawGizmos;
     [Space(5), Header("Visible")]
-    [SerializeField, Range(3f, 10f)] protected float _visibleRange = 3f;
+    [SerializeField, Range(3f, 15f)] protected float _visibleRange = 3f;
     [SerializeField, Range(25f, 250f)] protected float _viewAngle = 45f;
     [SerializeField] protected LayerMask _detectionLayer;
     [Space(5), Header("Components")]
@@ -153,12 +155,15 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     }
     protected virtual void OnDrawGizmosSelected()
     {
+        if (!_drawGizmos) return; 
+
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, _visibleRange);
 
         Vector3 leftBoundary = Quaternion.Euler(0, -_viewAngle / 2, 0) * transform.forward * _visibleRange;
         Vector3 rightBoundary = Quaternion.Euler(0, _viewAngle / 2, 0) * transform.forward * _visibleRange;
 
+        Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, leftBoundary);
         Gizmos.DrawRay(transform.position, rightBoundary);
     }
