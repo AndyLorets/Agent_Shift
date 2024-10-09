@@ -30,7 +30,7 @@ public class SceneLoader : MonoBehaviour
         int currentLevel = _gameData.PlayerData.currentLevel;
         int sceneIndex = hasTutorial ? currentLevel : SceneManager.sceneCountInBuildSettings - 1;
 
-        //LoadScene(sceneIndex);
+        LoadScene(sceneIndex);
     }
     public void LoadLevel()
     {

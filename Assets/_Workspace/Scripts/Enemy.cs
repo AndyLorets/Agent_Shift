@@ -12,6 +12,7 @@ public class Enemy : Character
     [SerializeField] private LureState _lureState;
     [SerializeField] private UnitInventory _unitInventory;
     [Space(5)]
+    [SerializeField] private bool _isFootStepHear = true;
     [SerializeField] private bool _isRequestingAssistance = true;
     [SerializeField, Range(1, 3)] private int _visibleCountToAttack = 2;
     [SerializeField, Range(.1f, 1f)] private float _hitChance = .5f;
@@ -222,6 +223,8 @@ public class Enemy : Character
     }
     private void OnHearFootStep(Vector3 pos)
     {
+        if (!_isFootStepHear) return;
+
         float dist = Vector3.Distance(transform.position, pos);
         if (dist > _visibleRange) return;
 

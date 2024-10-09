@@ -732,6 +732,7 @@ MonoBehaviour:
   _patrolState: {fileID: 4916038441406269865}
   _lureState: {fileID: 3616283909976650226}
   _unitInventory: {fileID: 321839853298967495}
+  _isFootStepHear: 1
   _isRequestingAssistance: 1
   _visibleCountToAttack: 2
   _hitChance: 0.7
