@@ -13,7 +13,8 @@ public class Door : MonoBehaviour
     [SerializeField] private KeypadDoorUnlocker _doorUnlocker;
     [SerializeField] private string _taskName;  
 
-    private KeypadDoorUnlocker _currentDoorUnlocker; 
+    private KeypadDoorUnlocker _currentDoorUnlocker;
+    private TaskManager _taskManager;
 
     private bool _isOpen;
     public enum UnlockType
@@ -42,7 +43,8 @@ public class Door : MonoBehaviour
         }
         else if (_unlockType == UnlockType.Task)
         {
-            ServiceLocator.GetService<TaskManager>().onTaskComplete += TaskComplate;
+            _taskManager = ServiceLocator.GetService<TaskManager>();
+            _taskManager.onTaskComplete += TaskComplate; 
             _collider.enabled = false;
             _interactHandler.SetEnable(false);
         }
@@ -104,10 +106,10 @@ public class Door : MonoBehaviour
             _interactHandler.SetInteractable(false);
     }
     private void OnDestroy()
-    {
+    { 
         if (_unlockType == UnlockType.Task)
         {
-            ServiceLocator.GetService<TaskManager>().onTaskComplete -= TaskComplate;
+            _taskManager.onTaskComplete -= TaskComplate;
         }
     }
 }

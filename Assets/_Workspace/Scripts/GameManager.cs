@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
-        ServiceLocator.RegisterService(this); 
+        ServiceLocator.RegisterService(this);
     }
     private void Start()
     {

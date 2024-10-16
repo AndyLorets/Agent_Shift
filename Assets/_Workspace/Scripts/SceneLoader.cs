@@ -48,8 +48,6 @@ public class SceneLoader : MonoBehaviour
     }
     public void LoadScene(int sceneIndex)
     {
-        ServiceLocator.ClearAllServices();
-        ServiceLocator.RegisterService(this);
         StartCoroutine(SceneLoading(sceneIndex));
         _canvasGroup.alpha = 1; 
     }
@@ -69,6 +67,8 @@ public class SceneLoader : MonoBehaviour
             elapsedTime += Time.deltaTime;
             if (elapsedTime >= minimumLoadTime && asyncOperation.progress >= 0.9f)
             {
+                ServiceLocator.ClearAllServices();
+                ServiceLocator.RegisterService(this);
                 asyncOperation.allowSceneActivation = true;
             }
 

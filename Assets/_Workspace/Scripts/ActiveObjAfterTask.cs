@@ -4,9 +4,12 @@ public class ActiveObjAfterTask : MonoBehaviour
 {
     [SerializeField] private GameObject[] _obj;
     [SerializeField] private string _taskName;
+
+    private TaskManager _taskManager;
     void Start()
     {
-        ServiceLocator.GetService<TaskManager>().onTaskComplete += TaskComplate;
+        _taskManager = ServiceLocator.GetService<TaskManager>();
+        _taskManager.onTaskComplete += TaskComplate;
         for (int i = 0; i < _obj.Length; i++)
         {
             _obj[i].SetActive(false);
@@ -23,6 +26,6 @@ public class ActiveObjAfterTask : MonoBehaviour
     }
     private void OnDestroy()
     {
-        ServiceLocator.GetService<TaskManager>().onTaskComplete -= TaskComplate;
+        _taskManager.onTaskComplete -= TaskComplate;
     }
 }
