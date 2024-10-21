@@ -5,7 +5,8 @@ public class TutorialManager : MonoBehaviour
 {
     [SerializeField] private Tutorial[] _tutorials;
     [SerializeField] protected CharacterDialogue _dialogueOnEnd;
-    [SerializeField] private Sprite _icon; 
+    [SerializeField] private Sprite _icon;
+    [SerializeField] private Button _skipTutorialBtn; 
     private int _currentStep;
 
     private void Awake()
@@ -15,6 +16,8 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
+        _skipTutorialBtn.onClick.AddListener(EndTutorial);
+        _skipTutorialBtn.gameObject.SetActive(false);   
         InitSteps(); 
         StartTutorial();
     }
@@ -40,6 +43,9 @@ public class TutorialManager : MonoBehaviour
         {
             EndTutorial();
         }
+
+        if (!_skipTutorialBtn.gameObject.activeSelf)
+            _skipTutorialBtn.gameObject.SetActive(true);
     }
 
     private void OnStepCompleted()

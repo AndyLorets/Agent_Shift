@@ -1,6 +1,6 @@
 {
     "currentLevel": 1,
-    "openLevel": 1,
+    "openLevel": 2,
     "moneyCount": 0,
     "startHp": 10.0,
     "currentHp": 10.0,
@@ -22,10 +22,10 @@
         "invisibilityPrice": 5,
         "invisibilityPriceIncreaseValue": 5,
         "headShotChanceStartValue": 10.0,
-        "headShotChanceCurrentValue": 20.0,
+        "headShotChanceCurrentValue": 10.0,
         "headShotChanceMaxValue": 80.0,
         "headShotChanceIncreaseValue": 10.0,
-        "headShotChancePrice": 15,
+        "headShotChancePrice": 10,
         "headShotChancePriceIncreaseValue": 5
     },
     "weaponData": {
