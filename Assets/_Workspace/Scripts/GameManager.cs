@@ -14,12 +14,6 @@ public class GameManager : MonoBehaviour
     public static System.Action onGameWin;
     public static System.Action onGameLose;
 
-    public enum GameState
-    {
-        Briefing, GamePlay, End
-    }
-    public static GameState gameState { get; private set; }
-
     private void OnEnable()
     {
         BriefingManager.onEndBriefing += OnStartGame;
@@ -36,7 +30,6 @@ public class GameManager : MonoBehaviour
     {
         Application.targetFrameRate = 120;
         QualitySettings.vSyncCount = 0;
-        gameState = GameState.Briefing;
     }
     private void Update()
     {
@@ -52,25 +45,21 @@ public class GameManager : MonoBehaviour
     }
     private void OnStartGame()
     {
-        gameState = GameState.GamePlay;
         onGameStart?.Invoke();
         _gamePlayCam.Priority = 10;
     }
     public void WinGame()
     {
-        gameState = GameState.End;
-
         int r = Random.Range(0, _winDialogue.Length);
         ServiceLocator.GetService<CharacterMessanger>().SetDialogue(_icon, _winDialogue[r], 5);
         ServiceLocator.GetService<Wallet>().AddMoney(100);
-        ServiceLocator.GetService<Player>().CanControll = false; 
+        ServiceLocator.GetService<Player>().CanControll = false;
+        ServiceLocator.GetService<GameDataController>().SaveData();
 
         onGameWin?.Invoke(); 
     }
     public void LoseGame()
     {
-        gameState = GameState.End;
-
         int r = Random.Range(0, _loseDialogue.Length);
         ServiceLocator.GetService<CharacterMessanger>().SetDialogue(_icon, _loseDialogue[r], 5);
         ServiceLocator.GetService<Player>().CanControll = false;
@@ -90,8 +79,6 @@ public class GameManager : MonoBehaviour
     }
     public void Restart()
     {
-        gameState = GameState.Briefing;
-
         CharacterDialogue.speaking = false;
         ServiceLocator.GetService<PauseManager>().Pause(false);
         ServiceLocator.GetService<SceneLoader>().LoadScene(ServiceLocator.GetService<GameDataController>().PlayerData.currentLevel);

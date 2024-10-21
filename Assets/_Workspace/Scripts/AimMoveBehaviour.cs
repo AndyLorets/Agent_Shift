@@ -8,7 +8,7 @@ public class AimMoveBehaviour : MoveBehaviour
         _player.Animator.CrossFade($"{weaponName}_Aim", .1f);
     }
 
-    public override void Move(Vector3 movementInput, Vector3 aimVector)
+    public override void Move(Vector3 movementInput, Vector3 aimVector, bool walk)
     {
         Vector3 movementDirection = _playerTransform.InverseTransformDirection(movementInput);
         movementDirection.y = 0; 

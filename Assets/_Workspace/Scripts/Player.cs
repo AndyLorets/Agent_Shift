@@ -21,6 +21,7 @@ public class Player : Character
     private PlayerAbilities _playerAbilities; 
     private bool _inputAiming => _joystickAim.Horizontal != 0  || _joystickAim.Vertical != 0;
     private bool _aiming;
+    private bool _walk; 
     public bool CanControll { get; set; } = true; 
     public WeaponBase currentWeapon => _weapon;
     private void Awake()
@@ -38,7 +39,7 @@ public class Player : Character
         base.Construct();
         rb = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
-        _playerAbilities = GetComponent<PlayerAbilities>(); 
+        _playerAbilities = GetComponent<PlayerAbilities>();
 
         _weaponLineRender.Construct(_viewAngle, _visibleRange);
         onChangeHP?.Invoke(_currentHP, _hp, false);
@@ -50,6 +51,7 @@ public class Player : Character
         PlayerAbilities.onInvisibility += SetInvisibility;
         PlayerAbilities.onArmor += SetArmor;
         BriefingManager.onStartBriefing += LoadData;
+        WalkToggle.onSwitch += ToggleWalkMode;
     }
     private void LoadData()
     {
@@ -71,6 +73,10 @@ public class Player : Character
             _targets = _enemyManager.enemiesList;
         }
     }
+    private void ToggleWalkMode()
+    {
+        _walk = !_walk; 
+    }
     private Vector3 GetMoveDirection()
     {
         float horizontal = CanControll ? Input.GetAxis("Horizontal") + _joystickMovement.Horizontal : 0;
@@ -91,7 +97,7 @@ public class Player : Character
     private void SetArmor(bool value) => IsArmom = value;
     private void RunBehaviours()
     {
-        _moveBehaviour.Move(GetMoveDirection(), GetAimDirection());
+        _moveBehaviour.Move(GetMoveDirection(), GetAimDirection(), _walk);
         if (_inputAiming && !IsInvisibility)
         {
             _weaponBehaviour.Run();
@@ -198,6 +204,7 @@ public class Player : Character
         PlayerAbilities.onInvisibility -= SetInvisibility;
         PlayerAbilities.onArmor -= SetArmor;
         BriefingManager.onStartBriefing -= LoadData;
+        WalkToggle.onSwitch -= ToggleWalkMode;
         _weapon.onStartReload -= OnStartReload;
         _weapon.onEndReload -= OnEndReload;
     }

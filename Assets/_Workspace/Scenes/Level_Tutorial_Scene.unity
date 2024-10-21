@@ -8308,6 +8308,7 @@ MonoBehaviour:
   _upgradesCanvas: {fileID: 856288168}
   _walletCanvas: {fileID: 1380859107}
   _animBtnContinue: {fileID: 6756306278978303826}
+  _playerAbilities: {fileID: 2017957900}
 --- !u!224 &1080832690
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13987,6 +13988,7 @@ MonoBehaviour:
     text: Great! Move to the designated point.
     clip: {fileID: 8300000, guid: 48487adcd6b23694da2b8c637cd262e7, type: 3}
   _point: {fileID: 1543512978}
+  _playerAbilities: {fileID: 2017957900}
 --- !u!224 &1921952317
 RectTransform:
   m_ObjectHideFlags: 0

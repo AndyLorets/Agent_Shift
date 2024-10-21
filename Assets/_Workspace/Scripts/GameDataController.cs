@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public class GameDataController : MonoBehaviour
 {
     public static GameDataController Instance { get; private set; }
     public PlayerData PlayerData { get; private set; }
+
+    public static Action onDataSave; 
 
     private void Awake()
     {
@@ -23,6 +26,7 @@ public class GameDataController : MonoBehaviour
 
     public void SaveData()
     {
+        onDataSave?.Invoke(); 
         SaveManager.SavePlayerData(PlayerData);
     }
 }

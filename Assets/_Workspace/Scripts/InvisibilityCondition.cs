@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class InvisibilityCondition : TutorialCondition
     [SerializeField] private GameObject _invisibilityBtn;
     [SerializeField] private CharacterDialogue _onActiveInvisibilityDialogue; 
     [SerializeField] private GameObject _point;
+    [SerializeField] private PlayerAbilities _playerAbilities;
 
     private Canvas _canvas;
     public override void EnableCondition()
@@ -16,6 +18,7 @@ public class InvisibilityCondition : TutorialCondition
         _canvas = GetComponent<Canvas>();
         _canvas.enabled = false;
         PlayerAbilities.onInvisibility += DisableUI;
+        _playerAbilities.CancelArmor();
     }
     private void DisableUI(bool value)
     {

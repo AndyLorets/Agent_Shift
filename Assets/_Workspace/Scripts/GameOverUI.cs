@@ -12,7 +12,9 @@ public class GameOverUI : MonoBehaviour
     [Space(5)]
     [SerializeField] private Color _winColor;
     [SerializeField] private Color _loseColor;
-    [SerializeField] private Button _nextBtn; 
+    [SerializeField] private Button _nextBtn;
+
+    private TextMeshProUGUI _nextText; 
 
     private CanvasGroup _group;
 
@@ -21,7 +23,8 @@ public class GameOverUI : MonoBehaviour
         GameManager.onGameLose += OnLoseGame;
         GameManager.onGameWin += OnWinGame;
 
-        _group = GetComponent<CanvasGroup>();   
+        _group = GetComponent<CanvasGroup>();
+        _nextText = _nextBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>(); 
     }
     private void OnDestroy()
     {
@@ -46,9 +49,10 @@ public class GameOverUI : MonoBehaviour
     }
     private void OnLoseGame()
     {
-        _nextBtn.interactable = false; 
+        _nextBtn.interactable = false;
+        _nextText.color = GetColorFromHex.GetColor("#6C6C6C");
         _titleText.color = _loseColor;
-        _titleText.text = "Mission Filed";
+        _titleText.text = "Mission Failed";
         Invoke(nameof(ShowUI), 2f);
         RenderTasks(); 
     }

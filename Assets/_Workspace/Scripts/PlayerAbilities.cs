@@ -14,7 +14,9 @@ public class PlayerAbilities : MonoBehaviour
     public static System.Action<float> onChangeArmorTime;
     public static System.Action<bool> onArmor;
 
-    private AudioManager _audioManager; 
+    private AudioManager _audioManager;
+    private Coroutine _armorCoroutine;
+    private Coroutine _invisibilityCoroutine;
 
     private void Awake()
     {
@@ -37,11 +39,17 @@ public class PlayerAbilities : MonoBehaviour
     }
     public void ActiveInvisibility()
     {
-        StartCoroutine(Invisibility());
+        if (_invisibilityCoroutine == null)
+        {
+            _invisibilityCoroutine = StartCoroutine(Invisibility());
+        }        
     }
     public void ActiveArmor()
     {
-        StartCoroutine(Armor());
+        if (_armorCoroutine == null)
+        {
+            _armorCoroutine = StartCoroutine(Armor());
+        }
     }
     private IEnumerator Invisibility()
     {
@@ -58,6 +66,7 @@ public class PlayerAbilities : MonoBehaviour
             yield return waitForSeconds;
         }
 
+        _invisibilityCoroutine = null;  
         onInvisibility?.Invoke(false);
         _audioManager.PlayAbilityOff();
     }
@@ -76,7 +85,29 @@ public class PlayerAbilities : MonoBehaviour
             yield return waitForSeconds;
         }
 
+        _armorCoroutine = null; 
         onArmor?.Invoke(false);
         _audioManager.PlayAbilityOff();
+    }
+
+    public void CancelInvisibility()
+    {
+        if (_invisibilityCoroutine != null)
+        {
+            onInvisibility?.Invoke(false);
+            _audioManager.PlayAbilityOff();
+            StopCoroutine(_invisibilityCoroutine);
+            _invisibilityCoroutine = null;
+        }
+    }
+    public void CancelArmor()
+    {
+        if (_armorCoroutine != null)
+        {
+            onArmor?.Invoke(false);
+            _audioManager.PlayAbilityOff();
+            StopCoroutine(_armorCoroutine);
+            _armorCoroutine = null;
+        }
     }
 }

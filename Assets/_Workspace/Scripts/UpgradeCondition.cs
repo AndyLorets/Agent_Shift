@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class UpgradeCondition : TutorialCondition
@@ -7,6 +8,7 @@ public class UpgradeCondition : TutorialCondition
     [SerializeField] private CanvasGroup _upgradesCanvas;
     [SerializeField] private CanvasGroup _walletCanvas;
     [SerializeField] private Animation _animBtnContinue;
+    [SerializeField] private PlayerAbilities _playerAbilities;
 
     private Canvas _canvas;
 
@@ -17,6 +19,8 @@ public class UpgradeCondition : TutorialCondition
         _canvas = GetComponent<Canvas>();
         _canvas.enabled = false;
         _menuCanvas.alpha = 1;
+        _playerAbilities.CancelInvisibility();
+        ServiceLocator.GetService<Wallet>().AddMoney(10); 
     }
     protected override void Ready()
     {
