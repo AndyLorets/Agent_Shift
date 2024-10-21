@@ -181,7 +181,7 @@ public class Enemy : Character
         if (!Alive) return; 
 
         float dist = Vector3.Distance(transform.position, pos);
-        if (dist <= _visibleRange)
+        if (dist <= 12)
         {
             _stateMachine.ChangeState(_attackState);
             _visionCone.SetColor(VisionCone.ColorType.Attack);

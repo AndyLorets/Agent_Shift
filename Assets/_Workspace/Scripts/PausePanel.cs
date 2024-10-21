@@ -4,10 +4,15 @@ using UnityEngine;
 public class PausePanel : MonoBehaviour
 {
     private CanvasGroup _canvasGroup;
+    [SerializeField] private GameObject[] _disableObjs;  
     private void Awake()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
         PauseManager.onPause += Active;
+    }
+    private void Start()
+    {
+        Active(false); 
     }
     private void OnDestroy()
     {
@@ -19,5 +24,10 @@ public class PausePanel : MonoBehaviour
         _canvasGroup.DOFade(endValue, .3f).SetUpdate(true);
         _canvasGroup.blocksRaycasts = value;
         _canvasGroup.interactable = value;
+
+        for (int i = 0; i < _disableObjs.Length; i++)
+        {
+            _disableObjs[i].SetActive(value); 
+        }
     }
 }
