@@ -1,4 +1,3 @@
-using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
@@ -11,6 +10,7 @@ public class Helicopter : MonoBehaviour
     private const float FLY_OFFSET = 30; 
     private AudioSource _audioSource;
     private Animator _animator;
+    private TaskManager _taskManager; 
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -18,14 +18,15 @@ public class Helicopter : MonoBehaviour
     }
     private void Start()
     {
-        ServiceLocator.GetService<TaskManager>().onTaskComplete += TaskComplate;
+        _taskManager = ServiceLocator.GetService<TaskManager>();
+        _taskManager.onTaskComplete += TaskComplate;
         _animator.enabled = false;
         _audioSource.Stop(); 
         transform.position += Vector3.up * FLY_OFFSET; 
     }
     private void OnDestroy()
     {
-        ServiceLocator.GetService<TaskManager>().onTaskComplete -= TaskComplate;
+        _taskManager.onTaskComplete -= TaskComplate;
     }
     private void TaskComplate(string taskName)
     {

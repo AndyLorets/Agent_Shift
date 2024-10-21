@@ -27,24 +27,9 @@ public class SceneLoader : MonoBehaviour
         }
 
         bool hasTutorial = PlayerPrefs.HasKey("Tutorial");
-        int currentLevel = _gameData.PlayerData.currentLevel;
-        int sceneIndex = hasTutorial ? currentLevel : SceneManager.sceneCountInBuildSettings - 1;
+        int sceneIndex = hasTutorial ? SceneManager.sceneCountInBuildSettings - 1 : SceneManager.sceneCountInBuildSettings - 2;
 
         LoadScene(sceneIndex);
-    }
-    public void LoadLevel()
-    {
-        if (!string.IsNullOrEmpty(levelInputField.text))
-        {
-            int levelIndex;
-            if (int.TryParse(levelInputField.text, out levelIndex))
-            {
-                if (levelIndex > 0 && levelIndex < SceneManager.sceneCountInBuildSettings)
-                {
-                    LoadScene(levelIndex);
-                }              
-            }
-        }
     }
     public void LoadScene(int sceneIndex)
     {

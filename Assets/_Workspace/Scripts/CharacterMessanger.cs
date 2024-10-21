@@ -22,7 +22,9 @@ public class CharacterMessanger : MonoBehaviour
     {
         ServiceLocator.RegisterService(this); 
         _canvasGroup = GetComponent<CanvasGroup>();
-        _canvasGroup.alpha = 0; 
+        _canvasGroup.alpha = 0;
+        _canvasGroup.interactable = false;
+        _canvasGroup.blocksRaycasts = false;    
     }
     public void SetDialogue(Sprite sprite, CharacterDialogue characterDialogue, int priority = 0)
     {
@@ -38,7 +40,9 @@ public class CharacterMessanger : MonoBehaviour
             _icon.sprite = sprite; 
             _text.text = text;
 
-            _canvasGroup.DOFade(1, tween_duration).SetUpdate(true); 
+            _canvasGroup.DOFade(1, tween_duration).SetUpdate(true);
+            _canvasGroup.interactable = true;
+            _canvasGroup.blocksRaycasts = true;
 
             CharacterDialogue.speaking = true;
             _currentPriority = priority;
@@ -63,5 +67,7 @@ public class CharacterMessanger : MonoBehaviour
     private void ClearText()
     {
         _canvasGroup.DOFade(0, tween_duration).SetUpdate(true);
+        _canvasGroup.interactable = false;
+        _canvasGroup.blocksRaycasts =  false;
     }
 }
