@@ -6,9 +6,11 @@ public class Explosives : MonoBehaviour, ITaskable
     [SerializeField] private Sprite _interactSprite;
     [SerializeField] private InteractableHandler _interactHandler;
     [SerializeField] private Shader _shader;
-   
+    [SerializeField] private Outline _outline;  
+
     private Material _material;
     public string taskName { get; set; }
+    public bool activeTask { get; set; }
 
     private void Awake()
     {
@@ -22,6 +24,7 @@ public class Explosives : MonoBehaviour, ITaskable
         {
             Debug.LogError("Renderer not found on the object.");
         }
+        _outline.enabled = false; 
     }
     private void Start()
     {
@@ -56,5 +59,17 @@ public class Explosives : MonoBehaviour, ITaskable
     {
         if (other.CompareTag(TagsObj.PLAYER))
             _interactHandler.SetInteractable(false);
+    }
+
+    public void ActiveTask()
+    {
+        activeTask = true;
+        _outline.enabled = true; 
+    }
+
+    public void DeactiveTask()
+    {
+        activeTask = false;
+        _outline.enabled = false;
     }
 }

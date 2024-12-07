@@ -8,7 +8,8 @@ public class StealthKill : MonoBehaviour
     [SerializeField] private float _detectionRange = 1f; 
     [SerializeField] private float _angle = 90f; 
     [SerializeField] private LayerMask _enemyLayer;
-    [SerializeField] private ParticleSystem _hitEffect; 
+    [SerializeField] private ParticleSystem _hitEffect;
+    [SerializeField] private CanvasGroup _hud; 
 
     private AudioManager _audioManager; 
     private CameraController _cameraController; 
@@ -73,6 +74,8 @@ public class StealthKill : MonoBehaviour
                 transform.LookAt(hit.point);
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
                 _player.CanControll = false;
+                _hud.interactable = false;
+                _hud.blocksRaycasts = false;
                 return true;
             }
         }
@@ -91,6 +94,8 @@ public class StealthKill : MonoBehaviour
         }
         _isKilling = false;
         _player.CanControll = true;
+        _hud.interactable = true;
+        _hud.blocksRaycasts = true; 
     }
 
     void OnDrawGizmosSelected()

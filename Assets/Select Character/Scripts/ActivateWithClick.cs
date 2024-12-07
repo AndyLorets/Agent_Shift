@@ -5,7 +5,7 @@ using UnityEngine;
 public class ClickToToggleObject : MonoBehaviour
 {
     public GameObject objectToToggle;
-    public GameObject objectP; // Object that is considered "active"
+    public GameObject objectP; // Object that is considered "activeTask"
 
     private bool isVisible = false; // Initially we set it to false
 

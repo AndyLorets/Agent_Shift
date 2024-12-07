@@ -10,7 +10,6 @@ public abstract class MoveBehaviour
     protected const float ROTATION_SPEED = 30f;
     protected const float RUN_SPEED = 5f;
     protected const float WALK_SPEED = 2.5f;
-    protected const float AIM_MOVE_SPEED = 3.5f;
 
     public MoveBehaviour(Player player)
     {

@@ -8,6 +8,7 @@ public class UnitInventory : MonoBehaviour, ITaskable
 
     private ItemPickup _itemPickup; 
     public string taskName { get; set; }
+    public bool activeTask { get; set; }
 
     private void Start()
     {
@@ -22,7 +23,17 @@ public class UnitInventory : MonoBehaviour, ITaskable
         _itemPickup.transform.position = transform.position;
         gameObject.SetActive(false);
 
-        if (taskName != "")
+        if (taskName != "" && activeTask)
             ServiceLocator.GetService<TaskManager>().CompleteTask(taskName);
+    }
+
+    public void ActiveTask()
+    {
+        activeTask = true; 
+    }
+
+    public void DeactiveTask()
+    {
+        activeTask = false; 
     }
 }

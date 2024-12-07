@@ -1,5 +1,57 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1725753691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1725753692}
+  - component: {fileID: 1725753693}
+  m_Layer: 7
+  m_Name: Vision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1725753692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725753691}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.198, z: 1.201}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5153223502784101686}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1725753693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725753691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886af6ee74760d14c9aa955b37abb5c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _material: {fileID: 2100000, guid: becc624bdbca78c409920b7cf31b4a16, type: 2}
+  _obstructingLayer:
+    serializedVersion: 2
+    m_Bits: 8768
+  _resolution: 80
+  _idleColor: {r: 1, g: 1, b: 1, a: 0.3137255}
+  _visibleColor: {r: 1, g: 0.8709866, b: 0, a: 0.3137255}
+  _attackColor: {r: 1, g: 0, b: 0, a: 0.3137255}
 --- !u!1 &3320145793266572212
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,13 +384,13 @@ MonoBehaviour:
   _audioSource: {fileID: 5153094447803323726}
   _shootClip: {fileID: 8300000, guid: 8602b7d5cd15c1943a50aa53f171c8cf, type: 3}
   _reloadClip: {fileID: 8300000, guid: 3c5c1d4d7b9307c458890a4beb12e4ae, type: 3}
-  _motionSensors:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _visionCone: {fileID: 1725753693}
   _head: {fileID: 5153223502784101686}
+  _visibleRange: 3
+  _viewAngle: 45
+  _detectionLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!65 &5153094447803323727
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -581,6 +633,7 @@ Transform:
   m_Children:
   - {fileID: 5153102423770656404}
   - {fileID: 5152784645647416974}
+  - {fileID: 1725753692}
   m_Father: {fileID: 5153094447803323728}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

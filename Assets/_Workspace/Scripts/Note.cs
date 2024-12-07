@@ -12,13 +12,21 @@ public class Note : MonoBehaviour
     [Space(5)]
     [SerializeField] private Sprite _icon;
     [SerializeField] private CharacterDialogue _dialogue;
+    [SerializeField] private Outline _outline; 
+
+    public static bool CodeFounded { get; private set; }  
 
     private UINoteContent _currenUIContent;
 
     private void Start()
     {
         _interactHandler.Init(_interactSprite, Action);
-        _text.text = _value; 
+        _text.text = _value;
+        GameManager.onGameStart += ResetCodeFounded; 
+    }
+    private void OnDestroy()
+    {
+        GameManager.onGameStart -= ResetCodeFounded;
     }
     private void Action()
     {
@@ -26,6 +34,12 @@ public class Note : MonoBehaviour
         _currenUIContent.Init(_value);
         ServiceLocator.GetService<CharacterMessanger>().SetDialogue(_icon, _dialogue, 5);
         ServiceLocator.GetService<UIContentManager>().Open(_currenUIContent.gameObject);
+        CodeFounded = true;
+        _outline.enabled = false; 
+    }
+    private void ResetCodeFounded()
+    {
+        CodeFounded = false; 
     }
     private void OnTriggerEnter(Collider other)
     {

@@ -13,10 +13,10 @@ public class AimMoveBehaviour : MoveBehaviour
         Vector3 movementDirection = _playerTransform.InverseTransformDirection(movementInput);
         movementDirection.y = 0; 
 
-        _player.Animator.SetFloat(ANIM_MOVE_HORIZONTAL, movementDirection.x * .85f);
-        _player.Animator.SetFloat(ANIM_MOVE_VERTICAL, movementDirection.z * .85f);
+        _player.Animator.SetFloat(ANIM_MOVE_HORIZONTAL, movementDirection.x * .55f);
+        _player.Animator.SetFloat(ANIM_MOVE_VERTICAL, movementDirection.z * .55f);
 
-        _playerTransform.position += movementInput * AIM_MOVE_SPEED * Time.deltaTime;
+        _playerTransform.position += movementInput * WALK_SPEED * Time.deltaTime;
 
         Vector3 directionToTarget = new Vector3(aimVector.x, 0, aimVector.z);
         directionToTarget.Normalize(); 

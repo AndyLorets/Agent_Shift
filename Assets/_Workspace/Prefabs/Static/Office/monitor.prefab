@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 23564442996311904}
   - component: {fileID: 174385041}
   - component: {fileID: 2119721977476920924}
+  - component: {fileID: 2883507228280832624}
   m_Layer: 2
   m_Name: monitor
   m_TagString: Untagged
@@ -190,6 +191,7 @@ MonoBehaviour:
     text: "\u041D\u0443\u0436\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u044D\u0442\u0443
       \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0443 "
     clip: {fileID: 8300000, guid: 25f08f9f525e5564b8e2817c7f7d2b9f, type: 3}
+  _outline: {fileID: 2883507228280832624}
 --- !u!65 &2119721977476920924
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -203,6 +205,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 2.327696, z: 1.355801}
   m_Center: {x: 0.0000043496048, y: -0.40384793, z: 0.57791156}
+--- !u!114 &2883507228280832624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336190861656512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.60839117, b: 0.051886797, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &131904885119145920
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,21 +5,25 @@ public class Hostage : Character, ITaskable
 {
     [SerializeField] private FollowingState _followingState;
     [SerializeField] private int _startAnimPos;
+    [SerializeField] private Outline _outline;
+    private readonly StateMachine _stateMachine = new StateMachine();
 
-    private StateMachine _stateMachine = new StateMachine();
-
-    [SerializeField] private CharacterDialogue[] _dialogue; 
-
+    [SerializeField] private CharacterDialogue[] _dialogue;
     public NavMeshAgent agent { get; private set; }
     public string taskName { get; set; }
+    public bool activeTask { get; set; }
 
-    private const string ANIM_HOSTAGE = "HostagePos";
-    private const string ANIM_HOSTAGE_NUM = "HostagePosNum";
+
+    private const string AnimHostageTrigger = "HostagePos";
+    private const string AnimHostageParam = "HostagePosNum";
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        _outline.enabled = false;
+        //_taskColorFlasher.CacheOriginalMaterials();
     }
+
     private void Update()
     {
         if (agent.hasPath && agent.velocity.sqrMagnitude == 0f)
@@ -30,35 +33,53 @@ public class Hostage : Character, ITaskable
             agent.SetDestination(destination);
         }
     }
+
     protected override void Construct()
     {
         base.Construct();
-
-        Animator.SetTrigger(ANIM_HOSTAGE);
-        Animator.SetInteger(ANIM_HOSTAGE_NUM, _startAnimPos);
+        Animator.SetTrigger(AnimHostageTrigger);
+        Animator.SetInteger(AnimHostageParam, _startAnimPos);
     }
+
     public void Released()
     {
-        int r = Random.Range(0, _dialogue.Length);
+        int randomIndex = Random.Range(0, _dialogue.Length);
 
         Animator.SetTrigger("StandUp");
-        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogue[r]);
+        ServiceLocator.GetService<CharacterMessanger>().SetDialogue(icon, _dialogue[randomIndex]);
         ServiceLocator.GetService<TaskManager>().CompleteTask(taskName);
-
         Invoke(nameof(EnterFollowingState), 2f);
     }
+
     private void EnterFollowingState()
     {
         _stateMachine.ChangeState(_followingState);
     }
+
     public override void TakeDamage(float value, bool headShot)
     {
+        // Implementation for damage handling (if required)
     }
+
     public override void Dead(bool headShot)
     {
+        // Implementation for death logic (if required)
     }
 
     protected override void ConstructTargets()
     {
+        // Implementation for target construction (if required)
+    }   
+
+    public void ActiveTask()
+    {
+        activeTask = true;
+        _outline.enabled = true; 
+    }
+
+    public void DeactiveTask()
+    {
+        activeTask = false;
+        _outline.enabled = false;
     }
 }

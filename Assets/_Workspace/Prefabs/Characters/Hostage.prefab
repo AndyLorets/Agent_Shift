@@ -350,6 +350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hp: 0
   _currentHP: 0
+  _drawGizmos: 0
   _visibleRange: 3
   _viewAngle: 25
   _detectionLayer:
@@ -361,6 +362,7 @@ MonoBehaviour:
   _deathClips: []
   _followingState: {fileID: 1386161603218862386}
   _startAnimPos: 1
+  _outline: {fileID: 6341444623121470275}
   _dialogue:
   - text: Incredible, you found me!
     clip: {fileID: 8300000, guid: 6e91e759071fba446aa8916d70c6cd63, type: 3}
@@ -1041,6 +1043,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44d57cfa07de346458450744785d8a7e, type: 3}
+--- !u!1 &7454349208210521852 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3191221269693404725, guid: 44d57cfa07de346458450744785d8a7e, type: 3}
+  m_PrefabInstance: {fileID: 5420739429321222345}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6341444623121470275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7454349208210521852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.72204477, b: 0.06132078, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &7454349208210521952 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3191221269693405097, guid: 44d57cfa07de346458450744785d8a7e, type: 3}

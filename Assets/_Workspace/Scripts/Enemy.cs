@@ -178,7 +178,7 @@ public class Enemy : Character
     }
     private void OnRequestingAssistance(Vector3 pos)
     {
-        if (!Alive) return; 
+        if (!Alive || !gameObject.activeSelf) return; 
 
         float dist = Vector3.Distance(transform.position, pos);
         if (dist <= 12)

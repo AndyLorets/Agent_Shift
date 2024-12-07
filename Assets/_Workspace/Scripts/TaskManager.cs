@@ -27,19 +27,24 @@ public class TaskManager : MonoBehaviour
     }
     private void ActiveTask()
     {
-        if (_tasks.Count == 0) return; 
-        
-        onTaskUpdate?.Invoke(_tasks[_currentTask].taskName);
+        if (_tasks.Count == 0) return;
+
+        Task task = _tasks[_currentTask];
+        task.taskable.ActiveTask(); 
+        onTaskUpdate?.Invoke(task.taskName);
         SetMinimapPointPosition();
     }
     private void SetMinimapPointPosition()
     {
-        float x = _tasks[_currentTask].taskableSource.transform.position.x;
-        float z = _tasks[_currentTask].taskableSource.transform.position.z;
+        Task task = _tasks[_currentTask];
+        float x = task.taskableSource.transform.position.x;
+        float z = task.taskableSource.transform.position.z;
         _minimapPoint.transform.position = new Vector3(x, 2, z);
     }
     public void CompleteTask(string taskName)
     {
+        _tasks[_currentTask].taskable.DeactiveTask();
+
         Task task = _tasks.Find(t => t.taskName == taskName);
         if (task != null)
         {
@@ -48,6 +53,7 @@ public class TaskManager : MonoBehaviour
             if (_currentTask < _tasks.Count)
             {
                 task.complate = true;
+                _tasks[_currentTask].taskable.ActiveTask();
                 onTaskUpdate?.Invoke(_tasks[_currentTask].taskName);
                 SetMinimapPointPosition();
             }

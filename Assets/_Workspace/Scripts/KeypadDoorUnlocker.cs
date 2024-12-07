@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class KeypadDoorUnlocker : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private TextMeshProUGUI _findCodeText;
     [SerializeField] private Button[] _btns; 
 
     private string _enteredCode;
@@ -23,11 +24,15 @@ public class KeypadDoorUnlocker : MonoBehaviour
         _UIContentManager = ServiceLocator.GetService<UIContentManager>();
         _audioManager = ServiceLocator.GetService<AudioManager>();
     }
+    private void OnEnable()
+    {
 
+    }
     public void Init(string correctCode, UnityAction action)
     {
         _correctCode = correctCode;
-        _action = action; 
+        _action = action;
+        _findCodeText.text = Note.CodeFounded ? $"Found code: <color=yellow>{_correctCode}</color>" : "<color=yellow>Code needs to be found</color>";
     }
 
     public void SetNumber(int num)

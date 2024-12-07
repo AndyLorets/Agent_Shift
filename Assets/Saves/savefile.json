@@ -1,7 +1,7 @@
 {
-    "currentLevel": 1,
+    "currentLevel": 2,
     "openLevel": 2,
-    "moneyCount": 0,
+    "moneyCount": 300,
     "startHp": 10.0,
     "currentHp": 10.0,
     "maxHp": 50.0,

@@ -93,7 +93,7 @@ public class Door : MonoBehaviour
         _collider.enabled = false;
         _interactHandler.SetEnable(false);
         _animation.PlayQueued(ANIM_OPEN);
-        ServiceLocator.GetService<AudioManager>().PlayOpenDoor(); 
+        ServiceLocator.GetService<AudioManager>().PlayOpenDoor();
     }
     private void OnTriggerEnter(Collider other)
     {

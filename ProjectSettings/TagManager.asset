@@ -7,6 +7,7 @@ TagManager:
   - Hostage
   - Enemy
   - FxTemporaire
+  - MiniMapIcon
   layers:
   - Default
   - TransparentFX

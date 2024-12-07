@@ -1,6 +1,4 @@
-using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening; 
+ using UnityEngine;
 
 public class Computer : MonoBehaviour, ITaskable
 {
@@ -11,13 +9,17 @@ public class Computer : MonoBehaviour, ITaskable
     [Space(5)]
     [SerializeField] private Sprite _icon;
     [SerializeField] private CharacterDialogue _dialogue;
+    [Space(5)]
+    [SerializeField] private Outline _outline;
 
     private PuzzleWires _currentPuzzleWires;
     public string taskName { get; set; }
+    public bool activeTask { get; set; }
 
     void Start()
     {
         _interactHandler.Init(_interactSprite, StartAction);
+        _outline.enabled = false;
     }
     private void StartAction()
     {
@@ -41,5 +43,17 @@ public class Computer : MonoBehaviour, ITaskable
     {
         if (other.CompareTag(TagsObj.PLAYER))
             _interactHandler.SetInteractable(false);
+    }
+
+    public void ActiveTask()
+    {
+        activeTask = true;
+        _outline.enabled = true; 
+    }
+
+    public void DeactiveTask()
+    {
+        activeTask = false;
+        _outline.enabled = false;
     }
 }
