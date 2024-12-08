@@ -5,7 +5,6 @@ public class TaskTrigger : MonoBehaviour, ITaskable
     [SerializeField] private TagType _tagType;
     public string taskName { get; set; }
     public bool activeTask { get; set; }
-
     private enum TagType
     {
         Player, Enemy, Hostage
@@ -25,14 +24,15 @@ public class TaskTrigger : MonoBehaviour, ITaskable
     }
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("activeTask " + activeTask + " taskName " + taskName);
         if (!other.CompareTag(GetTagName()) || !activeTask) return;
 
-        ServiceLocator.GetService<TaskManager>().CompleteTask(taskName); 
+        ServiceLocator.GetService<TaskManager>().CompleteTask(taskName);
     }
 
     public void ActiveTask()
     {
-        activeTask = true; 
+        activeTask = true;
     }
 
     public void DeactiveTask()

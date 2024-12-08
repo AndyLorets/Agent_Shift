@@ -10,6 +10,8 @@ public class PuzzleWires : MonoBehaviour
     private UIContentManager _UIContentManager;
     private AudioManager _audioManager;
 
+    private const string REWARD_NAME = "SkipPuzzleReward";
+
     public System.Action onComplete;  
     public Wire[] wires => _wires;
 
@@ -46,5 +48,15 @@ public class PuzzleWires : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(seconds);
         _UIContentManager.Close();
+    }
+    public void SkipAd()
+    {
+        AdManager.ShowReward(REWARD_NAME);
+        AdManager.OnRewardShowed += OnRewardComplate; 
+    }
+    private void OnRewardComplate(string name, bool compalte)
+    {
+        if (name == REWARD_NAME && compalte)
+            Complete(); 
     }
 }

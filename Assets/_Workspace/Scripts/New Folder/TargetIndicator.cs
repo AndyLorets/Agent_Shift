@@ -1,5 +1,4 @@
 using DG.Tweening;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 public class TargetIndicator : MonoBehaviour
@@ -10,13 +9,16 @@ public class TargetIndicator : MonoBehaviour
     public Sprite arrowSprite; 
     public Sprite iconSprite; 
     public Image indicatorImage;
-
-    [ReadOnly] public Transform target; 
+     public Transform target {  get; private set; } 
 
     private CanvasGroup _canvasGroup;
     private void Awake()
     {
-        target = GameObject.FindGameObjectWithTag("MiniMapIcon").transform;
+        try
+        {
+            target = GameObject.FindGameObjectWithTag("MiniMapIcon").transform;
+        }
+        catch { }
         if (target == null)
         {
             gameObject.SetActive(false);    
@@ -56,14 +58,23 @@ public class TargetIndicator : MonoBehaviour
     }
     private void Update()
     {
+        if (target == null) return;
+
         Vector3 screenPoint = mainCamera.WorldToViewportPoint(target.position);
 
-        if (screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1)
+        if (screenPoint.z < 0)
         {
-             //В пределах камеры: 
+            screenPoint.x = 1f - screenPoint.x;
+            screenPoint.y = 1f - screenPoint.y;
+            screenPoint.z = Mathf.Abs(screenPoint.z);
+        }
+
+        if (screenPoint.x >= 0 && screenPoint.x <= 1 && screenPoint.y >= 0 && screenPoint.y <= 1)
+        {
+            // В пределах камеры:
             indicatorImage.sprite = iconSprite;
             Vector2 canvasPosition = WorldToCanvasPosition(screenPoint);
-            indicator.anchoredPosition = canvasPosition; 
+            indicator.anchoredPosition = canvasPosition;
             indicator.localRotation = Quaternion.identity;
         }
         else
@@ -71,10 +82,11 @@ public class TargetIndicator : MonoBehaviour
             // Вне камеры:
             indicatorImage.sprite = arrowSprite;
             Vector2 canvasPosition = CalculateArrowPosition(screenPoint);
-            indicator.anchoredPosition = canvasPosition; 
+            indicator.anchoredPosition = canvasPosition;
             indicator.localRotation = CalculateArrowRotation(screenPoint);
         }
     }
+
 
     private Vector2 WorldToCanvasPosition(Vector3 screenPoint)
     {

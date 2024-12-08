@@ -8,7 +8,7 @@ public class FollowingState : StateBase
     private const float RUN_DISTANCE = 7f;
     private const float WALK_DISTANCE = 3f;
 
-    [SerializeField] private Player _player;
+    private Player _player;
     private Hostage _hostage;
 
     private bool _isMove; 

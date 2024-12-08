@@ -275,6 +275,7 @@ GameObject:
   - component: {fileID: 1386161603218862397}
   - component: {fileID: 1386161603218862386}
   - component: {fileID: 5696969994864512438}
+  - component: {fileID: 203578047}
   m_Layer: 8
   m_Name: Hostage
   m_TagString: Hostage
@@ -348,7 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f505783ce783f84e83f3d0287eafcd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 0
+  _hp: 1
   _currentHP: 0
   _drawGizmos: 0
   _visibleRange: 3
@@ -358,8 +359,13 @@ MonoBehaviour:
     m_Bits: 0
   _icon: {fileID: 21300000, guid: 71cefcb34edbeb04dbfb52f718b274a2, type: 3}
   _skin: {fileID: 5420739428255868641}
-  _damageClips: []
-  _deathClips: []
+  _damageClips:
+  - {fileID: 8300000, guid: aa48101fd9bd24b82af88afb182a9bf5, type: 3}
+  - {fileID: 8300000, guid: 450eaf4ebbde94988bfa31fe145db4ce, type: 3}
+  - {fileID: 8300000, guid: 794be7c4bd9e64c9bbb9776937807a9e, type: 3}
+  _deathClips:
+  - {fileID: 8300000, guid: 7a39ba789208642ea9fda609aea157b6, type: 3}
+  - {fileID: 8300000, guid: d14c998d6540344f89d98403b8d12b97, type: 3}
   _followingState: {fileID: 1386161603218862386}
   _startAnimPos: 1
   _outline: {fileID: 6341444623121470275}
@@ -481,6 +487,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!54 &203578047
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4650441780134229719}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &5420739427606763226
 PrefabInstance:
   m_ObjectHideFlags: 0

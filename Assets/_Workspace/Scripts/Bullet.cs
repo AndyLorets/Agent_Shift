@@ -57,7 +57,7 @@ public class Bullet : MonoBehaviour
                 var hitEffect = _hitEffectPool.GetObject(hit.point, Quaternion.identity); 
                 StartCoroutine(ReturnToPool(hitEffect, _hitEffectPool));
             }
-            print(hit.transform.name); 
+
             HitTarget();
         }
         _lastPos = transform.position;

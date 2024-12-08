@@ -117,7 +117,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4914566977288284252, guid: cfc4a6058dc9c06478039a243343b0a5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cfc4a6058dc9c06478039a243343b0a5, type: 3}
 --- !u!4 &3552617338067469451 stripped
 Transform:
@@ -191,7 +192,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4914566977288284252, guid: cfc4a6058dc9c06478039a243343b0a5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cfc4a6058dc9c06478039a243343b0a5, type: 3}
 --- !u!4 &742644000639476805 stripped
 Transform:
@@ -261,7 +263,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7384523932765953981, guid: ca405b6cbaa41dc419fcbc8d407b0554, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ca405b6cbaa41dc419fcbc8d407b0554, type: 3}
 --- !u!4 &4004970722300837172 stripped
 Transform:
@@ -335,7 +338,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4914566977288284252, guid: cfc4a6058dc9c06478039a243343b0a5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cfc4a6058dc9c06478039a243343b0a5, type: 3}
 --- !u!4 &8405275686580193653 stripped
 Transform:
@@ -409,7 +413,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4914566977288284252, guid: cfc4a6058dc9c06478039a243343b0a5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cfc4a6058dc9c06478039a243343b0a5, type: 3}
 --- !u!4 &6469036938146614930 stripped
 Transform:

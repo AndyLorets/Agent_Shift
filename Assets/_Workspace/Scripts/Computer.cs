@@ -11,15 +11,17 @@ public class Computer : MonoBehaviour, ITaskable
     [SerializeField] private CharacterDialogue _dialogue;
     [Space(5)]
     [SerializeField] private Outline _outline;
+    [SerializeField] private bool _isOutline;
 
     private PuzzleWires _currentPuzzleWires;
     public string taskName { get; set; }
     public bool activeTask { get; set; }
 
+
     void Start()
     {
         _interactHandler.Init(_interactSprite, StartAction);
-        _outline.enabled = false;
+        _outline.enabled = _isOutline;
     }
     private void StartAction()
     {

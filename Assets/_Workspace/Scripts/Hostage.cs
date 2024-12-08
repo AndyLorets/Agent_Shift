@@ -1,17 +1,19 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Hostage : Character, ITaskable
+public class Hostage : Character, ITaskable 
 {
     [SerializeField] private FollowingState _followingState;
     [SerializeField] private int _startAnimPos;
     [SerializeField] private Outline _outline;
     private readonly StateMachine _stateMachine = new StateMachine();
-
     [SerializeField] private CharacterDialogue[] _dialogue;
     public NavMeshAgent agent { get; private set; }
     public string taskName { get; set; }
     public bool activeTask { get; set; }
+
+    private Collider _collider;
+    private Rigidbody _rb;
 
 
     private const string AnimHostageTrigger = "HostagePos";
@@ -21,7 +23,8 @@ public class Hostage : Character, ITaskable
     {
         agent = GetComponent<NavMeshAgent>();
         _outline.enabled = false;
-        //_taskColorFlasher.CacheOriginalMaterials();
+        _collider = GetComponent<Collider>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -56,14 +59,24 @@ public class Hostage : Character, ITaskable
         _stateMachine.ChangeState(_followingState);
     }
 
-    public override void TakeDamage(float value, bool headShot)
-    {
-        // Implementation for damage handling (if required)
-    }
+    //public override void TakeDamage(float value, bool headShot)
+    //{
+    //    // Implementation for damage handling (if required)
+    //}
 
     public override void Dead(bool headShot)
     {
-        // Implementation for death logic (if required)
+        Alive = false;
+        enabled = false;
+        Animator.SetTrigger(ANIM_DEATH);
+        onDead?.Invoke(this);
+
+        int r = Random.Range(0, _deathClips.Length);
+        _audioSource.PlayOneShot(_deathClips[r]);
+
+        _collider.enabled = false;
+        _rb.isKinematic = true;
+        ServiceLocator.GetService<GameManager>().LoseGame();
     }
 
     protected override void ConstructTargets()

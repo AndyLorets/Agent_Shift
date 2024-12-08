@@ -15,14 +15,11 @@ public class TaskManager : MonoBehaviour
     private void Awake()
     {
         ServiceLocator.RegisterService(this);   
-        GameManager.onGameStart += ActiveTask; 
-    }
+        GameManager.onGameStart += ActiveTask;
 
-    void Start()
-    {
         for (int i = 0; i < _tasks.Count; i++)
         {
-            _tasks[i].Init(); 
+            _tasks[i].Init();
         }
     }
     private void ActiveTask()
@@ -43,13 +40,12 @@ public class TaskManager : MonoBehaviour
     }
     public void CompleteTask(string taskName)
     {
-        _tasks[_currentTask].taskable.DeactiveTask();
-
         Task task = _tasks.Find(t => t.taskName == taskName);
         if (task != null)
         {
-            onTaskComplete?.Invoke(taskName);
+            _tasks[_currentTask].taskable.DeactiveTask();
             _currentTask++;
+            onTaskComplete?.Invoke(taskName);
             if (_currentTask < _tasks.Count)
             {
                 task.complate = true;
@@ -58,7 +54,9 @@ public class TaskManager : MonoBehaviour
                 SetMinimapPointPosition();
             }
             else
-                ServiceLocator.GetService<GameManager>().WinGame(); 
+            {
+                ServiceLocator.GetService<GameManager>().WinGame();
+            }
         }       
     }
     private void OnDestroy()

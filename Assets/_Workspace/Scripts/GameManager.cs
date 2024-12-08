@@ -61,7 +61,8 @@ public class GameManager : MonoBehaviour
         ServiceLocator.GetService<Player>().CanControll = false;
         ServiceLocator.GetService<GameDataController>().SaveData();
 
-        onGameWin?.Invoke(); 
+        onGameWin?.Invoke();
+        AdManager.ShowInter();
     }
     public void LoseGame()
     {
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
         ServiceLocator.GetService<Player>().CanControll = false;
 
         onGameLose?.Invoke();
+        AdManager.ShowInter();
     }
     public void NextLevel()
     {

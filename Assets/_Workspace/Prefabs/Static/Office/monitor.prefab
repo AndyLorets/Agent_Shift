@@ -188,10 +188,10 @@ MonoBehaviour:
   _puzzleWires: {fileID: 4939951907665798103, guid: 0508f3058f2c8cf43bbaf6e117caedaa, type: 3}
   _icon: {fileID: 21300000, guid: c0a858d2598abe04fb79686f9aa87684, type: 3}
   _dialogue:
-    text: "\u041D\u0443\u0436\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u044D\u0442\u0443
-      \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0443 "
-    clip: {fileID: 8300000, guid: 25f08f9f525e5564b8e2817c7f7d2b9f, type: 3}
+    text: I think I can hack this.
+    clip: {fileID: 8300000, guid: e65f26de3c795b943a338ff544d41c9b, type: 3}
   _outline: {fileID: 2883507228280832624}
+  _isOutline: 0
 --- !u!65 &2119721977476920924
 BoxCollider:
   m_ObjectHideFlags: 0

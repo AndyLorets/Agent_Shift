@@ -8,19 +8,38 @@ public class Turret : WeaponBase
     [SerializeField, Range(3f, 15f)] protected float _visibleRange = 3f;
     [SerializeField, Range(25f, 250f)] protected float _viewAngle = 45f;
     [SerializeField] protected LayerMask _detectionLayer;
+    [SerializeField] private string _taskToDeactive;
+    [SerializeField] private Outline[] _outlines;
 
-    private Player _target;
+    private Player _player;
+    private TaskManager _taskManager;
+
     private bool _isActive = true;
     private float _fireDelay;
     private float _currentShootTime;
     private int _currentShootCount;
-    private bool EnemyIsDetected => IsTargetDetected() && !_target.IsInvisibility;
+    private bool EnemyIsDetected => IsTargetDetected() && !_player.IsInvisibility;
     private void Awake()
     {
         _visionCone.Init(_visibleRange, _viewAngle);
-        _target = FindObjectOfType<Player>();
+        _player = FindObjectOfType<Player>();
     }
+    protected override void Start()
+    {
+        base.Start();
 
+        _taskManager = ServiceLocator.GetService<TaskManager>();
+        _taskManager.onTaskComplete += TaskComplate;
+
+        for (int i = 0; i < _outlines.Length; i++)
+        {
+            _outlines[i].enabled = true; 
+        }
+    }
+    private void OnDestroy()
+    {
+        _taskManager.onTaskComplete -= TaskComplate;
+    }
     protected override void Update()
     {
         if (!_isActive) return;
@@ -34,6 +53,16 @@ public class Turret : WeaponBase
     {
         _isActive = false;
         _currentShootTime = 0;
+        _visionCone.gameObject.SetActive(false);    
+        for (int i = 0; i < _outlines.Length; i++)
+        {
+            _outlines[i].enabled = false;
+        }
+    }
+    private void TaskComplate(string taskName)
+    {
+        if (_taskToDeactive == taskName)
+            Deactive(); 
     }
     private void HeadRotation(Vector3 pos)
     {
@@ -43,23 +72,28 @@ public class Turret : WeaponBase
         _head.rotation = Quaternion.Slerp(_head.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         _head.eulerAngles = new Vector3(0, _head.eulerAngles.y, 0);
     }
-    private bool CheckForTargetInRange() => Physics.CheckSphere(_head.position, _visibleRange, _detectionLayer);
+    private bool CheckForTargetInRange() => Physics.CheckSphere(transform.position, _visibleRange, _detectionLayer);
     private bool IsTargetDetected()
     {
-        if (!_target.Alive)
+        if (!_player.Alive)
             return false;
-        if (!CheckForTargetInRange()) 
+        if (!CheckForTargetInRange())
+        {
+            _visionCone.SetColor(VisionCone.ColorType.Idle);
             return false;
+        }
 
-        float distance = Vector3.Distance(_head.position, _target.transform.position);
-        Vector3 directionToTarget = (_target.transform.position - _head.position).normalized;
-        float angleToTarget = Vector3.Angle(_head.forward, directionToTarget);
+        float distance = Vector3.Distance(transform.position, _player.transform.position);
+        Vector3 directionToTarget = (_player.transform.position - transform.position).normalized;
+        float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
         if (angleToTarget > _viewAngle / 2)
+        {
             return false;
+        }
 
-        if (!IsLineClear(_head.position, _target.transform.position))
+        if (!IsLineClear(transform.position, _player.transform.position))
             return false;
-
+        _visionCone.SetColor(VisionCone.ColorType.Attack);
         return true;
     }
     private bool IsLineClear(Vector3 pointA, Vector3 pointB)
@@ -77,18 +111,17 @@ public class Turret : WeaponBase
                 return true;
             }
         }
-
         return false;
     }
     private void Shooting()
     {
         _currentShootTime -= Time.deltaTime;
         _fireDelay -= Time.deltaTime;
-        HeadRotation(_target.transform.position);
+        HeadRotation(_player.transform.position);
 
         if (_currentShootTime <= 0 && !isReloading && _fireDelay <= 0)
         {
-            Shoot(_target.transform.position, false);
+            Shoot(_player.transform.position, false);
             _fireDelay = .3f;
             _currentShootCount--;
 

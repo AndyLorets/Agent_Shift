@@ -24,7 +24,7 @@ public abstract class Character : MonoBehaviour, ITakeDamage
     public ITakeDamage takeDamage => this;
     public Skin Skin => _skin;
     public Animator Animator => _skin.animator;
-    public bool Alive { get; private set; } = true;
+    public bool Alive { get; protected set; } = true;
     protected bool _enemyDetected;
 
     public System.Action<float, float, bool> onChangeHP;
