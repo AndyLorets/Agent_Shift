@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class AdManager 
+public class AdManager : MonoBehaviour 
 {
     private static string rewardName = ""; 
     public static Action<string, bool> OnRewardShowed; 

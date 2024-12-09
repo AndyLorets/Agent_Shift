@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour
     public static System.Action onGameWin;
     public static System.Action onGameLose;
 
-    private bool _gameWin; 
+    private bool _gameWin;
+
+    private const int LEVELS_COUNT = 5; 
 
     private void OnEnable()
     {
@@ -76,7 +78,7 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         PlayerData playerData = ServiceLocator.GetService<GameDataController>().PlayerData;
-        if (playerData.currentLevel < 3)
+        if (playerData.currentLevel < LEVELS_COUNT)
         {
             playerData.currentLevel++;
             playerData.openLevel = playerData.currentLevel;

@@ -76,6 +76,9 @@ public class TargetIndicator : MonoBehaviour
             Vector2 canvasPosition = WorldToCanvasPosition(screenPoint);
             indicator.anchoredPosition = canvasPosition;
             indicator.localRotation = Quaternion.identity;
+
+            if (indicatorImage.transform.localScale == Vector3.one)
+                indicatorImage.transform.localScale = Vector3.one * 0.5f; 
         }
         else
         {
@@ -84,6 +87,8 @@ public class TargetIndicator : MonoBehaviour
             Vector2 canvasPosition = CalculateArrowPosition(screenPoint);
             indicator.anchoredPosition = canvasPosition;
             indicator.localRotation = CalculateArrowRotation(screenPoint);
+            if (indicatorImage.transform.localScale == Vector3.one * 0.5f)
+                indicatorImage.transform.localScale = Vector3.one;
         }
     }
 

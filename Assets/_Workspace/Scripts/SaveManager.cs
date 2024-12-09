@@ -92,9 +92,9 @@ public class AbilitiesData
     public int invisibilityPrice = 5;
     public int invisibilityPriceIncreaseValue = 5;
 
-    public float headShotChanceStartValue = 10f;
+    public float headShotChanceStartValue = 30f;
     public float headShotChanceCurrentValue;
-    public float headShotChanceMaxValue = 80f;
+    public float headShotChanceMaxValue = 90f;
     public float headShotChanceIncreaseValue = 10f;
     public int headShotChancePrice = 10;
     public int headShotChancePriceIncreaseValue = 5;

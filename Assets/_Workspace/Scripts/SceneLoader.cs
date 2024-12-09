@@ -27,7 +27,7 @@ public class SceneLoader : MonoBehaviour
         }
 
         bool hasTutorial = PlayerPrefs.HasKey("Tutorial");
-        int sceneIndex = hasTutorial ? SceneManager.sceneCountInBuildSettings - 1 : SceneManager.sceneCountInBuildSettings - 2;
+        int sceneIndex = hasTutorial ? ServiceLocator.GetService<GameDataController>().PlayerData.currentLevel : SceneManager.sceneCountInBuildSettings - 2;
 
         LoadScene(sceneIndex);
     }
